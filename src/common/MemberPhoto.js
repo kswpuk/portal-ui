@@ -33,7 +33,7 @@ export default function MemberPhoto(props){
   if(error || image?.type !== "image/jpeg" ){
     return <img style={imgStyle} src={noPhoto} alt="" title="No photo" width={props.width} height={props.height} />
   }else if(isLoading){
-    return <Box {...props} sx={{display: 'flex'}}>
+    return <Box width={props.width} height={props.height} sx={{display: 'flex'}}>
       <CircularProgress sx={{alignSelf: 'center', margin: 'auto', mt: '1rem', mb: '1rem'}} />
     </Box>
   }
