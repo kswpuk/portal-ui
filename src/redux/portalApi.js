@@ -8,7 +8,10 @@ export const error = (message) => ({error: {message: message}})
 
 export const portalApi = createApi({
   reducerPath: 'portalApi',
-  tagTypes: ['MEMBERS', 'MEMBER'],
+  tagTypes: [
+    'APPLICATIONS', 'APPLICATION', 'REFERENCES',
+    'MEMBERS', 'MEMBER'
+  ],
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     prepareHeaders: async (headers) => {

@@ -1,11 +1,17 @@
 import { useDispatch } from 'react-redux'
-import { selectApplications, setTitle } from '../redux/navSlice'
+import { Route, Routes } from 'react-router-dom'
+import { selectApplications } from '../redux/navSlice'
+import ListApplications from './ListApplications'
+import ViewApplication from './ViewApplication'
 
 export default function Applications() {
   const dispatch = useDispatch()
-
-  dispatch(setTitle("Applications"))
   dispatch(selectApplications())
 
-  return <p>Applications</p>
+  return <>
+    <Routes>
+      <Route path=":membershipNumber/view" element={<ViewApplication />} />
+      <Route path="/" element={<ListApplications />} />
+    </Routes>
+  </>
 }
