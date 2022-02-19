@@ -1,0 +1,14 @@
+.Loading {
+  text-align: center;
+}
+
+.LoadingSpinner {
+  width: 5rem;
+  height: 5rem;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+}
+
+.LoadingText {
+  margin-bottom: 3rem;
+}
