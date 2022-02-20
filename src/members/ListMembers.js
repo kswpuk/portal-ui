@@ -28,7 +28,7 @@ export default function ListMembers() {
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading the list of current members</Error>
   }
 
-  const committee = members.filter(x => x.role !== "")
+  const committee = members.filter(x => x.role)
   committee.sort((a, b) => (committeeRoles[a.role]["sortOrder"] > committeeRoles[b.role]["sortOrder"]) ? 1 : -1)
 
   //TODO: Center grid in small display, hide committee members when small?

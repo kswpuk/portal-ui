@@ -25,7 +25,7 @@ export default function Error(props){
     {props.children}
     {message}
     {detail}
-    {props.error?.status ? <small>Status Code: {props.error.status}</small> : null}
+    {props.error?.status ? <p><small>Status Code: {props.error.status}</small></p> : null}
     {props.onRetry ? <p><Button variant="outlined" color="error" onClick={() => props.onRetry()}>Try Again</Button></p> : null}
   </Alert>
 }
