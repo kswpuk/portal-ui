@@ -28,9 +28,17 @@ const applicationsApi = portalApi.injectEndpoints({
         url: `applications/${membershipNumber}/approve`,
         method: 'POST'
       }),
-    })
+    }),
+    submitApplication: builder.mutation({
+      invalidatesTags: ['APPLICATIONS'],
+      query: (application) => ({
+        url: `applications/submit`,
+        method: 'POST',
+        body: application,
+      }),
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useListApplicationsQuery, useGetApplicationQuery, useListReferencesQuery, useDeleteApplicationMutation, useApproveApplicationMutation } = applicationsApi
+export const { useListApplicationsQuery, useGetApplicationQuery, useListReferencesQuery, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation } = applicationsApi

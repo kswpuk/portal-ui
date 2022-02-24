@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Sidebar from './layout/Sidebar';
 import Header from './layout/Header';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Members from './members/Members';
 import Events from './events/Events';
 import Report from './report/Report';
@@ -26,27 +26,25 @@ export default function App(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <BrowserRouter>
-        <Header toggleDrawer={handleDrawerToggle} />
-        <Sidebar isOpen={mobileOpen} onDrawerClose={handleDrawerToggle} username={props.user.username} signOut={props.signOut} />
-        
-        <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-          <Toolbar variant='dense'/>
-          <Routes>
-            <Route path="/applications/*" element={<Applications />} />
-            <Route path="/events/*" element={<Events />} />
-            <Route path="/members/*" element={<Members />} />
-            <Route path="/report" element={<Report />} />
-            <Route path="/shop" element={<Shop />} />
+      <Header toggleDrawer={handleDrawerToggle} />
+      <Sidebar isOpen={mobileOpen} onDrawerClose={handleDrawerToggle} username={props.user.username} signOut={props.signOut} />
+      
+      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+        <Toolbar variant='dense'/>
+        <Routes>
+          <Route path="/applications/*" element={<Applications />} />
+          <Route path="/events/*" element={<Events />} />
+          <Route path="/members/*" element={<Members />} />
+          <Route path="/report" element={<Report />} />
+          <Route path="/shop" element={<Shop />} />
 
-            <Route path="/user" element={<User />} />
-            <Route path="/user/photo" element={<UserPhoto />} />
-            <Route path="/user/password" element={<ChangePassword />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/user/photo" element={<UserPhoto />} />
+          <Route path="/user/password" element={<ChangePassword />} />
 
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </Box>
-      </BrowserRouter>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Box>
     </Box>
   );
 }
