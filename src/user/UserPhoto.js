@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import ChangePhoto from '../members/ChangePhoto'
 import { selectPhoto, setTitle } from '../redux/navSlice'
 
 export default function UserPhoto() {
@@ -7,5 +8,5 @@ export default function UserPhoto() {
   dispatch(setTitle("My Photo"))
   dispatch(selectPhoto())
 
-  return <p>My Photo</p>
+  return <ChangePhoto membershipNumber="404754" />
 }

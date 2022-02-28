@@ -10,11 +10,13 @@ import Error from '../common/Error'
 import { useForm } from 'react-hook-form'
 import SubmitButton from '../common/SubmitButton'
 
-export default function EditMember() {
+export default function EditMember(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const { membershipNumber } = useParams()
+  const { membershipNumber: membershipNumberParams } = useParams()
+  const membershipNumber = props.membershipNumber || membershipNumberParams
+
   const { data: member, error, isLoading, refetch } = useGetMemberQuery(membershipNumber)
   const [ updateMember, { isLoading: isUpdating, isSuccess: isUpdated, error: updateError } ] = useUpdateMemberMutation()
 

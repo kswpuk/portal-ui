@@ -30,12 +30,12 @@ export default function MemberPhoto(props){
   }
 
   //TODO: Why do we need to check the type? error returns undefined, regardless of whether the fetch fails or not
-  if(error || image?.type !== "image/jpeg" ){
-    return <img style={imgStyle} src={noPhoto} alt="" title="No photo" width={props.width} height={props.height} />
-  }else if(isLoading){
+  if(isLoading){
     return <Box width={props.width} height={props.height} sx={{display: 'flex'}}>
       <CircularProgress sx={{alignSelf: 'center', margin: 'auto', mt: '1rem', mb: '1rem'}} />
     </Box>
+  }else if(error || image?.type !== "image/jpeg" ){
+    return <img style={imgStyle} src={noPhoto} alt="" title="No photo" width={props.width} height={props.height} />
   }
 
   if(!image)

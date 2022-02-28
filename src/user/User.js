@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import EditMember from '../members/EditMember'
 import { selectUser, setTitle } from '../redux/navSlice'
 
 export default function User() {
@@ -7,5 +8,5 @@ export default function User() {
   dispatch(setTitle("My Details"))
   dispatch(selectUser())
 
-  return <p>My Details</p>
+  return <EditMember membershipNumber="404754" />
 }

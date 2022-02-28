@@ -8,10 +8,12 @@ import MemberPhoto from '../common/MemberPhoto'
 import { useChangePhotoMutation } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
 
-export default function ChangePhoto() {
+export default function ChangePhoto(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const { membershipNumber } = useParams()
+  
+  const { membershipNumber: membershipNumberParams } = useParams()
+  const membershipNumber = props.membershipNumber || membershipNumberParams
 
   const [photo, setPhoto] = useState(null)
 
