@@ -109,17 +109,26 @@ export default function ApplicationForm(){
 
       <Box>
         <Typography variant='h5' gutterBottom>Your Queen's Scout Award</Typography>
-        <Typography variant="body2" gutterBottom>
-          Please provide some evidence that you have received your Queen's Scout Award. This could be, for example, a scan of your Queen's Scout Award certificate or a photo of you receiving your award.
-        </Typography>
 
-        <DropzoneArea
-          acceptedFiles={['image/*']} maxFileSize={3000000} filesLimit={1}
-          showPreviews={true} showPreviewsInDropzone={false} useChipsForPreview={true} previewText="Selected Image:"
-          showAlerts={false}
-          dropzoneText="Drag and drop an image here or click (3 MB limit)"
-          onChange={(file) => setEvidence(file)}
-        />
+        <Stack spacing={3}>
+          <Typography variant="body2" gutterBottom>
+            Please provide some evidence that you have received your Queen's Scout Award. This could be, for example, a scan of your Queen's Scout Award certificate or a photo of you receiving your award.
+          </Typography>
+
+          <TextField variant="outlined" label="Month you received your Queen's Scout Award"
+                error={errors.qsaReceived != null} helperText={errors.qsaReceived ? "This field is required" : null}
+                required fullWidth type="month"
+                InputLabelProps={{ shrink: true }} 
+              {...register("qsaReceived")} />
+
+          <DropzoneArea
+            acceptedFiles={['image/*']} maxFileSize={3000000} filesLimit={1}
+            showPreviews={true} showPreviewsInDropzone={false} useChipsForPreview={true} previewText="Selected Image:"
+            showAlerts={false}
+            dropzoneText="Drag and drop an image here or click (3 MB limit)"
+            onChange={(file) => setEvidence(file)}
+          />
+        </Stack>
         
       </Box>
 

@@ -19,8 +19,13 @@ export default function Error(props){
       detail = <p>{props.error.data.detail}</p>
     }
   }
+
+  let sx = {}
+  if(props.gutterBottom){
+    sx['marginBottom'] = '1rem'
+  }
   
-  return <Alert severity="error">
+  return <Alert severity="error" sx={sx}>
     <AlertTitle>Oh no!</AlertTitle>
     {props.children}
     {message}

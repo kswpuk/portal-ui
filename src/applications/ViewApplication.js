@@ -12,9 +12,11 @@ import TelephoneLink from '../common/TelephoneLink'
 
 import { setTitle } from '../redux/navSlice'
 import styles from './ViewApplication.module.css'
-import { useApproveApplicationMutation, useDeleteApplicationMutation, useGetApplicationQuery } from '../redux/applicationsApi'
+import { useApproveApplicationMutation, useDeleteApplicationMutation, useGetApplicationQuery, useListReferencesQuery } from '../redux/applicationsApi'
 import { Close, Delete, HowToReg, MoreHoriz } from '@mui/icons-material'
 import ConfirmLink from '../common/ConfirmLink'
+import EvidenceImage from '../join/EvidenceImage'
+import { DataGrid } from '@mui/x-data-grid'
 
 export default function ViewApplication() {
   const dispatch = useDispatch()
@@ -22,6 +24,8 @@ export default function ViewApplication() {
   const { membershipNumber } = useParams()
 
   const { data: application, error, isLoading, refetch } = useGetApplicationQuery(membershipNumber)
+  const { data: references, error: referencesError, isLoading: referencesLoading, refetch: referencesRefetch } = useListReferencesQuery(membershipNumber)
+
   const [ deleteApplication, { isLoading: isDeleting, isSuccess: isDeleted } ] = useDeleteApplicationMutation()
   const [ approveApplication, { isLoading: isApproving, isSuccess: isApproved } ] = useApproveApplicationMutation()
 
@@ -43,6 +47,27 @@ export default function ViewApplication() {
     return <Loading />
   }else if(error){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading details of application {membershipNumber}</Error>
+  }
+
+  let refEl = null
+  if(referencesLoading){
+    refEl = <Loading /> 
+  }else if(referencesError){
+    return <Error error={referencesError} onRetry={() => referencesRefetch()}>An error occurred whilst loading references for application {membershipNumber}</Error>
+  }else{
+    refEl = <DataGrid autoHeight initialState={{
+      pagination: {
+        pageSize: 5,
+      },
+      sorting: {
+        sortModel: [{ field: "dateReceived", sort: "asc"}]
+      }
+    }} columns={[
+        {field: "referenceName", headerName: "Reference Name", flex: 2, hideable: false},
+        {field: "referenceEmail", headerName: "Reference E-mail", flex: 2, hideable: false},
+        {field: "dateReceived", headerName: "Date Received", flex: 1, hideable: false}
+      ]} rows={references}
+      getRowId={(row) => row.referenceEmail} />
   }
 
   return <>
@@ -105,11 +130,11 @@ export default function ViewApplication() {
           <TableBody>
             <TableRow>
               <TableCell sx={{width: '33%'}}>Award Received</TableCell>
-              <TableCell>{application.awardReceived}</TableCell>
+              <TableCell>{application.qsaReceived}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Award Evidence</TableCell>
-              <TableCell>TODO</TableCell>
+              <TableCell><EvidenceImage membershipNumber={application.membershipNumber}/></TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -117,7 +142,8 @@ export default function ViewApplication() {
 
       <Box>
         <Typography variant='h5' gutterBottom>References</Typography>
-        <p>TODO</p>
+        
+        {refEl}
       </Box>
 
     </Stack>
