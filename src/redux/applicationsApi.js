@@ -17,6 +17,18 @@ const applicationsApi = portalApi.injectEndpoints({
       providesTags: ['REFERENCES'],
       query: (membershipNumber) => `applications/${membershipNumber}/references`
     }),
+    getReference: builder.query({
+      providesTags: ['REFERENCE'],
+      query: ({membershipNumber, referenceEmail}) => `applications/${membershipNumber}/references/${referenceEmail}`
+    }),
+    acceptReference: builder.mutation({
+      invalidatesTags: ['REFERENCE', 'REFERENCES'],
+      query: ( {membershipNumber, referenceEmail, accept} ) => ({
+        url: `applications/${membershipNumber}/references/${referenceEmail}/accept`,
+        method: 'PATCH',
+        body: {accepted: accept}
+      }),
+    }),
     // TODO: Also delete references at same time - second API call, or Lambda triggered from DynamoDB Stream?
     deleteApplication: builder.mutation({
       invalidatesTags: ['APPLICATION', 'APPLICATIONS'],
@@ -52,4 +64,4 @@ const applicationsApi = portalApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation, useSubmitReferenceMutation } = applicationsApi
+export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useGetReferenceQuery, useAcceptReferenceMutation, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation, useSubmitReferenceMutation } = applicationsApi

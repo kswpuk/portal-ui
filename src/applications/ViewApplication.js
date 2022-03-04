@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, Table, TableBody, TableCell, TableRow, Typography } from '@mui/material'
+import { Box, Link, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, Table, TableBody, TableCell, TableRow, Typography } from '@mui/material'
 
 import DateOfBirth from '../common/DateOfBirth'
 import EmailLink from '../common/EmailLink'
@@ -13,15 +13,17 @@ import TelephoneLink from '../common/TelephoneLink'
 import { setTitle } from '../redux/navSlice'
 import styles from './ViewApplication.module.css'
 import { useApproveApplicationMutation, useDeleteApplicationMutation, useGetApplicationQuery, useListReferencesQuery } from '../redux/applicationsApi'
-import { Close, Delete, HowToReg, MoreHoriz } from '@mui/icons-material'
+import { AccessTime, AccessTimeFilled, Circle, CircleOutlined, Close, Delete, HowToReg, MoreHoriz } from '@mui/icons-material'
 import ConfirmLink from '../common/ConfirmLink'
 import EvidenceImage from '../join/EvidenceImage'
 import { DataGrid } from '@mui/x-data-grid'
+import ReferenceDialog from './ReferenceDialog'
 
 export default function ViewApplication() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const { membershipNumber } = useParams()
+  const [ showReference, setShowReference] = useState(null)
 
   const { data: application, error, isLoading, refetch } = useGetApplicationQuery(membershipNumber)
   const { data: references, error: referencesError, isLoading: referencesLoading, refetch: referencesRefetch } = useListReferencesQuery(membershipNumber)
@@ -50,22 +52,73 @@ export default function ViewApplication() {
   }
 
   let refEl = null
+  const refOutstanding = []
+
   if(referencesLoading){
     refEl = <Loading /> 
   }else if(referencesError){
     return <Error error={referencesError} onRetry={() => referencesRefetch()}>An error occurred whilst loading references for application {membershipNumber}</Error>
   }else{
-    refEl = <DataGrid autoHeight initialState={{
+    if(!references.some(r => r.accepted && r.relationship === "scouting")){
+      refOutstanding.push("No Scouting reference has been accepted")
+    }
+    if(!references.some(r => r.accepted && r.relationship === "nonScouting")){
+      refOutstanding.push("No non-Scouting reference has been accepted")
+    }
+    if(!references.some(r => r.accepted && r.howLong === "moreThan5")){
+      refOutstanding.push("No reference has been accepted from anyone that has known the applicant for more than 5 years")
+    }
+
+    refEl = <DataGrid disableSelectionOnClick autoHeight initialState={{
       pagination: {
         pageSize: 5,
       },
       sorting: {
-        sortModel: [{ field: "dateReceived", sort: "asc"}]
+        sortModel: [{ field: "submittedAt", sort: "asc"}]
       }
     }} columns={[
-        {field: "referenceName", headerName: "Reference Name", flex: 2, hideable: false},
-        {field: "referenceEmail", headerName: "Reference E-mail", flex: 2, hideable: false},
-        {field: "dateReceived", headerName: "Date Received", flex: 1, hideable: false}
+        {
+          field: "referenceName", headerName: "Reference Name", flex: 3, hideable: false,
+          renderCell: params => params.row.submittedAt ? <Link href="#" onClick={(event) => {event.preventDefault(); setShowReference(params.row.referenceEmail)}}>{params.value}</Link> : params.value
+        },
+        {
+          field: "referenceEmail", headerName: "Reference E-mail", flex: 3, hideable: false,
+          renderCell: params => <Link href={"mailto:"+params.value}>{params.value}</Link>
+        },
+        {
+          field: "submittedAt", headerName: "Date Received", flex: 2, hideable: false, 
+          type: 'dateTime', valueGetter: ({ value }) => value && new Date(value*1000)
+        },
+        {
+          field: "relationship", headerName: "Type", flex: 1, hideable: false,
+          align: "center", headerAlign: "center",
+          renderCell: params => {
+            if(params.value === "scouting"){
+              return <Circle htmlColor='#7413dc' titleAccess='Scouting' />
+            }else if(params.value === "nonScouting"){
+              return <Circle htmlColor='#003982' titleAccess='Non-Scouting'/>
+            }else{
+              return <CircleOutlined color='disabled' />
+            }
+          }
+        },
+        {
+          field: "howLong", headerName: "5+ years", flex: 1, hideable: false,
+          align: "center", headerAlign: "center",
+          renderCell: params => {
+            if(params.value === "moreThan5"){
+              return <AccessTimeFilled titleAccess='5 or more years' />
+            }else if(params.value === "lessThan5"){
+              return <AccessTime titleAccess='Less than 5 years'/>
+            }else{
+              return <CircleOutlined color='disabled' />
+            }
+          } 
+        },
+        {
+          field: "accepted", headerName: "Accepted", flex: 1, hideable: false, 
+          type: 'boolean'
+        }
       ]} rows={references}
       getRowId={(row) => row.referenceEmail} />
   }
@@ -144,9 +197,19 @@ export default function ViewApplication() {
         <Typography variant='h5' gutterBottom>References</Typography>
         
         {refEl}
+        
+        {refOutstanding.length > 0 ? <>
+          <Typography sx={{mt: '1rem'}}>The following issues are still outstanding:</Typography>
+          <ul>
+            {refOutstanding.map((val, idx) => <li key={"outstanding_"+idx}><Typography>{val}</Typography></li>)}
+          </ul>
+        </> : null}
+
       </Box>
 
     </Stack>
+
+    <ReferenceDialog open={showReference != null} onClose={() => setShowReference(null)} membershipNumber={membershipNumber} referenceEmail={showReference}/>
 
     <SpeedDial
         ariaLabel="Member Actions"

@@ -30,8 +30,6 @@ export default function EvidenceImage(props){
     maxHeight: '80%'
   }
 
-  console.log(image)
-
   //TODO: Why do we need to check the type? error returns undefined, regardless of whether the fetch fails or not
   if(error || image?.type !== "image/jpeg" ){
     return <img style={imgStyle} src={noPhoto} alt="" title="No photo" width={props.width} height={props.height} />

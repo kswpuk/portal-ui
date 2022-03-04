@@ -4,8 +4,10 @@ import { useEffect } from "react";
 export default function Error(props){
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    if(!props.noJump){
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [props])
 
   let message = null
   if(props.error?.data?.message){
