@@ -1,6 +1,7 @@
 import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
 import { Link, Route, Routes } from "react-router-dom";
 import ApplicationForm from "./ApplicationForm";
+import ReferenceForm from "./ReferenceForm";
 
 export default function Join(props){
   return <>
@@ -16,6 +17,7 @@ export default function Join(props){
       <Toolbar variant='dense' sx={{mb: '1rem'}} />
       <Routes>
         <Route path="/" element={<ApplicationForm />} />
+        <Route path=":membershipNumber/reference" element={<ReferenceForm />} />
       </Routes>
     </Container>
   </>

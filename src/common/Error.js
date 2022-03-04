@@ -1,16 +1,21 @@
 import { Alert, AlertTitle, Button } from "@mui/material";
+import { useEffect } from "react";
 
 export default function Error(props){
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   let message = null
-  if(props.error.data?.message){
+  if(props.error?.data?.message){
     message = <p>{props.error.data.message}</p>
-  }else{
+  }else if(props.error){
     message = <code>{JSON.stringify(props.error)}</code>
   }
 
   let detail = null
-  if(props.error.data?.detail){
+  if(props.error?.data?.detail){
     if(Array.isArray(props.error.data.detail)){
       detail = <ul>
         {props.error.data.detail.map((x,idx) => <li key={"error_detail_"+idx}>{x}</li>)}

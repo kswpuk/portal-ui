@@ -10,6 +10,9 @@ const applicationsApi = portalApi.injectEndpoints({
       providesTags: ['APPLICATION'],
       query: (membershipNumber) => `applications/${membershipNumber}`
     }),
+    getApplicationHead: builder.query({
+      query: (membershipNumber) => `applications/${membershipNumber}/head`
+    }),
     listReferences: builder.query({
       providesTags: ['REFERENCES'],
       query: (membershipNumber) => `applications/${membershipNumber}/references`
@@ -31,14 +34,22 @@ const applicationsApi = portalApi.injectEndpoints({
     }),
     submitApplication: builder.mutation({
       invalidatesTags: ['APPLICATIONS'],
-      query: (application) => ({
-        url: `applications/submit`,
+      query: ({membershipNumber, ...application}) => ({
+        url: `applications/${membershipNumber}`,
         method: 'POST',
         body: application,
+      }),
+    }),
+    submitReference: builder.mutation({
+      invalidatesTags: ['REFERENCES'],
+      query: ( {membershipNumber, reference} ) => ({
+        url: `applications/${membershipNumber}/references`,
+        method: 'POST',
+        body: reference,
       }),
     }),
   }),
   overrideExisting: false,
 })
 
-export const { useListApplicationsQuery, useGetApplicationQuery, useListReferencesQuery, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation } = applicationsApi
+export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation, useSubmitReferenceMutation } = applicationsApi
