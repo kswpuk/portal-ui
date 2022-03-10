@@ -1,9 +1,9 @@
-import { Approval, BarChart, Close, Event, Home, Logout, Password, People, Person, PhotoCamera, ShoppingBag } from '@mui/icons-material';
+import { Approval, BarChart, Close, CurrencyPound, Event, Home, Logout, Password, People, Person, PhotoCamera, ShoppingBag } from '@mui/icons-material';
 import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { drawerWidth } from '../consts';
-import { APPLICATIONS, CHANGE_PASSWORD, EVENTS, HOME, MEMBERS, PHOTO, REPORT, SHOP, USER } from '../redux/navSlice';
+import { APPLICATIONS, CHANGE_PASSWORD, EVENTS, HOME, MEMBERS, PAY_MEMBERSHIP, PHOTO, REPORT, SHOP, USER } from '../redux/navSlice';
 import { useTheme } from '@mui/material/styles';
 
 export default function Sidebar(props) {
@@ -85,6 +85,13 @@ export default function Sidebar(props) {
             <Password />
           </ListItemIcon>
           <ListItemText primary="Change Password" />
+        </ListItemButton>
+
+        <ListItemButton component={Link} to="/user/pay" selected={selected === PAY_MEMBERSHIP}>
+          <ListItemIcon>
+            <CurrencyPound />
+          </ListItemIcon>
+          <ListItemText primary="Pay Membership" />
         </ListItemButton>
 
         <ListItemButton onClick={props.signOut}>

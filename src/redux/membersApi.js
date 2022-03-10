@@ -25,6 +25,12 @@ const membersApi = portalApi.injectEndpoints({
         method: 'DELETE'
       }),
     }),
+    payMembership: builder.mutation({
+      query: (membershipNumber) => ({
+        url: `members/${membershipNumber}/payment`,
+        method: 'POST'
+      }),
+    }),
     changePhoto: builder.mutation({
       invalidatesTags: ['MEMBER'],
       query: ({membershipNumber, photo}) => ({
@@ -37,4 +43,4 @@ const membersApi = portalApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useListMembersQuery, useGetMemberQuery, useUpdateMemberMutation, useDeleteMemberMutation, useChangePhotoMutation } = membersApi
+export const { useListMembersQuery, useGetMemberQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation } = membersApi

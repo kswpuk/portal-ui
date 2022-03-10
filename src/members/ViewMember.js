@@ -154,7 +154,7 @@ export default function ViewMember() {
               <TableBody>
                 <TableRow>
                   <TableCell sx={{width: '33%'}}>Membership Status</TableCell>
-                  <TableCell>{member.status === "ACTIVE" ? "Active" : "Inactive"} <span style={{color: theme.palette.text.secondary}}>({member.status === "ACTIVE" ? "Expires" : "Expired"} {member.membershipExpires})</span></TableCell>
+                  <TableCell>{member.status === "ACTIVE" ? "Active" : "Inactive"} <span style={{color: theme.palette.text.secondary}}>({!member.membershipExpires ? "New Member" : (member.status === "ACTIVE" ? "Expires " : "Expired ") + member.membershipExpires})</span></TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Role</TableCell>

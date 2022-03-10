@@ -39,13 +39,16 @@ export const navSlice = createSlice({
     selectChangePassword: (state) => {
       state.selected = CHANGE_PASSWORD
     },
+    selectPayMembership: (state) => {
+      state.selected = PAY_MEMBERSHIP
+    },
     selectNone: (state) => {
       state.selected = null
     }
   },
 })
 
-export const { setTitle, selectHome, selectApplications, selectEvents, selectMembers, selectReport, selectShop, selectUser, selectPhoto, selectChangePassword, selectNone } = navSlice.actions
+export const { setTitle, selectHome, selectApplications, selectEvents, selectMembers, selectReport, selectShop, selectUser, selectPhoto, selectChangePassword, selectPayMembership, selectNone } = navSlice.actions
 
 export const HOME = "home"
 export const APPLICATIONS = "applications"
@@ -56,5 +59,6 @@ export const SHOP = "shop"
 export const USER = "user"
 export const PHOTO = "photo"
 export const CHANGE_PASSWORD = "change_password"
+export const PAY_MEMBERSHIP = "pay_membership"
 
 export default navSlice.reducer

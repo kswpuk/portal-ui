@@ -15,6 +15,7 @@ import User from './user/User';
 import ChangePassword from './user/ChangePassword';
 import { drawerWidth } from './consts';
 import UserPhoto from './user/UserPhoto';
+import PayMembership from './user/PayMembership';
 
 export default function App(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false)
@@ -41,6 +42,7 @@ export default function App(props) {
           <Route path="/user" element={<User />} />
           <Route path="/user/photo" element={<UserPhoto />} />
           <Route path="/user/password" element={<ChangePassword />} />
+          <Route path="/user/pay" element={<PayMembership />} />
 
           <Route path="/" element={<Home />} />
         </Routes>

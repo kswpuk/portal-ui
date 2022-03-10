@@ -29,7 +29,6 @@ const applicationsApi = portalApi.injectEndpoints({
         body: {accepted: accept}
       }),
     }),
-    // TODO: Also delete references at same time - second API call, or Lambda triggered from DynamoDB Stream?
     deleteApplication: builder.mutation({
       invalidatesTags: ['APPLICATION', 'APPLICATIONS'],
       query: ( membershipNumber ) => ({
