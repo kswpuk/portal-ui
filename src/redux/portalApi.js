@@ -10,7 +10,8 @@ export const portalApi = createApi({
   reducerPath: 'portalApi',
   tagTypes: [
     'APPLICATIONS', 'APPLICATION', 'REFERENCES',
-    'MEMBERS', 'MEMBER'
+    'MEMBERS', 'MEMBER',
+    'EVENTS', 'EVENT'
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,

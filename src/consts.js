@@ -33,3 +33,21 @@ export const committeeRoles = {
     "sortOrder": 5
   }
 }
+
+export const REGISTERED = "REGISTERED"
+export const ALLOCATED = "ALLOCATED"
+export const ATTENDED = "ATTENDED"
+export const NOT_ALLOCATED = "NOT_ALLOCATED"
+export const RESERVE = "RESERVE"
+export const DROPPED_OUT = "DROPPED_OUT"
+export const NO_SHOW = "NO_SHOW"
+
+export const ALLOCATION_COLOURS = {
+  REGISTERED: "#e3f2fd",
+  ALLOCATED: "#f1f8e9",
+  ATTENDED: "#f1f8e9",
+  NOT_ALLOCATED: "#eceff1",
+  RESERVE: "#fffde7",
+  DROPPED_OUT: "#ffebee",
+  NO_SHOW: "#ffebee"
+}
