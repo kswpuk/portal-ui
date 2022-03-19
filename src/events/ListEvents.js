@@ -32,7 +32,7 @@ export default function ListEvents() {
     <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '1rem' }}>
       <Tabs value={selectedTab} onChange={handleTabChange}>
         <Tab label="Current and Upcoming Events" />
-        <Tab label="Past Events" />
+        <Tab label="All Events" />
       </Tabs>
     </Box>
 

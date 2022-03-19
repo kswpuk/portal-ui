@@ -42,12 +42,12 @@ export const RESERVE = "RESERVE"
 export const DROPPED_OUT = "DROPPED_OUT"
 export const NO_SHOW = "NO_SHOW"
 
-export const ALLOCATION_COLOURS = {
-  REGISTERED: "#e3f2fd",
-  ALLOCATED: "#f1f8e9",
-  ATTENDED: "#f1f8e9",
-  NOT_ALLOCATED: "#eceff1",
-  RESERVE: "#fffde7",
-  DROPPED_OUT: "#ffebee",
-  NO_SHOW: "#ffebee"
+export const ALLOCATION_ORDERING = {
+  REGISTERED: 0,
+  ALLOCATED: 1,
+  RESERVE: 2,
+  NOT_ALLOCATED: 3,
+  DROPPED_OUT: 4,
+  ATTENDED: 5,
+  NO_SHOW: 6
 }

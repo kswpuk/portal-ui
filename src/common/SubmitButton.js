@@ -8,6 +8,6 @@ export default function SubmitButton(props){
     size={props.size || "medium"}
     variant="contained"
     type={props.onClick ? "button": "submit"}>
-      {props.submitting ? props.submittingText : (props.text || props.children)}
+      {props.submitting ? (props.submittingText || "Submitting...") : (props.text || props.children)}
     </Button>
 }

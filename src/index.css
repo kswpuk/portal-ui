@@ -11,3 +11,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.allocation_REGISTERED {
+  background-color: #e3f2fd !important;
+}
+
+.allocation_ALLOCATED, .allocation_ATTENDED {
+  background-color: #f1f8e9 !important;
+}
+
+.allocation_NOT_ALLOCATED {
+  background-color: #eceff1 !important;
+}
+
+.allocation_RESERVE {
+  background-color: #fffde7 !important;
+}
+
+.allocation_DROPPED_OUT, .allocation_NO_SHOW {
+  background-color: #ffebee !important;
+}
+
+.allocation_outline_REGISTERED {
+  border-color: #64b5f6 !important;
+}
+
+.allocation_outline_ALLOCATED, .allocation_outline_ATTENDED {
+  border-color: #aed581 !important;
+}
+
+.allocation_outline_NOT_ALLOCATED {
+  border-color: #90a4ae !important;
+}
+
+.allocation_outline_RESERVE {
+  border-color: #fff176 !important;
+}
+
+.allocation_outline_DROPPED_OUT, .allocation_outline_NO_SHOW {
+  border-color: #e57373 !important;
+}

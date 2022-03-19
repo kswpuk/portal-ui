@@ -12,7 +12,7 @@ export default function MemberPhoto(props){
     setToken(session.getAccessToken().getJwtToken())
   })
 
-  const { data: image, isLoading, error } = useFetch(baseUrl + "members/" + props.membershipNumber + "/photo", {
+  const { data: image, isLoading, error } = useFetch(baseUrl + "members/" + props.membershipNumber +  (props.thumb ? ".thumb" : "") + "/photo", {
     depends: [token],
     formatter: (response) => response.blob(),
     headers: {
@@ -35,7 +35,7 @@ export default function MemberPhoto(props){
       <CircularProgress sx={{alignSelf: 'center', margin: 'auto', mt: '1rem', mb: '1rem'}} />
     </Box>
   }else if(error || image?.type !== "image/jpeg" ){
-    return <img style={imgStyle} src={noPhoto} alt="" title="No photo" width={props.width} height={props.height} />
+    return <img style={imgStyle} src={noPhoto} alt="" title={props.title || "No photo"} width={props.width} height={props.height} />
   }
 
   if(!image)
@@ -46,5 +46,5 @@ export default function MemberPhoto(props){
   return <img 
     className="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img"
     style={imgStyle}
-    src={img} onLoad={() => URL.revokeObjectURL(img)} width={props.width} height={props.height} alt={props.alt} />
+    src={img} onLoad={() => URL.revokeObjectURL(img)} width={props.width} height={props.height} alt={props.alt} title={props.title} />
 }

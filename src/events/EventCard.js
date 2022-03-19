@@ -1,37 +1,11 @@
-import { Computer, Event, LocationOn, Person, PersonOutline } from "@mui/icons-material"
-import { Button, Card, CardActions, CardContent, Stack, Typography } from "@mui/material"
+import { Event } from "@mui/icons-material"
+import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
 import moment from "moment"
-import { ALLOCATED, ALLOCATION_COLOURS, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, NO_SHOW, REGISTERED, RESERVE } from "../consts"
+import IconText from "../common/IconText"
+import AllocationWidget from "./AllocationWidget"
+import LocationWidget from "./LocationWidget"
 
 export default function EventCard(props){
-  let allocationText = null
-
-  switch(props.event.allocation){
-    case REGISTERED:
-      allocationText = "Registered"
-      break
-    case ALLOCATED:
-      allocationText = "Allocated"
-      break
-    case ATTENDED:
-      allocationText = "Attended"
-      break
-    case NOT_ALLOCATED:
-      allocationText = "Not allocated"
-      break
-    case RESERVE:
-      allocationText = "Reserve list"
-      break
-    case DROPPED_OUT:
-      allocationText = "Dropped out"
-      break
-    case NO_SHOW:
-      allocationText = "Did not attend"
-      break
-    default:
-      allocationText = null
-  }
-
   let date = null
   const startDate = new moment(props.event.startDate)
   const endDate = new moment(props.event.endDate)
@@ -51,40 +25,21 @@ export default function EventCard(props){
     date = endDate.format("D MMMM YYYY") + " - "+ endDateFormat
   }
 
-  let location = null
-  switch(props.event.locationType){
-    case "virtual":
-      location = <>
-        <Computer />
-        {props.event.location}
-      </>
-      break
-    case "physical":
-    default:
-      location = <>
-        <LocationOn />
-        {props.event.location}, {props.event.postcode}
-      </>
-  }
-
-  return <Card sx={{backgroundColor: ALLOCATION_COLOURS[props.event.allocation]}}>
+  return <Card className={"allocation_"+props.event.allocation}>
     <CardContent>
       <Typography variant='h5' sx={{marginBottom: '1rem'}}>{props.event.name}</Typography>
-      <Typography component={Stack} direction="row" alignItems="center" gap={2} sx={{marginBottom: '0.5rem'}}>
-        <Event />
+      
+      <IconText icon={<Event />} marginBottom='0.5rem'>
         {date}
-      </Typography>
-      <Typography component={Stack} direction="row" alignItems="center" gap={2} sx={{marginBottom: '0.5rem'}}>
-        {location}
-      </Typography>
-      <Typography component={Stack} direction="row" alignItems="center" gap={2} sx={{marginBottom: '1rem'}}>
-        {allocationText == null ? <PersonOutline /> : <Person />}
-        {allocationText == null ? "Not responded" : allocationText}
-      </Typography>
+      </IconText>
+
+      <LocationWidget event={props.event} marginBottom='0.5rem' />
+      <AllocationWidget allocation={props.event.allocation} />
+
       <Typography variant="body2">{props.event.description}</Typography>
     </CardContent>
     <CardActions>
-      <Button href={"/events/" + props.event.combinedEventId}>View Details</Button>
+      <Button href={"/events/" + props.event.eventSeriesId + "/" + props.event.eventId}>View Details</Button>
     </CardActions>
   </Card>
 }
