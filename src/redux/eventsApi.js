@@ -16,9 +16,19 @@ const eventsApi = portalApi.injectEndpoints({
         url: `events/${eventSeriesId}/${eventId}/register/${membershipNumber}`,
         method: 'POST'
       }),
+    }),
+    allocateToEvent: builder.mutation({
+      invalidatesTags: ['EVENT', 'EVENTS'],
+      query: ({ eventSeriesId, eventId, allocations }) => ({
+        url: `events/${eventSeriesId}/${eventId}/allocate`,
+        method: 'PUT',
+        body: {
+          "allocations": allocations
+        }
+      }),
     })
   }),
   overrideExisting: false,
 })
 
-export const { useListEventsQuery, useGetEventQuery, useRegisterForEventMutation } = eventsApi
+export const { useListEventsQuery, useGetEventQuery, useRegisterForEventMutation, useAllocateToEventMutation } = eventsApi
