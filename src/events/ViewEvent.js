@@ -186,15 +186,14 @@ export default function ViewEvent(){
             {allocationCountText}
             
           </CardContent>
-          {event.eligibility.eligible && (now.isAfter(registrationDate) || (currentAllocation && currentAllocation !== "REGISTERED")) ? null : 
-            <CardActions>
+          {event.eligibility.eligible === true && now.isBefore(registrationDate) && (!currentAllocation || currentAllocation === "REGISTERED") ? <CardActions>
               <SubmitButton
                 submitting={isRegistering} submittingText="Updating..."
                 onClick={() => registerForEvent({eventSeriesId, eventId, membershipNumber})}>
                 { currentAllocation ? "Unregister from event" : "Register for event" }
               </SubmitButton>
             </CardActions>
-          }
+          : null }
         </Card>
       </Grid>
     </Grid>

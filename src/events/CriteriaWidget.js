@@ -5,7 +5,9 @@ export default function CriteriaWidget(props){
   const criteriaDescriptions = []
 
   const eligibilityIcon = {}
-  props.eligibility.forEach(e => eligibilityIcon[e["id"]] = e["passed"] ? <CheckCircleOutline /> : <CancelOutlined />)
+  if(props.eligibility){
+    props.eligibility.forEach(e => eligibilityIcon[e["id"]] = e["passed"] ? <CheckCircleOutline /> : <CancelOutlined />)
+  }
 
   const liWrap = (key, text) => <ListItem key={key}>
     <ListItemIcon>{eligibilityIcon[key] || <HelpOutline />}</ListItemIcon>
