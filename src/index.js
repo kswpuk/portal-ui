@@ -14,7 +14,8 @@ import { ThemeProvider } from '@mui/material';
 import { darkTheme, theme } from './theme';
 
 //TODO: Also/alternatively make this a user preference
-const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+//const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const prefersDarkMode = false;
 
 ReactDOM.render(
   <React.StrictMode>
