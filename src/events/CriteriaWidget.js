@@ -6,7 +6,7 @@ export default function CriteriaWidget(props){
 
   const eligibilityIcon = {}
   if(props.eligibility){
-    props.eligibility.forEach(e => eligibilityIcon[e["id"]] = e["passed"] ? <CheckCircleOutline /> : <CancelOutlined />)
+    props.eligibility.forEach(e => eligibilityIcon[e["id"]] = e["passed"] ? <CheckCircleOutline color="success" /> : <CancelOutlined color="error" />)
   }
 
   const liWrap = (key, text) => <ListItem key={key}>
@@ -19,9 +19,9 @@ export default function CriteriaWidget(props){
   }
 
   if((props.criteria || []).includes("under25")){
-    criteriaDescriptions.push(liWrap("under25", "You must be under 25 years old"))
+    criteriaDescriptions.push(liWrap("under25", "You must be under 25 years old at the time of the event"))
   }else if((props.criteria || []).includes("over25")){
-    criteriaDescriptions.push(liWrap("over25", "You must be at least 25 years old"))
+    criteriaDescriptions.push(liWrap("over25", "You must be at least 25 years old at the time of the event"))
   }
 
   if (criteriaDescriptions.length === 0){

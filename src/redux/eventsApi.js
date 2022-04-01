@@ -10,6 +10,21 @@ const eventsApi = portalApi.injectEndpoints({
       providesTags: ['EVENT'],
       query: ({eventSeriesId, eventId}) => `events/${eventSeriesId}/${eventId}`
     }),
+    createEvent: builder.mutation({
+      invalidatesTags: ['EVENTS'],
+      query: ( { eventSeriesId, eventId, body }) => ({
+        url: `events/${eventSeriesId}/${eventId}`,
+        method: 'POST',
+        body: body
+      })
+    }),
+    deleteEvent: builder.mutation({
+      invalidatesTags: ['EVENTS', 'EVENT'],
+      query: ( { eventSeriesId, eventId }) => ({
+        url: `events/${eventSeriesId}/${eventId}`,
+        method: 'DELETE'
+      })
+    }),
     registerForEvent: builder.mutation({
       invalidatesTags: ['EVENT', 'EVENTS'],
       query: ({ eventSeriesId, eventId, membershipNumber }) => ({
@@ -26,9 +41,24 @@ const eventsApi = portalApi.injectEndpoints({
           "allocations": allocations
         }
       }),
+    }),
+    listEventSeries: builder.query({
+      providesTags: ['EVENT_SERIES'],
+      query: () => `events/_series`
+    }),
+    getEventSeries: builder.query({
+      query: (eventSeriesId) => `events/${eventSeriesId}`
+    }),
+    createEventSeries: builder.mutation({
+      invalidatesTags: ['EVENT_SERIES'],
+      query: ( { eventSeriesId, body }) => ({
+        url: `events/${eventSeriesId}`,
+        method: 'POST',
+        body: body
+      })
     })
   }),
   overrideExisting: false,
 })
 
-export const { useListEventsQuery, useGetEventQuery, useRegisterForEventMutation, useAllocateToEventMutation } = eventsApi
+export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useDeleteEventMutation, useRegisterForEventMutation, useAllocateToEventMutation, useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation } = eventsApi

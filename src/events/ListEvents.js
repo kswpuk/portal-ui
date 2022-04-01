@@ -1,12 +1,15 @@
 import { useDispatch } from 'react-redux'
 import { setTitle } from '../redux/navSlice'
-import { Box, Grid, Tab, Tabs } from '@mui/material'
+import { Box, Fab, Grid, Tab, Tabs } from '@mui/material'
 
 import { useEffect, useState } from 'react'
 import EventCard from './EventCard'
 import { useListEventsQuery } from '../redux/eventsApi'
 import Loading from '../common/Loading'
 import Error from '../common/Error'
+import Privileged from '../common/Privileged'
+import { Add } from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 
 export default function ListEvents() {
   const dispatch = useDispatch()
@@ -42,5 +45,11 @@ export default function ListEvents() {
       </Grid>
       )}
     </Grid>
+
+    <Privileged allowed={["EVENTS"]}>
+      <Fab color="primary" sx={{ position: 'fixed', bottom: 16, right: 16 }} component={Link} to='/events/new'>
+        <Add />
+      </Fab>
+    </Privileged>
   </>
 }

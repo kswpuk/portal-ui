@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { selectEvents } from '../redux/navSlice'
 import ListEvents from './ListEvents'
+import NewEvent from './NewEvent'
 import ViewEvent from './ViewEvent'
 
 export default function Events() {
@@ -11,6 +12,7 @@ export default function Events() {
   return <>
     <Routes>
       <Route path=":eventSeriesId/:eventId" element={<ViewEvent />} />
+      <Route path="new" element={<NewEvent />} />
       <Route path="/" element={<ListEvents />} />
     </Routes>
   </>

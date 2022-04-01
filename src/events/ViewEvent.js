@@ -1,11 +1,11 @@
-import { ArrowForward, Close, CurrencyPound, EmojiEvents, Event, MoreHoriz } from "@mui/icons-material"
-import { Avatar, Box, Card, CardActions, CardContent, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Link, MenuItem, Typography } from "@mui/material"
+import { ArrowForward, Close, CurrencyPound, Delete, Edit, EmojiEvents, Event, MoreHoriz } from "@mui/icons-material"
+import { Avatar, Box, Card, CardActions, CardContent, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Link, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { Link as RouterLink, useParams } from "react-router-dom"
+import { Link as RouterLink, useNavigate, useParams } from "react-router-dom"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
-import { useGetEventQuery, useRegisterForEventMutation, useAllocateToEventMutation } from "../redux/eventsApi"
+import { useGetEventQuery, useRegisterForEventMutation, useAllocateToEventMutation, useDeleteEventMutation } from "../redux/eventsApi"
 import { setTitle } from "../redux/navSlice"
 import moment from "moment"
 import { Auth } from "aws-amplify"
@@ -19,14 +19,17 @@ import { ALLOCATED, ALLOCATION_ORDERING, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, N
 import SubmitButton from "../common/SubmitButton"
 import ButtonMenu from "../common/ButtonMenu"
 import CriteriaWidget from "./CriteriaWidget"
+import ConfirmLink from "../common/ConfirmLink"
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const { eventSeriesId, eventId } = useParams()
   const { data: event, error, isLoading, refetch } = useGetEventQuery({eventSeriesId, eventId})
   const [registerForEvent, { isLoading: isRegistering }] = useRegisterForEventMutation()
   const [allocateToEvent, {isLoading: isAllocating}] = useAllocateToEventMutation()
+  const [ deleteEvent, { isLoading: isDeleting, isSuccess: isDeleted } ] = useDeleteEventMutation()
 
   useEffect(() => {
     if(event) {
@@ -35,6 +38,12 @@ export default function ViewEvent(){
       dispatch(setTitle("View Event"))
     }
   }, [dispatch, event])
+
+  useEffect(() => {
+    if(isDeleted){
+      navigate("/events")
+    }
+  }, [navigate, isDeleted])
 
   const [membershipNumber, setMembershipNumber] = useState(null);
   Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
@@ -137,7 +146,7 @@ export default function ViewEvent(){
 
         {event.details ? <>
           <Typography variant="h6">Event Details</Typography>
-          <Typography variant="body1" gutterBottom>{event.details}</Typography>
+          <Typography variant="body1" gutterBottom sx={{whiteSpace: 'pre-wrap'}}>{event.details}</Typography>
           {event.eventUrl ? <Link href={event.eventUrl} target="_blank">More information</Link> : null }
         </> : null}
 
@@ -197,6 +206,30 @@ export default function ViewEvent(){
         </Card>
       </Grid>
     </Grid>
+
+    <Privileged allowed={["EVENTS"]}>
+      <SpeedDial
+        ariaLabel="Event Actions"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon icon={<MoreHoriz />} openIcon={<Close />} />}
+      >
+
+        <SpeedDialAction
+          icon={<Link sx={{display: "flex"}} component={RouterLink} to={"/events/"+eventSeriesId+"/"+eventId+"/edit"}><Edit /></Link>}
+          tooltipTitle="Edit"
+          tooltipOpen
+        />
+
+        <SpeedDialAction 
+          icon={<ConfirmLink sx={{display: "flex"}} title={"Delete "+(event?.name || "event")+"?"} loading={isDeleting}
+            onConfirm={() => deleteEvent({eventSeriesId, eventId})}
+            body={"Are you sure you wish to delete "+(event?.name || "this event")+"? This action is permanent, and cannot be undone."}><Delete />
+          </ConfirmLink>}
+          tooltipTitle="Delete"
+          tooltipOpen
+        />
+      </SpeedDial>
+    </Privileged>
 
     <Dialog onClose={() => setShowAllocations(false)} open={showAllocations} maxWidth="lg" fullWidth>
       <DialogTitle>
