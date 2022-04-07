@@ -18,6 +18,14 @@ const eventsApi = portalApi.injectEndpoints({
         body: body
       })
     }),
+    editEvent: builder.mutation({
+      invalidatesTags: ['EVENTS', 'EVENT'],
+      query: ( { eventSeriesId, eventId, body }) => ({
+        url: `events/${eventSeriesId}/${eventId}`,
+        method: 'PUT',
+        body: body
+      })
+    }),
     deleteEvent: builder.mutation({
       invalidatesTags: ['EVENTS', 'EVENT'],
       query: ( { eventSeriesId, eventId }) => ({
@@ -61,4 +69,4 @@ const eventsApi = portalApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useDeleteEventMutation, useRegisterForEventMutation, useAllocateToEventMutation, useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation } = eventsApi
+export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useEditEventMutation, useDeleteEventMutation, useRegisterForEventMutation, useAllocateToEventMutation, useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation } = eventsApi

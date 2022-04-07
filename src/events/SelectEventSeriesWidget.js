@@ -1,11 +1,11 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function SelectEventSeries(props){
+export default function SelectEventSeriesWidget(props){
   const sortedSeries = [...props.series]
   sortedSeries.sort((a, b) => a.name > b.name ? 1 : -1)
 
-  const [selected, setSelected] = useState(props.initialSelected || "")
+  const [selected, setSelected] = useState(props.selected || "")
   const handleChange = (event) => {
     setSelected(event.target.value);
     if (props.onChange) {
@@ -14,7 +14,7 @@ export default function SelectEventSeries(props){
   };  
 
   return <>
-    <FormControl fullWidth sx={{marginTop: '0.5rem'}}>
+    <FormControl fullWidth sx={{marginTop: '0.5rem'}} disabled={props.selected ? true : false}>
       <InputLabel id={props.id || "selectEventSeries-label"}>{props.label || "Event Series"}</InputLabel>
       <Select
         required
