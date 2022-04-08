@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { drawerWidth } from '../consts';
 import { APPLICATIONS, CHANGE_PASSWORD, EVENTS, HOME, MEMBERS, PAY_MEMBERSHIP, PHOTO, REPORT, SHOP, USER } from '../redux/navSlice';
 import { useTheme } from '@mui/material/styles';
+import Privileged from '../common/Privileged'
 
 export default function Sidebar(props) {
   const selected = useSelector((state) => state.nav.selected)
@@ -28,12 +29,14 @@ export default function Sidebar(props) {
           <ListItemText primary="Home" />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/applications" selected={selected === APPLICATIONS}>
-          <ListItemIcon>
-            <Approval />
-          </ListItemIcon>
-          <ListItemText primary="Applications" />
-        </ListItemButton>
+        <Privileged allowed={["MEMBERS"]}>
+          <ListItemButton component={Link} to="/applications" selected={selected === APPLICATIONS}>
+            <ListItemIcon>
+              <Approval />
+            </ListItemIcon>
+            <ListItemText primary="Applications" />
+          </ListItemButton>
+        </Privileged>
 
         <ListItemButton component={Link} to="/events" selected={selected === EVENTS}>
           <ListItemIcon>
@@ -49,12 +52,14 @@ export default function Sidebar(props) {
           <ListItemText primary="Members" />
         </ListItemButton>
 
-        <ListItemButton component={Link} to="/report" selected={selected === REPORT}>
-          <ListItemIcon>
-            <BarChart />
-          </ListItemIcon>
-          <ListItemText primary="Report" />
-        </ListItemButton>
+        <Privileged allows={[]}>
+          <ListItemButton component={Link} to="/report" selected={selected === REPORT}>
+            <ListItemIcon>
+              <BarChart />
+            </ListItemIcon>
+            <ListItemText primary="Report" />
+          </ListItemButton>
+        </Privileged>
 
         <ListItemButton component={Link} to="/shop" selected={selected === SHOP}>
           <ListItemIcon>

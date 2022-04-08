@@ -1,5 +1,5 @@
 import { Event } from "@mui/icons-material"
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/material"
+import { Button, Card, CardActions, CardContent, CardHeader, Typography } from "@mui/material"
 import moment from "moment"
 import IconText from "../common/IconText"
 import AllocationWidget from "./AllocationWidget"
@@ -25,16 +25,17 @@ export default function EventCard(props){
     date = endDate.format("D MMMM YYYY") + " - "+ endDateFormat
   }
 
-  return <Card className={"allocation_"+props.event.allocation}>
+  return <Card className={!props.hideAllocation ? "allocation_"+props.event.allocation : ""}>
+    {props.title ? <CardHeader title={props.title} /> : null}
     <CardContent>
-      <Typography variant='h5' sx={{marginBottom: '1rem'}}>{props.event.name}</Typography>
+      <Typography variant='h6' sx={{marginBottom: '1rem'}}>{props.event.name}</Typography>
       
       <IconText icon={<Event />} marginBottom='0.5rem'>
         {date}
       </IconText>
 
-      <LocationWidget event={props.event} marginBottom='0.5rem' />
-      <AllocationWidget allocation={props.event.allocation} />
+      <LocationWidget event={props.event} marginBottom={!props.hideAllocation ? '0.5rem' : '1rem'} />
+      {!props.hideAllocation ? <AllocationWidget allocation={props.event.allocation} /> : null }
 
       <Typography variant="body2">{props.event.description}</Typography>
     </CardContent>
