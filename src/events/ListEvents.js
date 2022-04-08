@@ -23,12 +23,22 @@ export default function ListEvents() {
     setSelectedTab(newValue);
   };
 
-  const { data: events, error, isLoading, refetch } = useListEventsQuery(selectedTab === 1)
+  const { data: events, error, isFetching, refetch } = useListEventsQuery(selectedTab === 1)
 
-  if(isLoading){
-    return <Loading />
-  }else if(error){
+  if(error){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading the list of events</Error>
+  }
+
+  let gridContent = null;
+  if(isFetching){
+    gridContent = <Loading />
+  }else{
+    gridContent = <Grid container spacing={2}>
+      {events.map(e => <Grid item key={e.combinedEventId} sm={12} md={4}>
+        <EventCard event={e} />
+      </Grid>
+      )}
+    </Grid>
   }
 
   return <>
@@ -39,12 +49,7 @@ export default function ListEvents() {
       </Tabs>
     </Box>
 
-    <Grid container spacing={2}>
-      {events.map(e => <Grid item key={e.combinedEventId} sm={12} md={4}>
-        <EventCard event={e} />
-      </Grid>
-      )}
-    </Grid>
+    {gridContent}
 
     <Privileged allowed={["EVENTS"]}>
       <Fab color="primary" sx={{ position: 'fixed', bottom: 16, right: 16 }} component={Link} to='/events/new'>
