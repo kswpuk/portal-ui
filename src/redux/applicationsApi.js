@@ -3,61 +3,61 @@ import { portalApi } from './portalApi'
 const applicationsApi = portalApi.injectEndpoints({
   endpoints: (builder) => ({
     listApplications: builder.query({
+      query: () => 'applications',
       providesTags: ['APPLICATIONS'],
-      query: () => 'applications'
     }),
     getApplication: builder.query({
-      providesTags: ['APPLICATION'],
-      query: (membershipNumber) => `applications/${membershipNumber}`
+      query: (membershipNumber) => `applications/${membershipNumber}`,
+      providesTags: (_result, _error, membershipNumber) => [{type: 'APPLICATION', id: membershipNumber}],
     }),
     getApplicationHead: builder.query({
       query: (membershipNumber) => `applications/${membershipNumber}/head`
     }),
     listReferences: builder.query({
-      providesTags: ['REFERENCES'],
-      query: (membershipNumber) => `applications/${membershipNumber}/references`
+      query: (membershipNumber) => `applications/${membershipNumber}/references`,
+      providesTags: (_result, _error, membershipNumber) => [{type: 'REFERENCES', id: membershipNumber}],
     }),
     getReference: builder.query({
-      providesTags: ['REFERENCE'],
-      query: ({membershipNumber, referenceEmail}) => `applications/${membershipNumber}/references/${referenceEmail}`
+      query: ({membershipNumber, referenceEmail}) => `applications/${membershipNumber}/references/${referenceEmail}`,
+      providesTags: (_result, _error, {membershipNumber, referenceEmail}) => [{type: 'REFERENCE', id: membershipNumber + "/" + referenceEmail}],
     }),
     acceptReference: builder.mutation({
-      invalidatesTags: ['REFERENCE', 'REFERENCES'],
       query: ( {membershipNumber, referenceEmail, accept} ) => ({
         url: `applications/${membershipNumber}/references/${referenceEmail}/accept`,
         method: 'PATCH',
         body: {accepted: accept}
       }),
+      invalidatesTags: (_result, _error, {membershipNumber, referenceEmail}) => [{type: 'REFERENCES', id: membershipNumber}, {type: 'REFERENCE', id: membershipNumber + "/" + referenceEmail}],
     }),
     deleteApplication: builder.mutation({
-      invalidatesTags: ['APPLICATION', 'APPLICATIONS'],
       query: ( membershipNumber ) => ({
         url: `applications/${membershipNumber}`,
         method: 'DELETE'
       }),
+      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'APPLICATION', id: membershipNumber}, 'APPLICATIONS'],
     }),
     approveApplication: builder.mutation({
-      invalidatesTags: ['APPLICATION', 'APPLICATIONS'],
       query: ( membershipNumber ) => ({
         url: `applications/${membershipNumber}/approve`,
         method: 'POST'
       }),
+      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'APPLICATION', id: membershipNumber}, 'APPLICATIONS', 'MEMBERS'],
     }),
     submitApplication: builder.mutation({
-      invalidatesTags: ['APPLICATIONS'],
       query: ({membershipNumber, ...application}) => ({
         url: `applications/${membershipNumber}`,
         method: 'POST',
         body: application,
       }),
+      invalidatesTags: ['APPLICATIONS'],
     }),
     submitReference: builder.mutation({
-      invalidatesTags: ['REFERENCES'],
       query: ( {membershipNumber, reference} ) => ({
         url: `applications/${membershipNumber}/references`,
         method: 'POST',
         body: reference,
       }),
+      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'REFERENCES', id: membershipNumber}],
     }),
   }),
   overrideExisting: false,

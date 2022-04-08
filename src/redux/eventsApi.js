@@ -3,45 +3,44 @@ import { portalApi } from './portalApi'
 const eventsApi = portalApi.injectEndpoints({
   endpoints: (builder) => ({
     listEvents: builder.query({
+      query: (allResults) => allResults ? 'events?all=true' : 'events',
       providesTags: ['EVENTS'],
-      query: (allResults) => allResults ? 'events?all=true' : 'events'
     }),
     getEvent: builder.query({
-      providesTags: ['EVENT'],
-      query: ({eventSeriesId, eventId}) => `events/${eventSeriesId}/${eventId}`
+      query: ({eventSeriesId, eventId}) => `events/${eventSeriesId}/${eventId}`,
+      providesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}],
     }),
     createEvent: builder.mutation({
-      invalidatesTags: ['EVENTS'],
       query: ( { eventSeriesId, eventId, body }) => ({
         url: `events/${eventSeriesId}/${eventId}`,
         method: 'POST',
         body: body
-      })
+      }),
+      invalidatesTags: ['EVENTS'],
     }),
     editEvent: builder.mutation({
-      invalidatesTags: ['EVENTS', 'EVENT'],
       query: ( { eventSeriesId, eventId, body }) => ({
         url: `events/${eventSeriesId}/${eventId}`,
         method: 'PUT',
         body: body
-      })
+      }),
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS'],
     }),
     deleteEvent: builder.mutation({
-      invalidatesTags: ['EVENTS', 'EVENT'],
       query: ( { eventSeriesId, eventId }) => ({
         url: `events/${eventSeriesId}/${eventId}`,
         method: 'DELETE'
-      })
+      }),
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS'],
     }),
     registerForEvent: builder.mutation({
-      invalidatesTags: ['EVENT', 'EVENTS'],
       query: ({ eventSeriesId, eventId, membershipNumber }) => ({
         url: `events/${eventSeriesId}/${eventId}/register/${membershipNumber}`,
         method: 'POST'
       }),
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS'],
     }),
     allocateToEvent: builder.mutation({
-      invalidatesTags: ['EVENT', 'EVENTS'],
       query: ({ eventSeriesId, eventId, allocations }) => ({
         url: `events/${eventSeriesId}/${eventId}/allocate`,
         method: 'PUT',
@@ -49,21 +48,23 @@ const eventsApi = portalApi.injectEndpoints({
           "allocations": allocations
         }
       }),
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS'],
     }),
     listEventSeries: builder.query({
-      providesTags: ['EVENT_SERIES'],
-      query: () => `events/_series`
+      query: () => `events/_series`,
+      providesTags: ['ALL_EVENT_SERIES'],
     }),
     getEventSeries: builder.query({
-      query: (eventSeriesId) => `events/${eventSeriesId}`
+      query: (eventSeriesId) => `events/${eventSeriesId}`,
+      providesTags: (_result, _error, eventSeriesId) => [{type: 'EVENT_SERIES', id: eventSeriesId}],
     }),
     createEventSeries: builder.mutation({
-      invalidatesTags: ['EVENT_SERIES'],
       query: ( { eventSeriesId, body }) => ({
         url: `events/${eventSeriesId}`,
         method: 'POST',
         body: body
-      })
+      }),
+      invalidatesTags: ['ALL_EVENT_SERIES'],
     })
   }),
   overrideExisting: false,

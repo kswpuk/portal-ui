@@ -9,9 +9,9 @@ export const error = (message) => ({error: {message: message}})
 export const portalApi = createApi({
   reducerPath: 'portalApi',
   tagTypes: [
-    'APPLICATIONS', 'APPLICATION', 'REFERENCES',
+    'APPLICATIONS', 'APPLICATION', 'REFERENCES', 'REFERENCE',
     'MEMBERS', 'MEMBER',
-    'EVENTS', 'EVENT'
+    'EVENTS', 'EVENT', 'ALL_EVENT_SERIES', 'EVENT_SERIES'
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
