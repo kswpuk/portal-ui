@@ -1,5 +1,5 @@
 import { ArrowForward, Close, CurrencyPound, Delete, Edit, EmojiEvents, Event, MoreHoriz } from "@mui/icons-material"
-import { Avatar, Box, Card, CardActions, CardContent, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, Link, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardActions, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, Link, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom"
@@ -20,6 +20,7 @@ import SubmitButton from "../common/SubmitButton"
 import ButtonMenu from "../common/ButtonMenu"
 import CriteriaWidget from "./CriteriaWidget"
 import ConfirmLink from "../common/ConfirmLink"
+import AddAllocationDialog from "./AddAllocationDialog"
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -49,6 +50,7 @@ export default function ViewEvent(){
   Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
 
   const [showAllocations, setShowAllocations] = useState(false);
+  const [showAddAllocation, setShowAddAllocation] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
 
   
@@ -271,22 +273,29 @@ export default function ViewEvent(){
           }}
           selectionModel={selectionModel}
         />
-        <Privileged allowed={["EVENTS"]}>
-          <Box sx={{mt: '1rem'}}>
-            <ButtonMenu buttonText="Update Allocations" disabled={selectionModel.length === 0 || isAllocating}>
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}]})}>Registered</MenuItem>
-              <Divider />
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ALLOCATED, "membershipNumbers": selectionModel}]})}>Allocated</MenuItem>
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": RESERVE, "membershipNumbers": selectionModel}]})}>Reserve</MenuItem>
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NOT_ALLOCATED, "membershipNumbers": selectionModel}]})}>Not Allocated</MenuItem>
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": DROPPED_OUT, "membershipNumbers": selectionModel}]})}>Dropped Out</MenuItem>
-              <Divider />
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ATTENDED, "membershipNumbers": selectionModel}]})}>Attended</MenuItem>
-              <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NO_SHOW, "membershipNumbers": selectionModel}]})}>No Show</MenuItem>
-            </ButtonMenu>
-          </Box>
-        </Privileged>
       </DialogContent>
+      <Privileged allowed={["EVENTS"]}>
+
+        <DialogActions>
+          <Button onClick={() => setShowAddAllocation(true)}>Add Allocation</Button>
+
+          <ButtonMenu buttonText="Update Allocations" disabled={selectionModel.length === 0 || isAllocating}>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}]})}>Registered</MenuItem>
+            <Divider />
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ALLOCATED, "membershipNumbers": selectionModel}]})}>Allocated</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": RESERVE, "membershipNumbers": selectionModel}]})}>Reserve</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NOT_ALLOCATED, "membershipNumbers": selectionModel}]})}>Not Allocated</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": DROPPED_OUT, "membershipNumbers": selectionModel}]})}>Dropped Out</MenuItem>
+            <Divider />
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ATTENDED, "membershipNumbers": selectionModel}]})}>Attended</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NO_SHOW, "membershipNumbers": selectionModel}]})}>No Show</MenuItem>
+          </ButtonMenu>
+        </DialogActions>
+      </Privileged>
     </Dialog>
+
+    <Privileged allowed={["EVENTS"]}>
+      <AddAllocationDialog show={showAddAllocation} onClose={() => setShowAddAllocation(false)} eventId={eventId} eventSeriesId={eventSeriesId} />
+    </Privileged>
   </>
 }
