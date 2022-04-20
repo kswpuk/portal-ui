@@ -16,7 +16,7 @@ const membersApi = portalApi.injectEndpoints({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
+      invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
     }),
     deleteMember: builder.mutation({
       query: ( membershipNumber ) => ({

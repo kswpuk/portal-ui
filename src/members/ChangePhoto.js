@@ -41,6 +41,8 @@ export default function ChangePhoto(props) {
     reader.readAsDataURL(photo[0]);
   }
 
+  console.log(photo)
+
   return <>
     {error ? <Error error={error} gutterBottom /> : null}
     <Grid container spacing={3}>
@@ -59,7 +61,7 @@ export default function ChangePhoto(props) {
             dropzoneText="Drag and drop a photo here or click (3 MB limit)"
             onChange={(file) => setPhoto(file)}
           />
-          <Button disabled={isLoading} variant="contained" sx={{mt: '1rem'}} onClick={onChangePhoto}>Update Photo</Button>
+          <Button disabled={isLoading || photo.length === 0} variant="contained" sx={{mt: '1rem'}} onClick={onChangePhoto}>Update Photo</Button>
       </Grid>
     </Grid>
   </>

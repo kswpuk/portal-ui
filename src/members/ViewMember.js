@@ -86,7 +86,7 @@ export default function ViewMember() {
                 </TableRow>
                 { member.preferredName ? <TableRow>
                   <TableCell>Preferred Name</TableCell>
-                  <TableCell>{member.preferred}</TableCell>
+                  <TableCell>{member.preferredName}</TableCell>
                 </TableRow> : null}
                 <TableRow>
                   <TableCell>Surname</TableCell>

@@ -29,11 +29,16 @@ export default function PayMembership() {
   }else if(error) {
     return <Error error={error} onRetry={refetch}>Unable to get your details</Error>
   }else{
-    const expiryDate = new Date(member.membershipExpires);
+    const expiryDate = new Date(member.membershipExpires || 0);
     const prePaymentDate = new Date(expiryDate.getTime() - 30*24*60*60*1000);
     const prePaymentDateIso = prePaymentDate.toISOString().slice(0, 10)
 
     const now = new Date()
+
+    let expiryDateEl = "Unknown"
+    if(member.membershipExpires){
+      expiryDateEl = <strong><time dateTime={member.membershipExpires}>{member.membershipExpires}</time></strong>
+    }
 
     let text = null
     let showPay = true
@@ -42,13 +47,13 @@ export default function PayMembership() {
       text = <>
         <Typography variant="body1">Thank you, you're already up to date with your membership payment for this year.</Typography>
         <Typography variant="body1">
-          Your current membership will expire on <strong><time dateTime={member.membershipExpires}>{member.membershipExpires}</time></strong>.
+          Your current membership will expire on {expiryDateEl}.
           You will be able to renew your membership up to 30 days before it expires, on <time dateTime={prePaymentDateIso}>{prePaymentDateIso}</time>.
         </Typography>
       </>
     }else if(member.status === "ACTIVE"){
       text = <>
-        <Typography variant="body1">Your membership will expire on <strong><time dateTime={member.membershipExpires}>{member.membershipExpires}</time></strong>.</Typography>
+        <Typography variant="body1">Your membership will expire on {expiryDateEl}.</Typography>
         <Typography variant="body1">
           You can choose to pay your membership fee of &pound;5.00 now, or wait until it expires.
           Paying your membership now will extend your current expiry date by 1 year, so you will not lose out by paying early.
@@ -58,7 +63,7 @@ export default function PayMembership() {
     }else{
       text = <>
         <Typography variant="body1">
-          Your membership expired on <strong><time dateTime={member.membershipExpires}>{member.membershipExpires}</time></strong>, and payment of &pound;5.00 is now due.
+          Your membership expired on {expiryDateEl}, and payment of &pound;5.00 is now due.
           You will not be eligible to register for or attend any QSWP events until membership has been paid.
         </Typography>
       </>

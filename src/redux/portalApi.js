@@ -16,11 +16,16 @@ export const portalApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
     prepareHeaders: async (headers) => {
-      const token = (await Auth.currentSession()).getAccessToken().getJwtToken()
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
+      try{
+        const token = (await Auth.currentSession()).getAccessToken().getJwtToken()
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`)
+        }
+      }catch(error){
+        // Do nothing
+      }finally{
+        return headers
       }
-      return headers
     }
   }),
   endpoints: () => ({}),

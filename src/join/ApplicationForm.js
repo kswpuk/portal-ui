@@ -116,7 +116,7 @@ export default function ApplicationForm(){
           </Typography>
 
           <TextField variant="outlined" label="Month you received your Queen's Scout Award"
-                error={errors.qsaReceived != null} helperText={errors.qsaReceived ? "This field is required" : null}
+                error={errors.qsaReceived != null} helperText={errors.qsaReceived ? "This field is required (YYYY-MM)" : null}
                 required fullWidth type="month"
                 InputLabelProps={{ shrink: true }} 
               {...register("qsaReceived")} />
