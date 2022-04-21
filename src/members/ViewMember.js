@@ -29,7 +29,7 @@ export default function ViewMember() {
   const [ deleteMember, { isLoading: isDeleting, isSuccess: isDeleted } ] = useDeleteMemberMutation()
 
   useEffect(() => {
-    if(member) {
+    if(member && member.membershipNumber) {
       dispatch(setTitle((member.preferredName || member.firstName) + " " + member.surname + " (" + membershipNumber + ")"))
     }else{
       dispatch(setTitle(membershipNumber))
@@ -46,6 +46,8 @@ export default function ViewMember() {
     return <Loading />
   }else if(error){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading details of member {membershipNumber}</Error>
+  }else if(member && !member.membershipNumber){
+    return <Error>Member {membershipNumber} does not exist</Error>
   }
 
   //TODO: Allocations (Separate Tab?)
