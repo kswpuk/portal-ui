@@ -117,6 +117,13 @@ export default function EventForm(props){
           </Grid>
         </Box>
 
+        <TextField variant="outlined" label="Event URL"
+          defaultValue={props.event?.eventUrl}
+          error={errors.eventUrl != null} helperText={errors.eventUrl ? "This field must be a valid URL" : null}
+          fullWidth placeholder="http://www.example.com"
+          InputLabelProps={{ shrink: true }} 
+          {...register("eventUrl", {pattern: /https?:\/\/([-\w-])+\.{1}([a-zA-Z]{2,63})([/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g})} />
+
         <Typography variant='h6' gutterBottom>Location</Typography>
 
         <FormControl fullWidth>

@@ -149,7 +149,7 @@ export default function ViewEvent(){
         {event.details ? <>
           <Typography variant="h6">Event Details</Typography>
           <Typography variant="body1" gutterBottom sx={{whiteSpace: 'pre-wrap'}}>{event.details}</Typography>
-          {event.eventUrl ? <Link href={event.eventUrl} target="_blank">More information</Link> : null }
+          {event.eventUrl ? <Typography variant="body1" gutterBottom><Link href={event.eventUrl} target="_blank">More information</Link></Typography> : null }
         </> : null}
 
         <Typography variant="h6">Allocation Criteria</Typography>
