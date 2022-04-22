@@ -1,5 +1,5 @@
 export const drawerWidth = 240;
-export const baseUrl = "https://b4dfslkqae.execute-api.eu-west-2.amazonaws.com/portal-dev/"
+export const baseUrl = "https://ou5s8vz427.execute-api.eu-west-2.amazonaws.com/portal-dev/"
 
 export const committeeRoles = {
   "MANAGER": {

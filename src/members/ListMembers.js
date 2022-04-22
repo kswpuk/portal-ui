@@ -5,7 +5,7 @@ import { useListMembersQuery } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom'
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, Typography } from '@mui/material'
 import Privileged from '../common/Privileged'
 import {committeeRoles} from '../consts'
 import { Email } from '@mui/icons-material'
@@ -40,10 +40,10 @@ export default function ListMembers() {
 
       {committee.map(x => <Grid key={"committee_"+x.membershipNumber} item>
         <Card variant="outlined">
-          <CardMedia component={() => 
+          <CardMedia component={() => <Box height={250} width={250}>
             <MemberPhoto membershipNumber={x.membershipNumber}
               width={250} height={250}
-              alt={(x.preferredName || x.firstName) + " " + x.surname} />}
+              alt={(x.preferredName || x.firstName) + " " + x.surname} /></Box>}
             />
 
           <CardContent>
