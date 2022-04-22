@@ -10,6 +10,10 @@ const membersApi = portalApi.injectEndpoints({
       query: (membershipNumber) => `members/${membershipNumber}`,
       providesTags: (_result, _error, membershipNumber) => [{type: 'MEMBER', id: membershipNumber}],
     }),
+    getMemberAllocations: builder.query({
+      query: (membershipNumber) => `members/${membershipNumber}/allocations`,
+      providesTags: (_result, _error, membershipNumber) => [{type: 'MEMBER_ALLOCATIONS', id: membershipNumber}],
+    }),
     updateMember: builder.mutation({
       query: ({ membershipNumber, ...body }) => ({
         url: `members/${membershipNumber}`,
@@ -44,4 +48,4 @@ const membersApi = portalApi.injectEndpoints({
   overrideExisting: false,
 })
 
-export const { useListMembersQuery, useGetMemberQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation } = membersApi
+export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation } = membersApi

@@ -21,6 +21,7 @@ import ButtonMenu from "../common/ButtonMenu"
 import CriteriaWidget from "./CriteriaWidget"
 import ConfirmLink from "../common/ConfirmLink"
 import AddAllocationDialog from "./AddAllocationDialog"
+import DateWidget from "../common/DateWidget"
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -71,8 +72,6 @@ export default function ViewEvent(){
   registrationDate.set('hour', 23)
   registrationDate.set('minute', 59)
   registrationDate.set('second', 59)
-  const startDate = new moment(event.startDate)
-  const endDate = new moment(event.endDate)
 
   // Event payee
 
@@ -156,8 +155,8 @@ export default function ViewEvent(){
         <Typography variant="body1" gutterBottom>
           {spaces}
           {now.isBefore(registrationDate) ?
-            <> You must sign up by <strong><time dateTime={registrationDate.format("YYYY-MM-DD")}>{registrationDate.format("D MMMM YYYY")}</time></strong> if you wish to attend.</> :
-            <> The deadline for signing up for this event was <strong><time dateTime={registrationDate.format("YYYY-MM-DD")}>{registrationDate.format("D MMMM YYYY")}</time></strong>.</>
+            <> You must sign up by <strong><DateWidget date={event.registerForEvent} dateOnly /></strong> if you wish to attend.</> :
+            <> The deadline for signing up for this event was <strong><DateWidget date={event.registerForEvent} dateOnly /></strong>.</>
           }
         </Typography>
         
@@ -171,10 +170,10 @@ export default function ViewEvent(){
           <CardContent>
             <Typography variant="h6" gutterBottom>Essentials</Typography>
             <IconText icon={<Event />} marginBottom='0.5rem'>
-              <time dateTime={startDate.format("YYYY-MM-DD HH:mm:ss")}>{startDate.format("HH:mm, D MMMM YYYY")}</time>
+              <DateWidget date={event.startDate} />
             </IconText>
             <IconText icon={<ArrowForward color="disabled" />} marginBottom='1.5rem'>
-              <time dateTime={endDate.format("YYYY-MM-DD HH:mm:ss")}>{endDate.format("HH:mm, D MMMM YYYY")}</time>
+              <DateWidget date={event.endDate} />
             </IconText>
 
             <LocationWidget event={event} marginBottom='1.5rem' />
