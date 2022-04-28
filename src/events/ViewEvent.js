@@ -128,6 +128,10 @@ export default function ViewEvent(){
     </Box>
 
     event.allocations.forEach(a => allocationCountByType[a.allocation] = (allocationCountByType[a.allocation] || 0) + 1)
+  }else{
+    allocations = <Privileged allowed={["EVENTS"]}>
+      <Button onClick={() => setShowAllocations(true)}>Manage Allocations</Button>
+    </Privileged>
   }
   
   const listJoin = (arr, s1, s2) => arr.slice(0,-1).join(s1).concat(arr.length > 1 ? s2 : '', arr.slice(-1));
@@ -183,7 +187,7 @@ export default function ViewEvent(){
             </IconText> : null }
 
             {event.cost > 0 ?  <IconText icon={<CurrencyPound />} marginBottom='1.5rem'>
-              <strong>&pound;{event.cost.toFixed(2)}</strong>, payable to {eventPayee}.
+              <span><strong>&pound;{event.cost.toFixed(2)}</strong>, payable to {eventPayee}.</span>
             </IconText> : null}
           </CardContent>
         </Card>

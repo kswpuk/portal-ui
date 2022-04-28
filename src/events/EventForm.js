@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useListEventSeriesQuery } from "../redux/eventsApi";
@@ -12,10 +12,12 @@ export default function EventForm(props){
   const { register, watch, handleSubmit, formState: { errors } } = useForm();
 
   const startDateWatch = watch("startDate")
+  const costWatch = watch("cost")
 
   const [eventSeriesId, setEventSeriesId] = useState(props.eventSeriesId)
   const [eventId, setEventId] = useState(props.eventId)
-  const [locationType, setLocationType] = useState(props.event?.locationType || "physical")  
+  const [payee, setPayee] = useState(props.event?.payee || "_qswp")
+  const [locationType, setLocationType] = useState(props.event?.locationType || "physical")
   const [salt, setSalt] = useState("qsa")
 
   const { data: series, isLoading: seriesLoading, error: seriesError, refetch: seriesRefetch } = useListEventSeriesQuery()
@@ -33,6 +35,10 @@ export default function EventForm(props){
     setEventId(startDateWatch?.substring(0, 10) + "-" + salt);
   }, [setEventId, startDateWatch, salt])
 
+  const handlePayeeChange = (event) => {
+    setPayee(event.target.value);
+  };
+
   const handleLocationTypeChange = (event) => {
     setLocationType(event.target.value);
   };
@@ -42,6 +48,7 @@ export default function EventForm(props){
       body: {
         ...data,
         locationType,
+        payee,
         attendanceCriteria: Object.values(data["attendanceCriteria"]).filter(v => v)
       } })
   }
@@ -123,6 +130,32 @@ export default function EventForm(props){
           fullWidth placeholder="http://www.example.com"
           InputLabelProps={{ shrink: true }} 
           {...register("eventUrl", {pattern: /https?:\/\/([-\w-])+\.{1}([a-zA-Z]{2,63})([/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g})} />
+        
+        <Box sx={{flexGrow: 1}}>
+          <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <TextField variant="outlined" label="Cost"
+                defaultValue={props.event?.cost || "0.00"}
+                error={errors.cost != null} helperText={errors.cost ? "A valid number is required" : null}
+                required fullWidth
+                startAdornment={<InputAdornment position="start">&pound;</InputAdornment>}
+                InputLabelProps={{ shrink: true }} 
+                {...register("cost", {required: true, pattern: /(0|[1-9][0-9]*)(\.[0-9]{2})?/})} />
+            </Grid>
+            <Grid item xs={8}>
+            <FormControl fullWidth>
+              <InputLabel id="selectPayee-label">Payable to</InputLabel>
+              <Select
+                required disabled={costWatch === "" || parseFloat(costWatch) === 0}
+                labelId="selectPayee-label" label="Payable to"
+                value={payee} onChange={handlePayeeChange}>
+                  <MenuItem value="_organiser">Event Organiser</MenuItem>
+                  <MenuItem value="_qswp">QSWP</MenuItem>
+              </Select>
+            </FormControl>
+            </Grid>
+          </Grid>
+        </Box>
 
         <Typography variant='h6' gutterBottom>Location</Typography>
 

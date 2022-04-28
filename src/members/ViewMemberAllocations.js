@@ -30,6 +30,9 @@ export default function ViewMemberAllocations(props) {
           <TableCell><AllocationWidget allocation={a.allocation} marginBottom="0rem" textOnly /></TableCell>
         </TableRow>
       )}
+      {allocations.length === 0 ? <TableRow>
+        <TableCell colSpan={2}>No allocations yet. You can sign up for events via the <MUILink component={Link} to="/events/">Events</MUILink> page.</TableCell>
+      </TableRow> : null}
     </TableBody>
   </Table>
 }
