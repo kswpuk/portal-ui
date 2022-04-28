@@ -22,6 +22,8 @@ import CriteriaWidget from "./CriteriaWidget"
 import ConfirmLink from "../common/ConfirmLink"
 import AddAllocationDialog from "./AddAllocationDialog"
 import DateWidget from "../common/DateWidget"
+import ReactMarkdown from 'react-markdown'
+import { grey } from '@mui/material/colors';
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -142,16 +144,14 @@ export default function ViewEvent(){
       {event.allocations.map(a => <Avatar key={a.membershipNumber} className={"allocation_outline_"+a.allocation} sx={{margin: 0.5, borderWidth: '2px', borderStyle: 'solid', height: '48px', width: '48px'}}>
         <MemberPhoto membershipNumber={a.membershipNumber} thumb title={(a.preferredName || a.firstName) ? `${a.preferredName || a.firstName} ${a.surname}` : a.membershipNumber}/>
       </Avatar>)}
-      <IconButton onClick={() => setShowAllocations(true)}>
-        <MoreHoriz />
-      </IconButton>
+      <Avatar sx={{margin: 0.5, backgroundColor: grey[300], height: '48px', width: '48px'}}>
+        <IconButton onClick={() => setShowAllocations(true)}>
+          <MoreHoriz />
+        </IconButton>
+      </Avatar>
     </Box>
 
     event.allocations.forEach(a => allocationCountByType[a.allocation] = (allocationCountByType[a.allocation] || 0) + 1)
-  }else{
-    allocations = <Privileged allowed={["EVENTS"]}>
-      <Button onClick={() => setShowAllocations(true)}>Manage Allocations</Button>
-    </Privileged>
   }
   
   const listJoin = (arr, s1, s2) => arr.slice(0,-1).join(s1).concat(arr.length > 1 ? s2 : '', arr.slice(-1));
@@ -171,11 +171,11 @@ export default function ViewEvent(){
 
         {event.details ? <>
           <Typography variant="h6">Event Details</Typography>
-          <Typography variant="body1" gutterBottom sx={{whiteSpace: 'pre-wrap'}}>{event.details}</Typography>
+          <ReactMarkdown components={{h1 : 'strong', h2: 'strong', h3: 'strong', h4: 'strong', h5: 'strong', h6: 'strong', p: ({node, ...props}) => <Typography gutterBottom variant="body1" {...props} />}}>{event.details}</ReactMarkdown>
           {event.eventUrl ? <Typography variant="body1" gutterBottom><Link href={event.eventUrl} target="_blank">More information</Link></Typography> : null }
         </> : null}
 
-        <Typography variant="h6">Allocation Criteria</Typography>
+        <Typography variant="h6" sx={{marginTop: '1.5rem'}}>Allocation Criteria</Typography>
         <Typography variant="body1" gutterBottom>
           {spaces}
           {now.isBefore(registrationDate) ?
@@ -220,14 +220,17 @@ export default function ViewEvent(){
             {allocationCountText}
             
           </CardContent>
-          {event.eligibility.eligible === true && now.isBefore(registrationDate) && (!currentAllocation || currentAllocation === "REGISTERED") ? <CardActions>
-              <SubmitButton
+          <CardActions>
+            {event.eligibility.eligible === true && now.isBefore(registrationDate) && (!currentAllocation || currentAllocation === "REGISTERED") ? <SubmitButton
                 submitting={isRegistering} submittingText="Updating..."
                 onClick={() => registerForEvent({eventSeriesId, eventId, membershipNumber})}>
                 { currentAllocation ? "Unregister from event" : "Register for event" }
-              </SubmitButton>
-            </CardActions>
-          : null }
+              </SubmitButton> : null }
+          
+            {event.allocations && event.allocations.length === 0 ? <Privileged allowed={["EVENTS"]}>
+              <Button onClick={() => setShowAllocations(true)}>Manage Allocations</Button>
+            </Privileged> : null}
+          </CardActions>
         </Card>
       </Grid>
     </Grid>

@@ -22,6 +22,7 @@
     "react-fetch-hook": "^1.8.5",
     "react-helmet-async": "^1.2.2",
     "react-hook-form": "^7.27.0",
+    "react-markdown": "^8.0.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
