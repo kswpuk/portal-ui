@@ -49,8 +49,16 @@ const membersApi = portalApi.injectEndpoints({
       }),
       // Doesn't invalidate tags because we don't cache photos via RTK
     }),
+    setNeckerReceived: builder.mutation({
+      query: ( {membershipNumber, received} ) => ({
+        url: `members/${membershipNumber}/necker`,
+        method: 'PATCH',
+        body: {receivedNecker: received}
+      }),
+      invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation } = membersApi
+export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation } = membersApi

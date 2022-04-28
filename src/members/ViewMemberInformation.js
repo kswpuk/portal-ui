@@ -1,13 +1,16 @@
-import { Box, Stack, Table, TableBody, TableCell, TableRow, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Switch, Table, TableBody, TableCell, TableRow, Typography, useTheme } from "@mui/material";
 import DateOfBirth from "../common/DateOfBirth";
 import EmailLink from "../common/EmailLink";
 import PostcodeLink from "../common/PostcodeLink";
 import TelephoneLink from "../common/TelephoneLink";
 import styles from './ViewMember.module.css'
 import { committeeRoles } from '../consts'
+import { useSetNeckerReceivedMutation } from "../redux/membersApi";
 
 export default function ViewMemberInformation({member}) {
   const theme = useTheme();
+
+  const [setNeckerReceived] = useSetNeckerReceivedMutation()
 
   return <Stack spacing={3}>
     <Box>
@@ -102,10 +105,10 @@ export default function ViewMemberInformation({member}) {
             <TableCell>Join Date</TableCell>
             <TableCell>{member.joinDate}</TableCell>
           </TableRow>
-          {member.receivedNecker !== undefined ? <TableRow>
+          <TableRow>
             <TableCell>Received Necker</TableCell>
-            <TableCell>{member.receivedNecker ? "Yes" : "No"}</TableCell>
-          </TableRow> : null }
+            <TableCell><Switch checked={member.receivedNecker === true} onChange={() => setNeckerReceived({membershipNumber: member.membershipNumber, received: !member.receivedNecker})} size="small" /></TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </Box>
