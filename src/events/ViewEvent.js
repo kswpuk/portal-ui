@@ -124,6 +124,27 @@ export default function ViewEvent(){
 
   // Allocations
 
+  const allocationToOrder = (alloc) =>{
+    switch(alloc){
+      case ATTENDED:
+        return 0;
+      case ALLOCATED:
+        return 1;
+      case RESERVE:
+        return 2;
+      case REGISTERED:
+        return 3;
+      case NOT_ALLOCATED:
+        return 4;
+      case NO_SHOW:
+        return 5;
+      case DROPPED_OUT:
+        return 6;
+      default:
+        return 10;
+    }
+  }
+
   const allocationColumns=[
     {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
@@ -140,8 +161,12 @@ export default function ViewEvent(){
   let allocations = null
   const allocationCountByType = {};
   if(event.allocations && event.allocations.length > 0){
+    const sortedAllocations = [...event.allocations].sort((a, b) => a.surname - b.surname)
+    sortedAllocations.sort((a, b) => (a.preferredName || a.firstName) - (b.preferredName || b.firstName))
+    sortedAllocations.sort((a, b) => allocationToOrder(a.allocation) - allocationToOrder(b.allocation))
+
     allocations = <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: 1}}>
-      {event.allocations.map(a => <Avatar key={a.membershipNumber} className={"allocation_outline_"+a.allocation} sx={{margin: 0.5, borderWidth: '2px', borderStyle: 'solid', height: '48px', width: '48px'}}>
+      {sortedAllocations.map(a => <Avatar key={a.membershipNumber} className={"allocation_outline_"+a.allocation} sx={{margin: 0.5, borderWidth: '2px', borderStyle: 'solid', height: '48px', width: '48px'}}>
         <MemberPhoto membershipNumber={a.membershipNumber} thumb title={(a.preferredName || a.firstName) ? `${a.preferredName || a.firstName} ${a.surname}` : a.membershipNumber}/>
       </Avatar>)}
       <Avatar sx={{margin: 0.5, backgroundColor: grey[300], height: '48px', width: '48px'}}>

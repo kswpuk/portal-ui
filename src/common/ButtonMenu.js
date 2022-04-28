@@ -23,8 +23,9 @@ export default function ButtonMenu(props){
       open={open}
       onClose={handleClose}
     >
-      {props.children.map(el => {
+      {props.children.map((el, idx) => {
         return React.cloneElement(el, {
+          key: idx,
           onClick: el.props.onClick ? (() => {el.props.onClick(); handleClose()}) : null
         })
       })}
