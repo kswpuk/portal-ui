@@ -54,14 +54,21 @@ export default function ViewEvent(){
   const [showAddAllocation, setShowAddAllocation] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
 
-  
+  const [committee, setCommittee] = useState(false);
+  const [eventsCoord, setEventsCoord] = useState(false);
+
+  Auth.currentAuthenticatedUser().then(user => {
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
+    setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
+  })
+
   if(isLoading || membershipNumber === null){
     return <Loading />
   }else if(error){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading this event</Error>
   }
 
-  // TODO: Menu for edit event, delete event
   // TODO: Descriptive text for weightings
   // TODO: Map?
 
@@ -114,6 +121,19 @@ export default function ViewEvent(){
   }
 
   // Allocations
+
+  const allocationColumns=[
+    {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+      renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
+    {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
+    {field: "surname", headerName: "Surname", flex: 2, hideable: false},
+    {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
+      renderCell: params => <AllocationWidget textOnly allocation={params.value} />}
+  ]
+  if(committee){
+    allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1, hideable: false,
+      renderCell: params => params.value ? "Yes" : "No"})
+  }
 
   let allocations = null
   const allocationCountByType = {};
@@ -260,17 +280,10 @@ export default function ViewEvent(){
           sorting: {
             sortModel: [{ field: "surname", sort: "asc"}]
           }
-          }} columns={[
-            {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
-              renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
-            {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
-            {field: "surname", headerName: "Surname", flex: 2, hideable: false},
-            {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
-              renderCell: params => <AllocationWidget textOnly allocation={params.value} />}
-          ]} rows={event.allocations}
+          }} columns={allocationColumns} rows={event.allocations}
           getRowId={(row) => row.membershipNumber}
           getRowClassName={(params) => `allocation_${params.row.allocation}`}
-          checkboxSelection={true}
+          checkboxSelection={eventsCoord}
           onSelectionModelChange={(newSelectionModel) => {
             setSelectionModel(newSelectionModel);
           }}

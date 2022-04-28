@@ -102,6 +102,10 @@ export default function ViewMemberInformation({member}) {
             <TableCell>Join Date</TableCell>
             <TableCell>{member.joinDate}</TableCell>
           </TableRow>
+          {member.receivedNecker !== undefined ? <TableRow>
+            <TableCell>Received Necker</TableCell>
+            <TableCell>{member.receivedNecker ? "Yes" : "No"}</TableCell>
+          </TableRow> : null }
         </TableBody>
       </Table>
     </Box>
