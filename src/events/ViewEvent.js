@@ -1,11 +1,11 @@
 import { ArrowForward, Close, CurrencyPound, Delete, Edit, EmojiEvents, Event, MoreHoriz } from "@mui/icons-material"
-import { Avatar, Box, Button, Card, CardActions, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, Link, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, IconButton, Link, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
-import { useGetEventQuery, useRegisterForEventMutation, useAllocateToEventMutation, useDeleteEventMutation } from "../redux/eventsApi"
+import { useGetEventQuery, useRegisterForEventMutation, useDeleteEventMutation } from "../redux/eventsApi"
 import { setTitle } from "../redux/navSlice"
 import moment from "moment"
 import { Auth } from "aws-amplify"
@@ -13,17 +13,15 @@ import AllocationWidget, {getAllocationText} from "./AllocationWidget"
 import IconText from "../common/IconText"
 import LocationWidget from "./LocationWidget"
 import MemberPhoto from "../common/MemberPhoto"
-import { DataGrid } from "@mui/x-data-grid"
 import Privileged from "../common/Privileged"
 import { ALLOCATED, ALLOCATION_ORDERING, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, NO_SHOW, REGISTERED, RESERVE } from "../consts"
 import SubmitButton from "../common/SubmitButton"
-import ButtonMenu from "../common/ButtonMenu"
 import CriteriaWidget from "./CriteriaWidget"
 import ConfirmLink from "../common/ConfirmLink"
-import AddAllocationDialog from "./AddAllocationDialog"
 import DateWidget from "../common/DateWidget"
 import ReactMarkdown from 'react-markdown'
 import { grey } from '@mui/material/colors';
+import ViewAllocationsDialog from "./ViewAllocationsDialog"
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -32,7 +30,6 @@ export default function ViewEvent(){
   const { eventSeriesId, eventId } = useParams()
   const { data: event, error, isLoading, refetch } = useGetEventQuery({eventSeriesId, eventId})
   const [registerForEvent, { isLoading: isRegistering }] = useRegisterForEventMutation()
-  const [allocateToEvent, {isLoading: isAllocating}] = useAllocateToEventMutation()
   const [ deleteEvent, { isLoading: isDeleting, isSuccess: isDeleted } ] = useDeleteEventMutation()
 
   useEffect(() => {
@@ -53,17 +50,6 @@ export default function ViewEvent(){
   Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
 
   const [showAllocations, setShowAllocations] = useState(false);
-  const [showAddAllocation, setShowAddAllocation] = useState(false);
-  const [selectionModel, setSelectionModel] = useState([]);
-
-  const [committee, setCommittee] = useState(false);
-  const [eventsCoord, setEventsCoord] = useState(false);
-
-  Auth.currentAuthenticatedUser().then(user => {
-    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-    setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
-    setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
-  })
 
   if(isLoading || membershipNumber === null){
     return <Loading />
@@ -145,24 +131,11 @@ export default function ViewEvent(){
     }
   }
 
-  const allocationColumns=[
-    {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
-      renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
-    {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
-    {field: "surname", headerName: "Surname", flex: 2, hideable: false},
-    {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
-      renderCell: params => <AllocationWidget textOnly allocation={params.value} />}
-  ]
-  if(committee){
-    allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1, hideable: false,
-      renderCell: params => params.value ? "Yes" : "No"})
-  }
-
   let allocations = null
   const allocationCountByType = {};
   if(event.allocations && event.allocations.length > 0){
-    const sortedAllocations = [...event.allocations].sort((a, b) => a.surname - b.surname)
-    sortedAllocations.sort((a, b) => (a.preferredName || a.firstName) - (b.preferredName || b.firstName))
+    const sortedAllocations = [...event.allocations].sort((a, b) => (a.preferredName || a.firstName) - (b.preferredName || b.firstName))
+    sortedAllocations.sort((a, b) => a.surname - b.surname)
     sortedAllocations.sort((a, b) => allocationToOrder(a.allocation) - allocationToOrder(b.allocation))
 
     allocations = <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: 1}}>
@@ -284,62 +257,7 @@ export default function ViewEvent(){
       </SpeedDial>
     </Privileged>
 
-    <Dialog onClose={() => setShowAllocations(false)} open={showAllocations} maxWidth="lg" fullWidth>
-      <DialogTitle>
-        Allocations for {event.name}
-        <IconButton
-          aria-label="close"
-          onClick={() => setShowAllocations(false)}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <Close />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <DataGrid autoHeight initialState={{
-          pagination: {
-            pageSize: 25,
-          },
-          sorting: {
-            sortModel: [{ field: "surname", sort: "asc"}]
-          }
-          }} columns={allocationColumns} rows={event.allocations}
-          getRowId={(row) => row.membershipNumber}
-          getRowClassName={(params) => `allocation_${params.row.allocation}`}
-          checkboxSelection={eventsCoord}
-          onSelectionModelChange={(newSelectionModel) => {
-            setSelectionModel(newSelectionModel);
-          }}
-          selectionModel={selectionModel}
-        />
-      </DialogContent>
-      <Privileged allowed={["EVENTS"]}>
+    <ViewAllocationsDialog event={event} onClose={() => setShowAllocations(false)} open={showAllocations} />
 
-        <DialogActions>
-          <Button onClick={() => setShowAddAllocation(true)}>Add Allocation</Button>
-
-          <ButtonMenu buttonText="Update Allocations" disabled={selectionModel.length === 0 || isAllocating}>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}]})}>Registered</MenuItem>
-            <Divider />
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ALLOCATED, "membershipNumbers": selectionModel}]})}>Allocated</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": RESERVE, "membershipNumbers": selectionModel}]})}>Reserve</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NOT_ALLOCATED, "membershipNumbers": selectionModel}]})}>Not Allocated</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": DROPPED_OUT, "membershipNumbers": selectionModel}]})}>Dropped Out</MenuItem>
-            <Divider />
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ATTENDED, "membershipNumbers": selectionModel}]})}>Attended</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NO_SHOW, "membershipNumbers": selectionModel}]})}>No Show</MenuItem>
-          </ButtonMenu>
-        </DialogActions>
-      </Privileged>
-    </Dialog>
-
-    <Privileged allowed={["EVENTS"]}>
-      <AddAllocationDialog show={showAddAllocation} onClose={() => setShowAddAllocation(false)} eventId={eventId} eventSeriesId={eventSeriesId} />
-    </Privileged>
   </>
 }

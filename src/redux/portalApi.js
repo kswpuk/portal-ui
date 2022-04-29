@@ -11,7 +11,7 @@ export const portalApi = createApi({
   tagTypes: [
     'APPLICATIONS', 'APPLICATION', 'REFERENCES', 'REFERENCE',
     'MEMBERS', 'MEMBER', 'MEMBER_ALLOCATIONS', 'MEMBER_PHOTO',
-    'EVENTS', 'EVENT', 'ALL_EVENT_SERIES', 'EVENT_SERIES'
+    'EVENTS', 'EVENT', 'ALL_EVENT_SERIES', 'EVENT_SERIES', 'ALLOCATION_SUGGESTION'
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
