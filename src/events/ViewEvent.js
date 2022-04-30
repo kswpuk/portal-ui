@@ -22,6 +22,7 @@ import DateWidget from "../common/DateWidget"
 import ReactMarkdown from 'react-markdown'
 import { grey } from '@mui/material/colors';
 import ViewAllocationsDialog from "./ViewAllocationsDialog"
+import WeightingWidget from "./WeightingWidget"
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -93,19 +94,25 @@ export default function ViewEvent(){
 
   // Allocation Criteria
 
-  let spaces = "There is no limit on the number of attendees for this event."
-  if(event.attendanceLimit > 0){
-    spaces = "There are "+event.attendanceLimit+" spaces available to attend this event."
-  }
-
   let weighting = null
-  if(event.weightingCriteria && event.weightingCriteria.length > 0){
+
+  if(event.attendanceLimit > 0){
+    if(event.weightingCriteria && Object.keys(event.weightingCriteria).length > 0){
+      weighting = <>
+        <Typography variant="body1">There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone who registers will start with one name in the hat, and then the following rules will be applied:</Typography>
+        <WeightingWidget criteria={event.weightingCriteria} />
+        <Typography variant="body1" gutterBottom>After the above rules have been applied, everyone will receive an equal number of additional names until everyone has at least 1 name in the hat.</Typography>
+      </>
+    }else{
+      weighting = <Typography variant="body1" gutterBottom>There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone's name will be placed in the hat the same number of times.</Typography>
+    }
+
     weighting = <>
-      <Typography variant="body1">The following weighting criteria will be used if this event is over-subscribed:</Typography>
-      <ul>
-        {event.weightingCriteria.map((x, idx) => <li key={"weighting_"+idx}>x</li>)}
-      </ul>
+      {weighting}
+      <Typography variant="body1">The Events Coordinator may allocate specific people where there is a specific requirement for them to attend - e.g. they have a some skill, experience or qualification that is required.</Typography>
     </>
+  }else{
+    weighting = <Typography variant="body1" gutterBottom>There is no limit on the number of attendees for this event.</Typography>
   }
 
   // Allocations
@@ -173,17 +180,15 @@ export default function ViewEvent(){
           {event.eventUrl ? <Typography variant="body1" gutterBottom><Link href={event.eventUrl} target="_blank">More information</Link></Typography> : null }
         </> : null}
 
-        <Typography variant="h6" sx={{marginTop: '1.5rem'}}>Allocation Criteria</Typography>
-        <Typography variant="body1" gutterBottom>
-          {spaces}
-          {now.isBefore(registrationDate) ?
-            <> You must sign up by <strong><DateWidget date={event.registerForEvent} dateOnly /></strong> if you wish to attend.</> :
-            <> The deadline for signing up for this event was <strong><DateWidget date={event.registerForEvent} dateOnly /></strong>.</>
-          }
-        </Typography>
-        
+        <Typography variant="h6" sx={{marginTop: '1.5rem'}}>Attendance Criteria</Typography>
+        <Typography variant="body1" gutterBottom>{now.isBefore(registrationDate) ?
+          <> You must sign up by <strong><DateWidget date={event.registerForEvent} dateOnly /></strong> if you wish to attend.</> :
+          <> The deadline for signing up for this event was <strong><DateWidget date={event.registerForEvent} dateOnly /></strong>.</>
+        }</Typography>
+
         <CriteriaWidget criteria={event.attendanceCriteria} eligibility={event.eligibility.rules} />
 
+        <Typography variant="h6" sx={{marginTop: '1.5rem'}}>Allocation Criteria</Typography>
         {weighting}
         
       </Grid>
