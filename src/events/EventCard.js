@@ -9,6 +9,11 @@ export default function EventCard(props){
   let date = null
   const startDate = new moment(props.event.startDate)
   const endDate = new moment(props.event.endDate)
+  
+  const registrationDate = new moment(props.event.registrationDate)
+  const now = new moment()
+
+  const registrationClosed = registrationDate.isBefore(now, 'day');
 
   const endDateFormat = endDate.format("D MMMM YYYY")
   if(startDate.format("D MMMM YYYY") === endDateFormat){
@@ -25,7 +30,7 @@ export default function EventCard(props){
     date = endDate.format("D MMMM YYYY") + " - "+ endDateFormat
   }
 
-  return <Card className={!props.hideAllocation ? "allocation_"+props.event.allocation : ""}>
+  return <Card className={!props.hideAllocation ? "allocation_"+props.event.allocation : ""} elevation={registrationClosed || props.flat ? 1 : 6}>
     {props.title ? <CardHeader title={props.title} /> : null}
     <CardContent>
       <Typography variant='h6' sx={{marginBottom: '1rem'}}>{props.event.name}</Typography>
@@ -35,7 +40,7 @@ export default function EventCard(props){
       </IconText>
 
       <LocationWidget event={props.event} marginBottom={!props.hideAllocation ? '0.5rem' : '1rem'} />
-      {!props.hideAllocation ? <AllocationWidget allocation={props.event.allocation} /> : null }
+      {!props.hideAllocation ? <AllocationWidget allocation={props.event.allocation} closed={registrationClosed} /> : null }
 
       <Typography variant="body2">{props.event.description}</Typography>
     </CardContent>

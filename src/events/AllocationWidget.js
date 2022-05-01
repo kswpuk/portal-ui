@@ -6,8 +6,16 @@ export default function AllocationWidget(props){
   const allocationText = getAllocationText(props.allocation, props.verbose)
 
   return props.textOnly ? allocationText : <IconText icon={allocationText == null ? <PersonOutline /> : <Person />} marginBottom={props.marginBottom} gap={props.gap}>
-    {allocationText == null ? (props.verbose ? "You have not responded to this event" : "Not responded") : allocationText}
+    {allocationText == null ? getNotRespondedText(props.closed || false, props.verbose) : allocationText}
   </IconText>
+}
+
+function getNotRespondedText(closed=false, verbose=false){
+  if(closed){
+    return verbose ? "It's too late to sign up for this event" : "Registration closed"
+  }else{
+    return verbose ? "You have not responded to this event" : "Not responded"
+  }
 }
 
 export function getAllocationText(allocation, verbose=false){
