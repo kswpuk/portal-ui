@@ -1,5 +1,5 @@
 export const drawerWidth = 240;
-export const baseUrl = "https://ou5s8vz427.execute-api.eu-west-2.amazonaws.com/portal-dev/"
+export const baseUrl = process.env.REACT_APP_STAGE === "prod" ? "https://yw6qyqsr0j.execute-api.eu-west-2.amazonaws.com/portal/" : "https://ou5s8vz427.execute-api.eu-west-2.amazonaws.com/portal-dev/"
 
 export const committeeRoles = {
   "MANAGER": {

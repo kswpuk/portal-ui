@@ -34,7 +34,7 @@ export default function ListEvents() {
     gridContent = <Loading />
   }else{
     gridContent = <Grid container spacing={2}>
-      {events.map(e => <Grid item key={e.combinedEventId} sm={12} md={4}>
+      {events.map(e => <Grid item key={e.combinedEventId} sm={12} md={6} lg={4}>
         <EventCard event={e} />
       </Grid>
       )}

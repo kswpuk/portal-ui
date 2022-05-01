@@ -6,6 +6,7 @@ import TelephoneLink from "../common/TelephoneLink";
 import styles from './ViewMember.module.css'
 import { committeeRoles } from '../consts'
 import { useSetNeckerReceivedMutation } from "../redux/membersApi";
+import Privileged from "../common/Privileged";
 
 export default function ViewMemberInformation({member}) {
   const theme = useTheme();
@@ -105,10 +106,12 @@ export default function ViewMemberInformation({member}) {
             <TableCell>Join Date</TableCell>
             <TableCell>{member.joinDate}</TableCell>
           </TableRow>
-          <TableRow>
-            <TableCell>Received Necker</TableCell>
-            <TableCell><Switch checked={member.receivedNecker === true} onChange={() => setNeckerReceived({membershipNumber: member.membershipNumber, received: !member.receivedNecker})} size="small" /></TableCell>
-          </TableRow>
+          <Privileged allowed={["COMMITTEE"]}>
+            <TableRow>
+              <TableCell>Received Necker</TableCell>
+              <TableCell><Switch checked={member.receivedNecker === true} onChange={() => setNeckerReceived({membershipNumber: member.membershipNumber, received: !member.receivedNecker})} size="small" /></TableCell>
+            </TableRow>
+          </Privileged>
         </TableBody>
       </Table>
     </Box>

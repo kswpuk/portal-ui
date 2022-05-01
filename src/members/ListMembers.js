@@ -40,9 +40,9 @@ export default function ListMembers() {
 
       {committee.map(x => <Grid key={"committee_"+x.membershipNumber} item>
         <Card variant="outlined">
-          <CardMedia component={() => <Box height={250} width={250}>
+          <CardMedia component={() => <Box height={300} width={300}>
             <MemberPhoto membershipNumber={x.membershipNumber}
-              width={250} height={250}
+              width={300} height={300}
               alt={(x.preferredName || x.firstName) + " " + x.surname} /></Box>}
             />
 

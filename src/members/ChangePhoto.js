@@ -15,7 +15,7 @@ export default function ChangePhoto(props) {
   const { membershipNumber: membershipNumberParams } = useParams()
   const membershipNumber = props.membershipNumber || membershipNumberParams
 
-  const [photo, setPhoto] = useState(null)
+  const [photo, setPhoto] = useState([])
 
   const [ changePhoto, { isLoading, isSuccess, error } ] = useChangePhotoMutation()
 
@@ -40,8 +40,6 @@ export default function ChangePhoto(props) {
     }
     reader.readAsDataURL(photo[0]);
   }
-
-  console.log(photo)
 
   return <>
     {error ? <Error error={error} gutterBottom /> : null}
