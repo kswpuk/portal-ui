@@ -182,8 +182,8 @@ export default function ViewEvent(){
 
         <Typography variant="h6" sx={{marginTop: '1.5rem'}}>Attendance Criteria</Typography>
         <Typography variant="body1" gutterBottom>{now.isBefore(registrationDate) ?
-          <> You must sign up by <strong><DateWidget date={event.registerForEvent} dateOnly /></strong> if you wish to attend.</> :
-          <> The deadline for signing up for this event was <strong><DateWidget date={event.registerForEvent} dateOnly /></strong>.</>
+          <> You must sign up by <strong><DateWidget date={event.registrationDate} dateOnly /></strong> if you wish to attend.</> :
+          <> The deadline for signing up for this event was <strong><DateWidget date={event.registrationDate} dateOnly /></strong>.</>
         }</Typography>
 
         <CriteriaWidget criteria={event.attendanceCriteria} eligibility={event.eligibility.rules} />
