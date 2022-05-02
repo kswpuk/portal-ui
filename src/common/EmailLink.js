@@ -1,7 +1,9 @@
 import { Link } from "@mui/material";
 
 export default function EmailLink(props){
-  const s = String(props.children).toLowerCase()
+  if(!props.children)
+    return null
 
+  const s = String(props.children).toLowerCase()
   return <Link href={"mailto:"+s}>{s}</Link>
 }

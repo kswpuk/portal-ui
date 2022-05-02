@@ -1,5 +1,5 @@
-import { Close } from "@mui/icons-material";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Link, MenuItem } from "@mui/material";
+import { AddCircle, Assistant, Close, Email } from "@mui/icons-material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Link, MenuItem } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link as RouterLink } from "react-router-dom"
 
@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import AddAllocationDialog from "./AddAllocationDialog";
 import { Auth } from "aws-amplify";
 import AllocationWidget from "./AllocationWidget";
+import EmailLink from "../common/EmailLink";
 
 export default function ViewAllocationsDialog({event, open, onClose}) {
   const eventId = event.eventId
@@ -47,6 +48,8 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
     }
   }
 
+  let emails = null
+
   const allocationColumns=[
     {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
@@ -56,8 +59,14 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
       renderCell: params => <AllocationWidget textOnly allocation={params.value} />}
   ]
   if(committee){
+    allocationColumns.push({field: "email", headerName: "E-mail", flex: 2, hideable: false,
+      renderCell: params => <EmailLink>{params.value}</EmailLink>})
     allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1, hideable: false,
       renderCell: params => params.value ? "Yes" : "No"})
+    
+      console.log(event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(','))
+
+      emails = event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(',')
   }
 
   return <>
@@ -98,8 +107,9 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
       <Privileged allowed={["EVENTS"]}>
 
         <DialogActions>
-          <Button onClick={() => setShowAddAllocation(true)}>Add Allocation</Button>
-          <Button onClick={suggestAllocations} disabled={isSuggesting || selectionModel === suggestion}>Suggest Allocations</Button>
+          <IconButton title="E-mail Selected" disabled={selectionModel.length === 0} sx={{marginRight: '8px'}} href={"mailto:?subject="+event.name+"&bcc="+emails}><Email /></IconButton>
+          <IconButton title="Add Allocation" onClick={() => setShowAddAllocation(true)}><AddCircle /></IconButton>
+          <IconButton title="Suggest Allocations" onClick={suggestAllocations} disabled={isSuggesting || selectionModel === suggestion}><Assistant /></IconButton>
 
           <ButtonMenu buttonText="Update Allocations" disabled={selectionModel.length === 0 || isAllocating}>
             <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}]})}>Registered</MenuItem>
