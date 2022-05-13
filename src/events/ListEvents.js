@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { setTitle } from '../redux/navSlice'
-import { Box, Fab, Grid, Tab, Tabs } from '@mui/material'
+import { Box, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Tab, Tabs } from '@mui/material'
 
 import { useEffect, useState } from 'react'
 import EventCard from './EventCard'
@@ -8,7 +8,7 @@ import { useListEventsQuery } from '../redux/eventsApi'
 import Loading from '../common/Loading'
 import Error from '../common/Error'
 import Privileged from '../common/Privileged'
-import { Add } from '@mui/icons-material'
+import { Add, Close, EventRepeat, MoreHoriz } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 
 export default function ListEvents() {
@@ -52,9 +52,23 @@ export default function ListEvents() {
     {gridContent}
 
     <Privileged allowed={["EVENTS"]}>
-      <Fab color="primary" sx={{ position: 'fixed', bottom: 16, right: 16 }} component={Link} to='/events/new'>
-        <Add />
-      </Fab>
+      <SpeedDial
+        ariaLabel="Event Actions"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon icon={<MoreHoriz />} openIcon={<Close />} />}
+      >
+        <SpeedDialAction
+          icon={<MUILink sx={{display: "flex"}} component={Link} to={"/events/new"}><Add /></MUILink>}
+          tooltipTitle="New"
+          tooltipOpen
+        />
+
+        <SpeedDialAction
+          icon={<MUILink sx={{display: "flex"}} component={Link} to={"/events/series"}><EventRepeat /></MUILink>}
+          tooltipTitle="Series"
+          tooltipOpen
+        />
+      </SpeedDial>
     </Privileged>
   </>
 }

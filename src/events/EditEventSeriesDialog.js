@@ -1,9 +1,10 @@
 import { Close } from "@mui/icons-material";
-import { Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Error from "../common/Error";
 import SubmitButton from "../common/SubmitButton";
+import Warning from "../common/Warning";
 import { useEditEventSeriesMutation } from "../redux/eventsApi";
 
 export default function EditEventSeriesDialog(props) {
@@ -51,8 +52,10 @@ export default function EditEventSeriesDialog(props) {
       </IconButton>
     </DialogTitle>
     <DialogContent>
-      <Typography variant="body1">Updating the event series will update the name and description for all events that are part of this series, including past events.</Typography>
-      <Stack spacing={3} sx={{marginTop: '0.5rem'}}>
+      <Warning>
+        Updating the event series will update the name, description, and event type for all events that are part of this series, including past events.
+      </Warning>
+      <Stack spacing={3} sx={{marginTop: '1rem'}}>
         {editError ? <Error error={editError}>Unable to update event series</Error> : null}
 
         <TextField variant="outlined" label="Name"
