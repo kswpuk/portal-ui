@@ -25,14 +25,14 @@ const membersApi = portalApi.injectEndpoints({
         method: 'PUT',
         body: body,
       }),
-      invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
+      invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS', 'MEMBERS_COMPARE'],
     }),
     deleteMember: builder.mutation({
       query: ( membershipNumber ) => ({
         url: `members/${membershipNumber}`,
         method: 'DELETE'
       }),
-      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
+      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS', 'MEMBERS_COMPARE'],
     }),
     payMembership: builder.mutation({
       query: (membershipNumber) => ({
@@ -57,8 +57,17 @@ const membersApi = portalApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
     }),
+    compare: builder.query({
+      query: ( membershipNumbers ) => ({
+        url: `members/compare`,
+        method: 'POST',
+        body: {members: membershipNumbers}
+      }),
+      providesTags: ['MEMBERS_COMPARE'],
+    })
   }),
   overrideExisting: false,
 })
 
-export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation, usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation } = membersApi
+export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation,
+  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery } = membersApi

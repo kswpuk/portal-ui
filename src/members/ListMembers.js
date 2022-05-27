@@ -5,10 +5,10 @@ import { useListMembersQuery } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom'
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material'
 import Privileged from '../common/Privileged'
 import {committeeRoles} from '../consts'
-import { Email } from '@mui/icons-material'
+import { Close, CompareArrows, Email, MoreHoriz } from '@mui/icons-material'
 import { useEffect } from 'react'
 import Help from '../common/Help'
 import MemberPhoto from '../common/MemberPhoto'
@@ -82,5 +82,20 @@ export default function ListMembers() {
         {field: "status", headerName: "Status", flex: 1, hideable: true}
       ]} rows={members}
       getRowId={(row) => row.membershipNumber} />
+    
+    
+    <Privileged allowed={["MEMBERS"]}>
+      <SpeedDial
+        ariaLabel="Membership Actions"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon icon={<MoreHoriz />} openIcon={<Close />} />}
+      >
+        <SpeedDialAction
+          icon={<MUILink sx={{display: "flex"}} component={Link} to={"/members/compare"}><CompareArrows /></MUILink>}
+          tooltipTitle="Compare"
+          tooltipOpen
+        />
+      </SpeedDial>
+    </Privileged>
   </>
 }

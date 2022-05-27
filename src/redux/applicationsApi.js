@@ -41,7 +41,7 @@ const applicationsApi = portalApi.injectEndpoints({
         url: `applications/${membershipNumber}/approve`,
         method: 'POST'
       }),
-      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'APPLICATION', id: membershipNumber}, 'APPLICATIONS', 'MEMBERS'],
+      invalidatesTags: (_result, _error, membershipNumber) => [{type: 'APPLICATION', id: membershipNumber}, 'APPLICATIONS', 'MEMBERS', 'MEMBERS_COMPARE'],
     }),
     submitApplication: builder.mutation({
       query: ({membershipNumber, ...application}) => ({
