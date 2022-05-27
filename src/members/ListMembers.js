@@ -62,7 +62,7 @@ export default function ListMembers() {
       <Help>By default, the grid is filtered to only show active members. You can view all members by removing the filter from the Active column. Only one filter can be applied at a time.</Help>
     </Typography>
 
-    <DataGrid autoHeight initialState={{
+    <DataGrid autoHeight sx={{marginBottom: '2rem'}} initialState={{
       pagination: {
         pageSize: 25,
       },

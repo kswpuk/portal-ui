@@ -13,7 +13,7 @@ import TelephoneLink from '../common/TelephoneLink'
 import { setTitle } from '../redux/navSlice'
 import styles from './ViewApplication.module.css'
 import { useApproveApplicationMutation, useDeleteApplicationMutation, useGetApplicationQuery, useListReferencesQuery } from '../redux/applicationsApi'
-import { AccessTime, AccessTimeFilled, Circle, CircleOutlined, Close, Delete, HowToReg, MoreHoriz } from '@mui/icons-material'
+import { AccessTimeFilled, AccessTimeOutlined, Circle, CircleOutlined, Close, Delete, HowToReg, MoreHoriz } from '@mui/icons-material'
 import ConfirmLink from '../common/ConfirmLink'
 import EvidenceImage from '../join/EvidenceImage'
 import { DataGrid } from '@mui/x-data-grid'
@@ -93,12 +93,22 @@ export default function ViewApplication() {
           field: "relationship", headerName: "Type", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
           renderCell: params => {
-            if(params.value === "scouting"){
-              return <Circle htmlColor='#7413dc' titleAccess='Scouting' />
-            }else if(params.value === "nonScouting"){
-              return <Circle htmlColor='#003982' titleAccess='Non-Scouting'/>
+            let col = ''
+            let text = ''
+            if (params.value === "scouting"){
+              col = "#7413dc"
+              text = "Scouting reference"
+            }else if (params.value === "nonScouting"){
+              col = "#003982"
+              text = "Non-Scouting reference"
             }else{
-              return <CircleOutlined color='disabled' />
+              return "-"
+            }
+
+            if(params.row.accepted){
+              return <Circle htmlColor={col} titleAccess={text + ", accepted"} />
+            }else{
+              return <CircleOutlined htmlColor={col} titleAccess={text + ", not yet accepted"} />
             }
           }
         },
@@ -106,18 +116,25 @@ export default function ViewApplication() {
           field: "howLong", headerName: "5+ years", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
           renderCell: params => {
+            // Color = gt/lt 5
+            // Icon = accepted
+            let col, text;
             if(params.value === "moreThan5"){
-              return <AccessTimeFilled titleAccess='5 or more years' />
+              col = ''
+              text = '5 or more years'
             }else if(params.value === "lessThan5"){
-              return <AccessTime titleAccess='Less than 5 years'/>
+              col = 'disabled'
+              text = 'Less than 5 years'
             }else{
-              return <CircleOutlined color='disabled' />
+              return "-"
+            }
+
+            if(params.row.accepted){
+              return <AccessTimeFilled color={col} titleAccess={text + ", accepted"} />
+            }else{
+              return <AccessTimeOutlined color={col} titleAccess={text + ", not yet accepted"} />
             }
           } 
-        },
-        {
-          field: "accepted", headerName: "Accepted", flex: 1, hideable: false, 
-          type: 'boolean'
         }
       ]} rows={references}
       getRowId={(row) => row.referenceEmail} />

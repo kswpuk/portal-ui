@@ -120,7 +120,7 @@ export default function ReferenceForm(props) {
                 {...register("notConsidered", {required: true})}
               >
                 <MenuItem value="no">No</MenuItem>
-                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="yes">Yes, I know a reason why this applicant should NOT be considered</MenuItem>
               </Select>
             </FormControl>
 
