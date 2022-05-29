@@ -11,7 +11,13 @@ export default function SelectEventSeriesWidget(props){
     if (props.onChange) {
       props.onChange(event.target.value);
     }
-  };  
+  };
+
+  const typeDesc = {
+    "event": "Regular event",
+    "social": "Social event",
+    "no_impact": "Regular event, with no impact on allocations"
+  }
 
   return <>
     <FormControl fullWidth sx={{marginTop: '0.5rem'}} disabled={props.selected ? true : false}>
@@ -24,6 +30,7 @@ export default function SelectEventSeriesWidget(props){
           {sortedSeries.map(s => <MenuItem key={s.eventSeriesId} value={s.eventSeriesId}>{s.name}</MenuItem>)}
       </Select>
       <Typography variant="body2" sx={{marginTop: '1rem', marginBottom: '1rem'}}>{props.series.find(s => s.eventSeriesId === selected)?.description}</Typography>
+      <Typography variant="body2" sx={{marginBottom: '1rem'}}><strong>Event Type:</strong> {typeDesc[props.series.find(s => s.eventSeriesId === selected)?.type]}</Typography>
     </FormControl>
   </>
 }

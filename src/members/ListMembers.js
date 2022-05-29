@@ -3,7 +3,7 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 import { useListMembersQuery } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
-import { DataGrid, GridToolbar, GridToolbarContainer } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom'
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material'
 import Privileged from '../common/Privileged'
