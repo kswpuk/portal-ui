@@ -27,7 +27,7 @@ const applicationsApi = portalApi.injectEndpoints({
         method: 'PATCH',
         body: {accepted: accept}
       }),
-      invalidatesTags: (_result, _error, {membershipNumber, referenceEmail}) => [{type: 'REFERENCES', id: membershipNumber}, {type: 'REFERENCE', id: membershipNumber + "/" + referenceEmail}],
+      invalidatesTags: (_result, _error, {membershipNumber, referenceEmail}) => [{type: 'REFERENCES', id: membershipNumber}, {type: 'REFERENCE', id: membershipNumber + "/" + referenceEmail}, 'APPLICATIONS'],
     }),
     deleteApplication: builder.mutation({
       query: ( membershipNumber ) => ({

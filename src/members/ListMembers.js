@@ -3,19 +3,29 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 import { useListMembersQuery } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarContainer } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom'
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material'
 import Privileged from '../common/Privileged'
 import {committeeRoles} from '../consts'
 import { Close, CompareArrows, Email, MoreHoriz } from '@mui/icons-material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Help from '../common/Help'
 import MemberPhoto from '../common/MemberPhoto'
+import { Auth } from 'aws-amplify'
+import EmailLink from '../common/EmailLink'
 
 export default function ListMembers() {
   const dispatch = useDispatch()
   
+  const [isCommittee, setIsCommittee] = useState(false);
+  const [selectionModel, setSelectionModel] = useState([]);
+
+  Auth.currentAuthenticatedUser().then(user => {
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    setIsCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
+  })
+
   useEffect(() => {
     dispatch(setTitle("Members"))
   }, [dispatch])
@@ -32,6 +42,29 @@ export default function ListMembers() {
   committee.sort((a, b) => (committeeRoles[a.role]["sortOrder"] > committeeRoles[b.role]["sortOrder"]) ? 1 : -1)
 
   //TODO: Center grid in small display, hide committee members when small?
+
+  const columns = [
+    {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+      renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
+    {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
+    {field: "surname", headerName: "Surname", flex: 3, hideable: false},
+    {field: "status", headerName: "Status", flex: 1, hideable: true}
+  ]
+  let emails = null
+  let toolbar = null
+
+  if(isCommittee){
+    columns.splice(-1, 0, {field: "email", headerName: "E-mail", flex: 3, hideable: false,
+      renderCell: params => <EmailLink>{params.value}</EmailLink>})
+    
+    emails = members.filter(m => selectionModel.includes(m.membershipNumber)).map(a => a.email).join(',')
+
+    toolbar = () => {
+      return <GridToolbarContainer>
+        <Button startIcon={<Email />} disabled={selectionModel.length === 0} href={"mailto:?bcc="+emails}>E-mail Selected</Button>
+      </GridToolbarContainer>
+    }
+  }
 
   return <>
     <Typography variant='h5' gutterBottom>Committee Members</Typography>
@@ -62,27 +95,28 @@ export default function ListMembers() {
       <Help>By default, the grid is filtered to only show active members. You can view all members by removing the filter from the Active column. Only one filter can be applied at a time.</Help>
     </Typography>
 
-    <DataGrid autoHeight sx={{marginBottom: '2rem'}} initialState={{
-      pagination: {
-        pageSize: 25,
-      },
-      filter: {
-        filterModel: {
-          items: [{ columnField: "status", operatorValue: "equals", "value": "ACTIVE"}]
+    <DataGrid checkboxSelection={isCommittee} autoHeight sx={{marginBottom: '2rem'}} initialState={{
+        pagination: {
+          pageSize: 25,
+        },
+        filter: {
+          filterModel: {
+            items: [{ columnField: "status", operatorValue: "equals", "value": "ACTIVE"}]
+          }
+        },
+        sorting: {
+          sortModel: [{ field: "surname", sort: "asc"}]
         }
-      },
-      sorting: {
-        sortModel: [{ field: "surname", sort: "asc"}]
-      }
-    }} columns={[
-        {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
-          renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
-        {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
-        {field: "surname", headerName: "Surname", flex: 3, hideable: false},
-        {field: "status", headerName: "Status", flex: 1, hideable: true}
-      ]} rows={members}
-      getRowId={(row) => row.membershipNumber} />
-    
+      }}
+      onSelectionModelChange={(newSelectionModel) => {
+        setSelectionModel(newSelectionModel);
+      }}
+      selectionModel={selectionModel}
+      columns={columns} rows={members}
+      getRowId={(row) => row.membershipNumber}
+      components={{
+        Toolbar: toolbar
+      }} />
     
     <Privileged allowed={["MEMBERS"]}>
       <SpeedDial

@@ -63,10 +63,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
       renderCell: params => <EmailLink>{params.value}</EmailLink>})
     allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1, hideable: false,
       renderCell: params => params.value ? "Yes" : "No"})
-    
-      console.log(event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(','))
-
-      emails = event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(',')
+    emails = event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(',')
   }
 
   return <>
