@@ -12,10 +12,11 @@ export default function AddAllocationDialog(props) {
   const [allocateToEvent, {isLoading: isAllocating, isSuccess: isAllocated, error: allocationError}] = useAllocateToEventMutation()
 
   const onSubmit = (data) => {
-    allocateToEvent({eventSeriesId: props.eventSeriesId, eventId: props.eventId, "allocations": [{"allocation": data.allocation, "membershipNumbers": [data.membershipNumber]}]})
+    allocateToEvent({eventSeriesId: props.eventSeriesId, eventId: props.eventId, "allocations": [{"allocation": data.allocation, "membershipNumbers": [data.membershipNumber]}], social})
   }
 
   const close = props.onClose
+  const social = props.social
 
   useEffect(() => {
     if(isAllocated){

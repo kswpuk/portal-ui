@@ -11,24 +11,24 @@ const eventsApi = portalApi.injectEndpoints({
       providesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}],
     }),
     createEvent: builder.mutation({
-      query: ( { eventSeriesId, eventId, body }) => ({
-        url: `events/${eventSeriesId}/${eventId}`,
+      query: ( { eventSeriesId, eventId, body, social }) => ({
+        url: `${social ? 'socials' : 'events'}/${eventSeriesId}/${eventId}`,
         method: 'POST',
         body: body
       }),
       invalidatesTags: ['EVENTS'],
     }),
     editEvent: builder.mutation({
-      query: ( { eventSeriesId, eventId, body }) => ({
-        url: `events/${eventSeriesId}/${eventId}`,
+      query: ( { eventSeriesId, eventId, body, social }) => ({
+        url: `${social ? 'socials' : 'events'}/${eventSeriesId}/${eventId}`,
         method: 'PUT',
         body: body
       }),
       invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}],
     }),
     deleteEvent: builder.mutation({
-      query: ( { eventSeriesId, eventId }) => ({
-        url: `events/${eventSeriesId}/${eventId}`,
+      query: ( { eventSeriesId, eventId, social }) => ({
+        url: `${social ? 'socials' : 'events'}/${eventSeriesId}/${eventId}`,
         method: 'DELETE'
       }),
       invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS'],
@@ -45,8 +45,8 @@ const eventsApi = portalApi.injectEndpoints({
       providesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}],
     }),
     allocateToEvent: builder.mutation({
-      query: ({ eventSeriesId, eventId, allocations }) => ({
-        url: `events/${eventSeriesId}/${eventId}/allocate`,
+      query: ({ eventSeriesId, eventId, allocations, social }) => ({
+        url: `${social ? 'socials' : 'events'}/${eventSeriesId}/${eventId}/allocate`,
         method: 'PUT',
         body: {
           "allocations": allocations

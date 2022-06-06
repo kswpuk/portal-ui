@@ -62,7 +62,7 @@ export default function EventForm(props){
     seriesEl = <Error error={seriesError} onRetry={seriesRefetch}/>
   }else if(series){
     seriesEl = <>
-      <SelectEventSeriesWidget selected={props.eventSeriesId} series={series} onChange={props.eventSeriesId ? null : setEventSeriesId} />
+      <SelectEventSeriesWidget selected={props.eventSeriesId} series={props.social ? series.filter(s => s.type === "social") : series} onChange={props.eventSeriesId ? null : setEventSeriesId} />
     </>
   }
 

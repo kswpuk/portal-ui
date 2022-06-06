@@ -33,6 +33,12 @@ export default function EventSeries() {
     return <Error error={error}>Unable to load event series</Error>
   }
 
+  const typeDesc = {
+    "event": "Regular event",
+    "social": "Social event",
+    "no_impact": "Regular event, with no impact on allocations"
+  }
+
   return <>
     <Grid container spacing={2} sx={{marginBottom: '1rem'}}>
       {eventSeries.map(e => <Grid item xs={12} key={e.eventSeriesId}>
@@ -40,6 +46,7 @@ export default function EventSeries() {
           <CardContent>
             <Typography variant="h6">{e.name}</Typography>
             <Typography variant="body2">{e.description}</Typography>
+            <Typography variant="body2" sx={{mt: '1rem'}}><strong>Event Type:</strong> {typeDesc[e.type]}</Typography>
 
             <Grid container spacing={2} sx={{mt: 1}}>
               {e["instances"].map(i => <Grid item xs={6} md={4} lg={3} xl={2}>

@@ -23,6 +23,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
   
   const [committee, setCommittee] = useState(false);
   const [eventsCoord, setEventsCoord] = useState(false);
+  const [socialsCoord, setSocialsCoord] = useState(false);
   const [suggest, setSuggest] = useState(false);
 
   const [allocateToEvent, {isLoading: isAllocating}] = useAllocateToEventMutation()
@@ -32,6 +33,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
     setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
+    setSocialsCoord(groups.includes("MANAGER") || groups.includes("SOCIALS"));
   })
 
   useEffect(() => {
@@ -94,37 +96,39 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
           }} columns={allocationColumns} rows={event.allocations}
           getRowId={(row) => row.membershipNumber}
           getRowClassName={(params) => `allocation_${params.row.allocation}`}
-          checkboxSelection={eventsCoord}
+          checkboxSelection={eventsCoord || (socialsCoord && event.type === "social")}
           onSelectionModelChange={(newSelectionModel) => {
             setSelectionModel(newSelectionModel);
           }}
           selectionModel={selectionModel}
         />
       </DialogContent>
-      <Privileged allowed={["EVENTS"]}>
+      <Privileged allowed={event.type === "social" ? ["EVENTS", "SOCIALS"] : ["EVENTS"]}>
 
         <DialogActions>
           <IconButton title="E-mail Selected" disabled={selectionModel.length === 0} sx={{marginRight: '8px'}} href={"mailto:?subject="+event.name+"&bcc="+emails}><Email /></IconButton>
           <IconButton title="Add Allocation" onClick={() => setShowAddAllocation(true)}><AddCircle /></IconButton>
-          <IconButton title="Suggest Allocations" onClick={suggestAllocations} disabled={isSuggesting || selectionModel === suggestion}><Assistant /></IconButton>
+          <Privileged allowed={["EVENTS"]}>
+            <IconButton title="Suggest Allocations" onClick={suggestAllocations} disabled={isSuggesting || selectionModel === suggestion}><Assistant /></IconButton>
+          </Privileged>
 
           <ButtonMenu buttonText="Update Allocations" disabled={selectionModel.length === 0 || isAllocating}>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}]})}>Registered</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": REGISTERED, "membershipNumbers": selectionModel}], social: socialsCoord})}>Registered</MenuItem>
             <Divider />
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ALLOCATED, "membershipNumbers": selectionModel}]})}>Allocated</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": RESERVE, "membershipNumbers": selectionModel}]})}>Reserve</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NOT_ALLOCATED, "membershipNumbers": selectionModel}]})}>Not Allocated</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": DROPPED_OUT, "membershipNumbers": selectionModel}]})}>Dropped Out</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ALLOCATED, "membershipNumbers": selectionModel}], social: socialsCoord})}>Allocated</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": RESERVE, "membershipNumbers": selectionModel}], social: socialsCoord})}>Reserve</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NOT_ALLOCATED, "membershipNumbers": selectionModel}], social: socialsCoord})}>Not Allocated</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": DROPPED_OUT, "membershipNumbers": selectionModel}], social: socialsCoord})}>Dropped Out</MenuItem>
             <Divider />
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ATTENDED, "membershipNumbers": selectionModel}]})}>Attended</MenuItem>
-            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NO_SHOW, "membershipNumbers": selectionModel}]})}>No Show</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": ATTENDED, "membershipNumbers": selectionModel}], social: socialsCoord})}>Attended</MenuItem>
+            <MenuItem onClick={() => allocateToEvent({eventSeriesId, eventId, "allocations": [{"allocation": NO_SHOW, "membershipNumbers": selectionModel}], social: socialsCoord})}>No Show</MenuItem>
           </ButtonMenu>
         </DialogActions>
       </Privileged>
     </Dialog>
     
-    <Privileged allowed={["EVENTS"]}>
-      <AddAllocationDialog show={showAddAllocation} onClose={() => setShowAddAllocation(false)} eventId={eventId} eventSeriesId={eventSeriesId} />
+    <Privileged allowed={event.type === "social" ? ["EVENTS", "SOCIALS"] : ["EVENTS"]}>
+      <AddAllocationDialog show={showAddAllocation} social={socialsCoord} onClose={() => setShowAddAllocation(false)} eventId={eventId} eventSeriesId={eventSeriesId} />
     </Privileged>
   </>
 }

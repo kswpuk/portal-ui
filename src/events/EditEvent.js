@@ -1,13 +1,14 @@
 import { useDispatch } from 'react-redux'
 import { setTitle } from '../redux/navSlice'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useEditEventMutation, useGetEventQuery } from '../redux/eventsApi'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import EventForm from './EventForm'
 import Loading from '../common/Loading'
 import Error from '../common/Error'
+import { Auth } from 'aws-amplify'
 
 export default function EditEvent() {
   const dispatch = useDispatch()
@@ -16,10 +17,16 @@ export default function EditEvent() {
   const { eventSeriesId, eventId } = useParams()
   const { data: event, error, isLoading, refetch } = useGetEventQuery({eventSeriesId, eventId})
 
+  const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
+  Auth.currentAuthenticatedUser().then(user => {
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
+  })
+
   const [ editEvent, { isLoading: isSubmitting, isSuccess: isSubmitted, error: submitError } ] = useEditEventMutation()
 
   const submit = (eventSeriesId, eventId, body) => {
-    editEvent({eventSeriesId, eventId, body})
+    editEvent({eventSeriesId, eventId, body, social: isSocialCoordinator})
   }
 
   useEffect(() => {
@@ -45,6 +52,7 @@ export default function EditEvent() {
 
   return <EventForm 
     event={event}
+    social={isSocialCoordinator}
     error={submitError} submitting={isSubmitting}
     eventSeriesId={eventSeriesId} eventId={eventId}
     onSubmit={({eventSeriesId, eventId, body}) => submit(eventSeriesId, eventId, body) } />

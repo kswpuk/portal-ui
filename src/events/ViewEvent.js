@@ -48,7 +48,13 @@ export default function ViewEvent(){
   }, [navigate, isDeleted])
 
   const [membershipNumber, setMembershipNumber] = useState(null);
-  Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
+  const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
+  Auth.currentAuthenticatedUser().then(user => {
+    setMembershipNumber(user.username)
+
+    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
+  })
 
   const [showAllocations, setShowAllocations] = useState(false);
 
@@ -230,7 +236,7 @@ export default function ViewEvent(){
                 { currentAllocation ? "Unregister from event" : "Register for event" }
               </SubmitButton> : null }
           
-            {event.allocations && event.allocations.length === 0 ? <Privileged allowed={["EVENTS"]}>
+            {event.allocations && event.allocations.length === 0 ? <Privileged allowed={event.type === "social" ? ["EVENTS", "SOCIALS"] : ["EVENTS"]}>
               <Button onClick={() => setShowAllocations(true)}>Manage Allocations</Button>
             </Privileged> : null}
           </CardActions>
@@ -238,7 +244,7 @@ export default function ViewEvent(){
       </Grid>
     </Grid>
 
-    <Privileged allowed={["EVENTS"]}>
+    <Privileged allowed={event.type === "social" ? ["EVENTS", "SOCIALS"] : ["EVENTS"]}>
       <SpeedDial
         ariaLabel="Event Actions"
         sx={{ position: 'fixed', bottom: 16, right: 16 }}
@@ -253,7 +259,7 @@ export default function ViewEvent(){
 
         <SpeedDialAction 
           icon={<ConfirmLink sx={{display: "flex"}} title={"Delete "+(event?.name || "event")+"?"} loading={isDeleting}
-            onConfirm={() => deleteEvent({eventSeriesId, eventId})}
+            onConfirm={() => deleteEvent({eventSeriesId, eventId, social: isSocialCoordinator})}
             body={"Are you sure you wish to delete "+(event?.name || "this event")+"? This action is permanent, and cannot be undone."}><Delete />
           </ConfirmLink>}
           tooltipTitle="Delete"

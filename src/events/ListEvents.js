@@ -51,7 +51,7 @@ export default function ListEvents() {
 
     {gridContent}
 
-    <Privileged allowed={["EVENTS"]}>
+    <Privileged allowed={["EVENTS", "SOCIALS"]}>
       <SpeedDial
         ariaLabel="Event Actions"
         sx={{ position: 'fixed', bottom: 16, right: 16 }}
