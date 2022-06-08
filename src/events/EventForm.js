@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem, Radio, RadioGroup, Select, Slider, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useListEventSeriesQuery } from "../redux/eventsApi";
@@ -6,6 +6,7 @@ import Loading from '../common/Loading'
 import Error from '../common/Error'
 import SubmitButton from '../common/SubmitButton'
 import SelectEventSeriesWidget from './SelectEventSeriesWidget'
+import Privileged from "../common/Privileged";
 
 export default function EventForm(props){
 
@@ -44,6 +45,7 @@ export default function EventForm(props){
   };
 
   const onSubmit = (data) => {
+    console.log(data)
     props.onSubmit({ eventSeriesId: (props.eventSeriesId || eventSeriesId), eventId: (props.eventId || eventId),
       body: {
         ...data,
@@ -52,8 +54,6 @@ export default function EventForm(props){
         attendanceCriteria: Object.values(data["attendanceCriteria"]).filter(v => v)
       } })
   }
-
-  //TODO: Create new event series
 
   let seriesEl = null
   if(seriesLoading){
@@ -78,6 +78,21 @@ export default function EventForm(props){
       validate: {
         required: () => locationType === "physical",
       }})} />
+
+  const weightingSlider = (id, title) => <>
+    <Grid item xs={3}>
+      {title}
+    </Grid>
+    <Grid item xs={9}>
+      <Slider
+        marks={true} track={false}
+        valueLabelDisplay="auto"
+        min={-3} max={3}
+        defaultValue={props.event?.weightingCriteria?.[id] || 0}
+        {...register("weightingCriteria." + id)}
+      />
+    </Grid>
+  </>
 
   return <>
     <Typography variant='h5' gutterBottom>Event Series</Typography>
@@ -138,7 +153,9 @@ export default function EventForm(props){
                 defaultValue={props.event?.cost || "0.00"}
                 error={errors.cost != null} helperText={errors.cost ? "A valid number is required" : null}
                 required fullWidth
-                startAdornment={<InputAdornment position="start">&pound;</InputAdornment>}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">&pound;</InputAdornment>
+                }}
                 InputLabelProps={{ shrink: true }} 
                 {...register("cost", {required: true, pattern: /(0|[1-9][0-9]*)(\.[0-9]{2})?/})} />
             </Grid>
@@ -181,7 +198,7 @@ export default function EventForm(props){
 
         <Grid container>
           <Grid item xs={6}>
-            <FormControlLabel control={<Checkbox defaultChecked={props.event?.attendanceCriteria.includes("active") || true} value="active" {...register("attendanceCriteria.active")} />} label="Active Members" />
+            <FormControlLabel control={<Checkbox defaultChecked={props.event?.attendanceCriteria ? props.event.attendanceCriteria.includes("active") : true} value="active" {...register("attendanceCriteria.active")} />} label="Active Members" />
           </Grid>
 
           <Grid item xs={6}>
@@ -199,7 +216,64 @@ export default function EventForm(props){
           required fullWidth
           InputLabelProps={{ inputMode: "numeric", pattern: "[0-9]+" }} 
           {...register("attendanceLimit", {required: true, min: 0, pattern: "[0-9]+"})} />
+        
+        <Privileged allowed={["EVENTS"]}>
+          <Box>
+            <Typography variant='h6' gutterBottom>Allocation Rules</Typography>
+            <Typography variant='body2'>
+              Allocation rules are used to calculate suggested allocations for an event, and only apply if there is an attendance limit <em>and</em> the number of people registered for the event exceeds the attendance limit.
+              The number assigned to each rule indicates the number of times a name is added or removed from the hat where a member meets the criteria for that rule.
+              If there are no rules set (i.e. they are all 0), then allocation suggestions will be random.
+            </Typography>
+          </Box>
+          <Accordion>
+            <AccordionSummary>
+              Allocation Rules
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container>
+                <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
+                  <strong>Age</strong>
+                </Grid>
+                {weightingSlider("under_25", "Under 25")}
+                {weightingSlider("over_25", "Over 25")}
 
+                <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
+                  <strong>Joined QSWP</strong>
+                </Grid>
+                {weightingSlider("joined_1yr", "Past year")}
+                {weightingSlider("joined_2yr", "Past 2 years")}
+                {weightingSlider("joined_3yr", "Past 3 years")}
+                {weightingSlider("joined_5yr", "Past 5 years")}
+
+                <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
+                  <strong>Event Series Attendance</strong>
+                </Grid>
+                {weightingSlider("attended", "Previously")}
+                {weightingSlider("attended_1yr", "Past year")}
+                {weightingSlider("attended_2yr", "Past 2 years")}
+                {weightingSlider("attended_3yr", "Past 3 years")}
+                {weightingSlider("attended_5yr", "Past 5 years")}
+
+                <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
+                  <strong>Dropped Out of Events</strong>
+                </Grid>
+                {weightingSlider("droppedout_6mo", "Past 6 months")}
+                {weightingSlider("droppedout_1yr", "Past year")}
+                {weightingSlider("droppedout_2yr", "Past 2 years")}
+                {weightingSlider("droppedout_3yr", "Past 3 years")}
+
+                <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
+                  <strong>No Show at Events</strong>
+                </Grid>
+                {weightingSlider("noshow_6mo", "Past 6 months")}
+                {weightingSlider("noshow_1yr", "Past year")}
+                {weightingSlider("noshow_2yr", "Past 2 years")}
+                {weightingSlider("noshow_3yr", "Past 3 years")}
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        </Privileged>
       </Stack>
 
       <SubmitButton disabled={!eventSeriesId} submitting={props.submitting}>{props.event ? "Update" : "Create"} Event</SubmitButton>
