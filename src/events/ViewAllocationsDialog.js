@@ -33,7 +33,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
     setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
-    setSocialsCoord(groups.includes("MANAGER") || groups.includes("SOCIALS"));
+    setSocialsCoord(groups.includes("SOCIALS"));
   })
 
   useEffect(() => {

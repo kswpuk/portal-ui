@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, Fab, Grid, Typography } from "@mui/material"
+import { Button, Card, CardActionArea, CardActions, CardContent, Fab, Grid, Tooltip, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import Error from "../common/Error"
@@ -6,7 +6,7 @@ import Loading from "../common/Loading"
 import { useDeleteEventSeriesMutation, useListEventSeriesQuery } from "../redux/eventsApi"
 import { setTitle } from "../redux/navSlice"
 import Privileged from '../common/Privileged'
-import { Add, Delete, Edit } from '@mui/icons-material'
+import { Add, Celebration, Delete, Edit, EventBusy } from '@mui/icons-material'
 import AddEventSeriesDialog from "./AddEventSeriesDialog"
 import EditEventSeriesDialog from "./EditEventSeriesDialog"
 import ConfirmButton from "../common/ConfirmButton"
@@ -33,10 +33,18 @@ export default function EventSeries() {
     return <Error error={error}>Unable to load event series</Error>
   }
 
-  const typeDesc = {
-    "event": "Regular event",
-    "social": "Social event",
-    "no_impact": "Regular event, with no impact on allocations"
+  const eventTypeIcon = (type) => {
+    if (type === "social"){
+      return <Tooltip title="This is a social event">
+        <Celebration fontSize="small" sx={{ml: '0.5rem', verticalAlign: 'middle'}} color="primary" />
+      </Tooltip>
+    } else if (type === "no_impact") {
+      return <Tooltip title="This is event has no impact on allocations">
+        <EventBusy fontSize="small" sx={{ml: '0.5rem', verticalAlign: 'middle'}} color="primary" />
+      </Tooltip>
+    } else {
+      return null
+    }
   }
 
   return <>
@@ -44,9 +52,11 @@ export default function EventSeries() {
       {eventSeries.map(e => <Grid item xs={12} key={e.eventSeriesId}>
         <Card>
           <CardContent>
-            <Typography variant="h6">{e.name}</Typography>
+            <Typography variant="h6">
+              {e.name}
+              {eventTypeIcon(e.type)}
+            </Typography>
             <Typography variant="body2">{e.description}</Typography>
-            <Typography variant="body2" sx={{mt: '1rem'}}><strong>Event Type:</strong> {typeDesc[e.type]}</Typography>
 
             <Grid container spacing={2} sx={{mt: 1}}>
               {e["instances"].map(i => <Grid item xs={6} md={4} lg={3} xl={2}>
