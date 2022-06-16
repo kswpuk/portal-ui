@@ -8,6 +8,7 @@ import { Link as MUILink } from '@mui/material'
 import { useEffect } from 'react'
 import { useListApplicationsQuery } from '../redux/applicationsApi'
 import { AccessTimeFilled, AccessTimeOutlined, Circle, CircleOutlined } from '@mui/icons-material';
+import moment from 'moment';
 
 export default function ListApplications() {
   const dispatch = useDispatch()
@@ -37,6 +38,10 @@ export default function ListApplications() {
           renderCell: params => <MUILink component={Link} to={"/applications/"+params.value+"/view"}>{params.value}</MUILink>},
         {field: "firstName", headerName: "First Name", flex: 3, hideable: false},
         {field: "surname", headerName: "Surname", flex: 3, hideable: false},
+        {field: "submittedAt", headerName: "Application Date", flex: 2, hideable: false, type: 'date',
+          valueFormatter: (params) => moment.unix(params.value).format("YYYY-MM-DD"),
+          valueGetter: (params) => new Date(params.value)
+        },
         {
           field: "scouting", headerName: "Scout Reference", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
