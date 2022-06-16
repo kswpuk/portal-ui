@@ -54,10 +54,20 @@ export default function ListMembers() {
   let emails = null
   let toolbar = null
 
+  let columnsInitialState = {}
+
   if(isCommittee){
     columns.splice(-1, 0, {field: "email", headerName: "E-mail", flex: 3, hideable: false,
       renderCell: params => <EmailLink>{params.value}</EmailLink>})
+    columns.splice(-1, 0, {field: "age", headerName: "Age", type: 'number', flex: 1, hideable: true})
     
+    columnsInitialState = {
+      columnVisibilityModel: {
+        age: false
+      }
+    }
+
+
     emails = members.filter(m => selectionModel.includes(m.membershipNumber)).map(a => a.email).join(',')
 
     toolbar = () => {
@@ -108,7 +118,8 @@ export default function ListMembers() {
         },
         sorting: {
           sortModel: [{ field: "surname", sort: "asc"}]
-        }
+        },
+        columns: columnsInitialState
       }}
       onSelectionModelChange={(newSelectionModel) => {
         setSelectionModel(newSelectionModel);
