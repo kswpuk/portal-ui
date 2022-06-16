@@ -64,10 +64,19 @@ const membersApi = portalApi.injectEndpoints({
         body: {members: membershipNumbers}
       }),
       providesTags: ['MEMBERS_COMPARE'],
+    }),
+    export: builder.query({
+      query: ( {members, event} ) => ({
+        url: `members/export`,
+        method: 'POST',
+        body: {members, combinedEventId: event},
+        responseHandler: "text"
+      }),
+      providesTags: ['MEMBERS_EXPORT'],
     })
   }),
   overrideExisting: false,
 })
 
 export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation,
-  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery } = membersApi
+  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery, useExportQuery } = membersApi

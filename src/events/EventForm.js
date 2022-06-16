@@ -79,7 +79,7 @@ export default function EventForm(props){
         required: () => locationType === "physical",
       }})} />
 
-  const weightingSlider = (id, title) => <>
+  const weightingSlider = (id, title, defaultValue = 0) => <>
     <Grid item xs={3}>
       {title}
     </Grid>
@@ -88,7 +88,7 @@ export default function EventForm(props){
         marks={true} track={false}
         valueLabelDisplay="auto"
         min={-3} max={3}
-        defaultValue={props.event?.weightingCriteria?.[id] || 0}
+        defaultValue={props.event?.weightingCriteria?.[id] || defaultValue}
         {...register("weightingCriteria." + id)}
       />
     </Grid>
@@ -235,13 +235,13 @@ export default function EventForm(props){
                 <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
                   <strong>Age</strong>
                 </Grid>
-                {weightingSlider("under_25", "Under 25")}
+                {weightingSlider("under_25", "Under 25", 1)}
                 {weightingSlider("over_25", "Over 25")}
 
                 <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
                   <strong>Joined QSWP</strong>
                 </Grid>
-                {weightingSlider("joined_1yr", "Past year")}
+                {weightingSlider("joined_1yr", "Past year", 1)}
                 {weightingSlider("joined_2yr", "Past 2 years")}
                 {weightingSlider("joined_3yr", "Past 3 years")}
                 {weightingSlider("joined_5yr", "Past 5 years")}
@@ -259,7 +259,7 @@ export default function EventForm(props){
                   <strong>Dropped Out of Events</strong>
                 </Grid>
                 {weightingSlider("droppedout_6mo", "Past 6 months")}
-                {weightingSlider("droppedout_1yr", "Past year")}
+                {weightingSlider("droppedout_1yr", "Past year", -1)}
                 {weightingSlider("droppedout_2yr", "Past 2 years")}
                 {weightingSlider("droppedout_3yr", "Past 3 years")}
 
@@ -267,7 +267,7 @@ export default function EventForm(props){
                   <strong>No Show at Events</strong>
                 </Grid>
                 {weightingSlider("noshow_6mo", "Past 6 months")}
-                {weightingSlider("noshow_1yr", "Past year")}
+                {weightingSlider("noshow_1yr", "Past year", -2)}
                 {weightingSlider("noshow_2yr", "Past 2 years")}
                 {weightingSlider("noshow_3yr", "Past 3 years")}
               </Grid>

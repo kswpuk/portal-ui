@@ -13,6 +13,7 @@ import AddAllocationDialog from "./AddAllocationDialog";
 import { Auth } from "aws-amplify";
 import AllocationWidget from "./AllocationWidget";
 import EmailLink from "../common/EmailLink";
+import ExportCsvButton from "../common/ExportCsvButton";
 
 export default function ViewAllocationsDialog({event, open, onClose}) {
   const eventId = event.eventId
@@ -107,6 +108,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
 
         <DialogActions>
           <IconButton title="E-mail Selected" disabled={selectionModel.length === 0} sx={{marginRight: '8px'}} href={"mailto:?subject="+event.name+"&bcc="+emails}><Email /></IconButton>
+          <ExportCsvButton iconButton selected={selectionModel} event={eventSeriesId + "/" + eventId} filename={`event_${eventSeriesId}_${eventId}${selectionModel.length > 0 ? "_selected" : ""}`} />
           <IconButton title="Add Allocation" onClick={() => setShowAddAllocation(true)}><AddCircle /></IconButton>
           <Privileged allowed={["EVENTS"]}>
             <IconButton title="Suggest Allocations" onClick={suggestAllocations} disabled={isSuggesting || selectionModel === suggestion}><Assistant /></IconButton>

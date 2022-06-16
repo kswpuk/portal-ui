@@ -38,7 +38,7 @@ const eventsApi = portalApi.injectEndpoints({
         url: `events/${eventSeriesId}/${eventId}/register/${membershipNumber}`,
         method: 'POST'
       }),
-      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}],
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT'],
     }),
     suggestAllocations: builder.query({
       query: ({eventSeriesId, eventId}) => `events/${eventSeriesId}/${eventId}/allocate/suggest`,
@@ -52,7 +52,7 @@ const eventsApi = portalApi.injectEndpoints({
           "allocations": allocations
         }
       }),
-      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}],
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT'],
     }),
     listEventSeries: builder.query({
       query: (detailed) => detailed ? `events/_series?detailed=true` : `events/_series`,

@@ -26,8 +26,11 @@ export default function Shop() {
       Your items will be sent to the address we have on record for you (i.e. the address on the Portal).
       If you wish to have them sent to a different address, please let us know when placing the order.
     </Typography>
-    <Typography variant='body1'>
+    <Typography variant='body1' gutterBottom>
       All new members will receive a necker and a nametape at the first event they attend, and do <strong>not</strong> need to order one.
+    </Typography>
+    <Typography variant='body1'>
+      QSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/qswp">Carrie Lou Print and Embroidery</Link> store.
     </Typography>
   </>
 }

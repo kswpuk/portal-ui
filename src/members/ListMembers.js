@@ -14,6 +14,7 @@ import Help from '../common/Help'
 import MemberPhoto from '../common/MemberPhoto'
 import { Auth } from 'aws-amplify'
 import EmailLink from '../common/EmailLink'
+import ExportCsvButton from '../common/ExportCsvButton'
 
 export default function ListMembers() {
   const dispatch = useDispatch()
@@ -62,6 +63,7 @@ export default function ListMembers() {
     toolbar = () => {
       return <GridToolbarContainer>
         <Button startIcon={<Email />} disabled={selectionModel.length === 0} href={"mailto:?bcc="+emails}>E-mail Selected</Button>
+        <ExportCsvButton selected={selectionModel} filename={`members${selectionModel.length > 0 ? "_selected" : ""}`} />
       </GridToolbarContainer>
     }
   }
