@@ -6,6 +6,8 @@ import Error from "../common/Error";
 import SubmitButton from "../common/SubmitButton";
 import { useSubmitApplicationMutation } from "../redux/applicationsApi";
 import Submitted from "./Submitted";
+import { Link as RouterLink } from 'react-router-dom'
+
 
 export default function ApplicationForm(){
 
@@ -43,6 +45,7 @@ export default function ApplicationForm(){
     </Typography>
     <Typography variant="body1" gutterBottom>
         If you have any questions about joining the QSWP, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
+        If you have already submitted an application, you can check on its <Link to="/join/status" component={RouterLink}>status online</Link> .
     </Typography>
 
     {submitError ? <Error error={submitError}>An error occurred whilst submitting your application form.</Error> : null}
@@ -73,7 +76,7 @@ export default function ApplicationForm(){
               error={errors.dateOfBirth != null} helperText={errors.dateOfBirth ? "This field is required" : null}
               required fullWidth type="date"
               InputLabelProps={{ shrink: true }} 
-            {...register("dateOfBirth")} />
+            {...register("dateOfBirth", {required: true})} />
         </Stack>
       </Box>
 

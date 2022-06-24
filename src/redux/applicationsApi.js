@@ -59,8 +59,16 @@ const applicationsApi = portalApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, membershipNumber) => [{type: 'REFERENCES', id: membershipNumber}],
     }),
+    getStatus: builder.query({
+      query: ({membershipNumber, dateOfBirth}) => ({
+        url: `applications/${membershipNumber}/status`,
+        method: 'POST',
+        body: {dateOfBirth}
+      })
+    })
   }),
   overrideExisting: false,
 })
 
-export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useGetReferenceQuery, useAcceptReferenceMutation, useDeleteApplicationMutation, useApproveApplicationMutation, useSubmitApplicationMutation, useSubmitReferenceMutation } = applicationsApi
+export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useGetReferenceQuery, useAcceptReferenceMutation, useDeleteApplicationMutation, useApproveApplicationMutation,
+  useSubmitApplicationMutation, useSubmitReferenceMutation, useGetStatusQuery } = applicationsApi
