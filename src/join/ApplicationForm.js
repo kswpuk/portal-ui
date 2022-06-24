@@ -45,7 +45,7 @@ export default function ApplicationForm(){
     </Typography>
     <Typography variant="body1" gutterBottom>
         If you have any questions about joining the QSWP, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
-        If you have already submitted an application, you can check on its <Link to="/join/status" component={RouterLink}>status online</Link> .
+        If you have already submitted an application, you can <Link to="/join/status" component={RouterLink}>check on its status</Link> online.
     </Typography>
 
     {submitError ? <Error error={submitError}>An error occurred whilst submitting your application form.</Error> : null}
