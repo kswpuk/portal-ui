@@ -23,7 +23,9 @@ ReactDOM.render(
       <AmplifyProvider>
         <HelmetProvider>
           <Provider store={store}>
-            <AuthApp />
+            <div data-theme={prefersDarkMode ? "dark" : "light"}>
+              <AuthApp />
+            </div>
           </Provider>
         </HelmetProvider>
       </AmplifyProvider>

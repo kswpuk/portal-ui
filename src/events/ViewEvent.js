@@ -64,7 +64,6 @@ export default function ViewEvent(){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading this event</Error>
   }
 
-  // TODO: Descriptive text for weightings
   // TODO: Map?
 
   // Event dates

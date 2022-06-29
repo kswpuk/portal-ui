@@ -1,17 +1,19 @@
 import { useDispatch } from 'react-redux'
 import { selectChangePassword, setTitle } from '../redux/navSlice'
-import { Box, Button, IconButton, InputAdornment, Link, Stack, TextField, Typography } from '@mui/material';
+import { Box, IconButton, InputAdornment, Link, Stack, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Error from '../common/Error';
 import Success from '../common/Success';
 import { Auth } from 'aws-amplify';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import SubmitButton from '../common/SubmitButton';
 
 export default function ChangePassword() {
   const dispatch = useDispatch()
 
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
 
@@ -22,6 +24,7 @@ export default function ChangePassword() {
 
   const changePassword = data => {
     setSuccess(false)
+    setLoading(true)
     setError(null)
 
     Auth.currentAuthenticatedUser()
@@ -30,14 +33,14 @@ export default function ChangePassword() {
     })
     .then(() => {
       setSuccess(true)
+      setLoading(false)
       reset()
     })
     .catch(err => {
       setError(err.message)
+      setLoading(false)
     });
   }
-
-  // TODO: Update button to loading whilst submitting form
 
   return <>
     <form onSubmit={handleSubmit(changePassword)}>
@@ -72,7 +75,7 @@ export default function ChangePassword() {
           }} {...register("newPassword", {required: true, minLength: 8})} />
 
         <Box>
-          <Button variant="contained" type="submit">Change Password</Button>
+          <SubmitButton submitting={loading}>Change Password</SubmitButton>
         </Box>
       </Stack>
       

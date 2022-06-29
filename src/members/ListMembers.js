@@ -42,8 +42,6 @@ export default function ListMembers() {
   const committee = members.filter(x => x.role)
   committee.sort((a, b) => (committeeRoles[a.role]["sortOrder"] > committeeRoles[b.role]["sortOrder"]) ? 1 : -1)
 
-  //TODO: Center grid in small display, hide committee members when small?
-
   const columns = [
     {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
@@ -78,10 +76,12 @@ export default function ListMembers() {
     }
   }
 
+  // TODO: Hide committee members on small displays?
+
   return <>
     <Typography variant='h5' gutterBottom>Committee Members</Typography>
 
-    <Grid container spacing={2} sx={{mb: 3}}>
+    <Grid container spacing={2} sx={{mb: 3, display: "flex", justifyContent: "center"}}>
 
       {committee.map(x => <Grid key={"committee_"+x.membershipNumber} item>
         <Card variant="outlined">

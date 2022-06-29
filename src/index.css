@@ -1,3 +1,25 @@
+:root {
+  --background-registered: #e3f2fd;
+  --background-allocated_attended: #f1f8e9;
+  --background-notallocated: #eceff1;
+  --background-reserve: #fffde7;
+  --background-droppedout_noshow: #ffebee;
+  
+  --border-registered: #64b5f6;
+  --border-allocated_attended: #aed581;
+  --border-notallocated: #90a4ae;
+  --border-reserve: #fff176;
+  --border-droppedout_noshow: #e57373;
+}
+
+[data-theme='dark'] {
+  --background-registered: #1565c0;
+  --background-allocated_attended: #558b2f;
+  --background-notallocated: #37474f;
+  --background-reserve: #f9a825;
+  --background-droppedout_noshow: #c62828;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,41 +35,41 @@ code {
 }
 
 .allocation_REGISTERED {
-  background-color: #e3f2fd !important;
+  background-color: var(--background-registered) !important;
 }
 
 .allocation_ALLOCATED, .allocation_ATTENDED {
-  background-color: #f1f8e9 !important;
+  background-color: var(--background-allocated_attended) !important;
 }
 
 .allocation_NOT_ALLOCATED {
-  background-color: #eceff1 !important;
+  background-color: var(--background-notallocated) !important;
 }
 
 .allocation_RESERVE {
-  background-color: #fffde7 !important;
+  background-color: var(--background-reserve) !important;
 }
 
 .allocation_DROPPED_OUT, .allocation_NO_SHOW {
-  background-color: #ffebee !important;
+  background-color: var(--background-droppedout_noshow) !important;
 }
 
 .allocation_outline_REGISTERED {
-  border-color: #64b5f6 !important;
+  border-color: var(--border-registered) !important;
 }
 
 .allocation_outline_ALLOCATED, .allocation_outline_ATTENDED {
-  border-color: #aed581 !important;
+  border-color: var(--border-allocated_attended) !important;
 }
 
 .allocation_outline_NOT_ALLOCATED {
-  border-color: #90a4ae !important;
+  border-color: var(--border-notallocated) !important;
 }
 
 .allocation_outline_RESERVE {
-  border-color: #fff176 !important;
+  border-color: var(--border-reserve) !important;
 }
 
 .allocation_outline_DROPPED_OUT, .allocation_outline_NO_SHOW {
-  border-color: #e57373 !important;
+  border-color: var(--border-droppedout_noshow) !important;
 }
