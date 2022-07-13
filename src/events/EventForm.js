@@ -103,7 +103,7 @@ export default function EventForm(props){
 
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3} sx={{marginBottom: '1rem'}}>
-        {props.error ? <Error error={props.error}>An error occurred whilst submitting your application form.</Error> : null}
+        {props.error ? <Error error={props.error}>An error occurred whilst {props.event ? "updating" : "creating"} your event.</Error> : null}
 
         <TextField variant="outlined" label="Details"
           defaultValue={props.event?.details}
