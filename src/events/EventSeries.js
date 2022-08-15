@@ -59,7 +59,7 @@ export default function EventSeries() {
             <Typography variant="body2">{e.description}</Typography>
 
             <Grid container spacing={2} sx={{mt: 1}}>
-              {e["instances"].map(i => <Grid item xs={6} md={4} lg={3} xl={2}>
+              {e["instances"].map(i => <Grid item xs={6} md={4} lg={3}>
                 <Card variant="outlined">
                   <CardActionArea sx={{p: 1, pt: '1rem'}} component={Link} to={`/events/${i["eventSeriesId"]}/${i["eventId"]}`}>
                     <DateRangeWidget startDate={i.startDate} endDate={i.endDate} marginBottom='0.5rem' />

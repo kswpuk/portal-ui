@@ -27,6 +27,7 @@ export default function ReferenceForm(props) {
       </Typography>
       <Typography variant="body1" gutterBottom>
         If you have any questions regarding this reference, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
+        For information on what information we collect and how it is used, please refer to our <Link href="http://www.qswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
       </Typography>
     </>
   }else if(isLoading){
@@ -48,6 +49,7 @@ export default function ReferenceForm(props) {
     </Typography>
     <Typography variant="body1" gutterBottom>
       If you have any questions regarding this reference, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
+      For information on what information we collect and how it is used, please refer to our <Link href="http://www.qswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
     </Typography>
 
     { submitError? <Error error={submitError}>An error occurred whilst processing your reference.</Error> : null }

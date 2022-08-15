@@ -1,5 +1,5 @@
 import { Approval, BarChart, Close, CurrencyPound, Event, Home, Logout, Password, People, Person, PhotoCamera, ShoppingBag } from '@mui/icons-material';
-import { Box, Divider, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Toolbar, Typography, useMediaQuery } from '@mui/material';
+import { Box, Divider, Drawer, IconButton, Link as MuiLink, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { drawerWidth } from '../consts';
@@ -20,6 +20,7 @@ export default function Sidebar(props) {
       </Typography>
       { isMobile ? <IconButton onClick={props.onDrawerClose}><Close /></IconButton> :  null }
     </Toolbar>
+    <Box sx={{display: 'flex', flexDirection: 'column', height: '100%'}}>
     <Box sx={{ overflow: 'auto' }}>
       <List>
         <ListItemButton component={Link} to="/" selected={selected === HOME}>
@@ -106,6 +107,9 @@ export default function Sidebar(props) {
           <ListItemText primary="Log Out" />
         </ListItemButton>
       </List>
+    </Box>
+    <Box sx={{flexGrow: 1}}></Box>
+    <Box sx={{padding: 1, fontSize: 'small'}}><MuiLink href="http://www.qswp.org.uk/members/dataPolicy.html" target="_blank">Data Policy</MuiLink></Box>
     </Box>
   </>
 
