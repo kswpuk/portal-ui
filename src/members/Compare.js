@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Box, Button, Link as MUILink, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from "react-hook-form";
@@ -11,6 +11,8 @@ import Error from '../common/Error';
 import { DataGrid } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import { PersonAdd, PersonRemove } from '@mui/icons-material';
+import { Link } from 'react-router-dom'
+
 
 export default function Compare() {
   const dispatch = useDispatch()
@@ -54,7 +56,7 @@ export default function Compare() {
           sortModel: [{ field: "membershipNumber", sort: "asc"}]
         }
       }} columns={[
-          {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false},
+          {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false, renderCell: params => <MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink>},
           {field: "name", headerName: "Name", flex: 2, hideable: false, renderCell: params => params.row.name || <Grey>Unknown</Grey>},
           {field: "action", headerName: "Action", flex: 2, hideable: false, renderCell: params => {
             switch(params.row.action){

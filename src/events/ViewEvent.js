@@ -223,7 +223,7 @@ export default function ViewEvent(){
         <Card elevation={3} className={"allocation_"+currentAllocation}>
           <CardContent>
             <Typography variant="h6" gutterBottom>Attendance</Typography>
-            <AllocationWidget allocation={currentAllocation} verbose marginBottom={allocations !== null ? '1.5rem' : '0rem'}/>
+            <AllocationWidget allocation={currentAllocation} verbose marginBottom={allocations !== null ? '1.5rem' : '0rem'} eligible={event.eligibility.eligible}/>
             {allocations}
             {allocationCountText}
             
