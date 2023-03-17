@@ -9,7 +9,7 @@ export default function Join(props){
     <AppBar position="fixed">
       <Toolbar variant='dense'>
         <Container sx={{display: 'flex'}}>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}> Queen's Scout Working Party </Typography>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}> King's Scout Working Party </Typography>
           <Button component={Link} color="inherit" variant="outlined" to="/">Already a member?</Button>
         </Container>
       </Toolbar>

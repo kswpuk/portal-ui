@@ -64,7 +64,7 @@ export default function PayMembership() {
       text = <>
         <Typography variant="body1">
           Your membership expired on {expiryDateEl}, and payment of &pound;5.00 is now due.
-          You will not be eligible to register for or attend any QSWP events until membership has been paid.
+          You will not be eligible to register for or attend any KSWP events until membership has been paid.
         </Typography>
       </>
     }

@@ -40,7 +40,7 @@ export default function Compare() {
 
     return <>
       <Typography variant='body1' gutterBottom>
-        The actions required to make the external list (Compass) match the Portal are detailed below. A 60 day grace period is given to members whose membership has expired on the QSWP Portal before they are recommended for removal.
+        The actions required to make the external list (Compass) match the Portal are detailed below. A 60 day grace period is given to members whose membership has expired on the KSWP Portal before they are recommended for removal.
       </Typography>
 
       <DataGrid autoHeight checkboxSelection={true} sx={{marginTop: '1rem'}} initialState={{

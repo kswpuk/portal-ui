@@ -10,18 +10,21 @@ export default function Shop() {
 
   return <>
     <Typography variant='body1'>
-      The shop is currently being redeveloped, and is not available online.
-      If you wish to order additional neckers or nametapes, please review the price list below and e-mail the <Link href="mailto:manager@qswp.org.uk">QSWP Manager</Link> with your order.
-      Bank transfer of the full amount will be required prior to any items being sent.
+      <strong>Please note:</strong> All members (including those who were previously members of the QSWP) will receive a KSWP necker and nametape at their first KSWP event, and that you will not be able to order additional neckers or nametapes until you have attended a KSWP event.
+    </Typography>
+
+    <Typography variant='body1'>
+      The shop is currently being redeveloped, and is not available online. Please view the price list below, and contact the <Link href="mailto:manager@kswp.org.uk">KSWP Manager</Link> if you would like to place an order.
+      Some stock of old QSWP nametapes and neckers may be availableon request.
     </Typography>
     <ul>
-      <li><Typography variant='body1'>QSWP Necker - &pound;7.50</Typography></li>
-      <li><Typography variant='body1'>QSWP Nametape (Green) - &pound;0.50</Typography></li>
-      <li><Typography variant='body1'>QSWP Nametape (Blue) - &pound;0.50</Typography></li>
-      <li><Typography variant='body1'>75th Anniversary Badge - &pound;2.50</Typography></li>
+      <li><Typography variant='body1'>KSWP Necker - &pound;7.50</Typography></li>
+      <li><Typography variant='body1'>KSWP Nametape (Green) - &pound;0.50</Typography></li>
+      <li><Typography variant='body1'>KSWP Nametape (Blue) - &pound;0.50</Typography></li>
+      <li><Typography variant='body1'>75th Anniversary Badge - &pound;1.50</Typography></li>
     </ul>
     <Typography variant='body1' gutterBottom>
-      Our preferred delivery method is to give you your items at the next QSWP event that you attend.
+      Our preferred delivery method is to give you your items at the next KSWP event that you attend.
       However, if you prefer, we can post them to you for an additional cost of &pound;2.00.
       Your items will be sent to the address we have on record for you (i.e. the address on the Portal).
       If you wish to have them sent to a different address, please let us know when placing the order.
@@ -30,7 +33,7 @@ export default function Shop() {
       All new members will receive a necker and a nametape at the first event they attend, and do <strong>not</strong> need to order one.
     </Typography>
     <Typography variant='body1'>
-      QSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/qswp">Carrie Lou Print and Embroidery</Link> store.
+      KSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/kswp">Carrie Lou Print and Embroidery</Link> store.
     </Typography>
   </>
 }

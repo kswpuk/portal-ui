@@ -51,13 +51,13 @@ function getRuleText(rule) {
       return "joined in the last 5 years"
     // QSA
     case "qsa_1yr":
-      return "received your Queen's Scout Award in the last year"
+      return "received your King/Queen's Scout Award in the last year"
     case "qsa_2yr":
-      return "received your Queen's Scout Award in the last 2 years"
+      return "received your King/Queen's Scout Award in the last 2 years"
     case "qsa_3yr":
-      return "received your Queen's Scout Award in the last 3 years"
+      return "received your King/Queen's Scout Award in the last 3 years"
     case "qsa_5yr":
-      return "received your Queen's Scout Award in the last 5 years"
+      return "received your King/Queen's Scout Award in the last 5 years"
     default:
       return <>{rule}</>
   }

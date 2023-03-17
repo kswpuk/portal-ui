@@ -82,7 +82,7 @@ export default function ViewEvent(){
       eventPayee = "the event organiser"
       break
     case "_qswp":
-      eventPayee = "the QSWP"
+      eventPayee = "the KSWP"
       break
     default:
       eventPayee = event.payee

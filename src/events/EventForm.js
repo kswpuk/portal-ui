@@ -167,7 +167,7 @@ export default function EventForm(props){
                 labelId="selectPayee-label" label="Payable to"
                 value={payee} onChange={handlePayeeChange}>
                   <MenuItem value="_organiser">Event Organiser</MenuItem>
-                  <MenuItem value="_qswp">QSWP</MenuItem>
+                  <MenuItem value="_qswp">KSWP</MenuItem>
               </Select>
             </FormControl>
             </Grid>
@@ -239,7 +239,7 @@ export default function EventForm(props){
                 {weightingSlider("over_25", "Over 25")}
 
                 <Grid item xs={12} sx={{marginBottom: '0.5rem'}}>
-                  <strong>Joined QSWP</strong>
+                  <strong>Joined KSWP</strong>
                 </Grid>
                 {weightingSlider("joined_1yr", "Past year", 1)}
                 {weightingSlider("joined_2yr", "Past 2 years")}

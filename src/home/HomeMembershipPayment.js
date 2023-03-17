@@ -31,11 +31,11 @@ export default function HomeMembershipPayment(props) {
     <CardContent>
       <Typography variant="body2" gutterBottom>
         You are currently an inactive member.
-        This means your membership has lapsed, and you are no longer able to attend QSWP events.
+        This means your membership has lapsed, and you are no longer able to attend KSWP events.
         You can reactivate your membership by <MUILink component={Link} to={"/user/pay"}>paying your annual membership fee</MUILink>.
       </Typography>
       <Typography variant="body2">
-        After 2 years as an inactive member, your account will be deleted and you will need to reapply to join the QSWP if you wish to renew your membership.
+        After 2 years as an inactive member, your account will be deleted and you will need to reapply to join the KSWP if you wish to renew your membership.
         Your account will be deleted on <strong>{deleted.toLocaleDateString('en-gb', { year:"numeric", month:"long", day: "numeric"})}</strong> unless you renew your membership.
       </Typography>
     </CardContent>

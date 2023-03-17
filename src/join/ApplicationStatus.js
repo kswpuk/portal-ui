@@ -67,7 +67,7 @@ export default function ApplicationStatus(){
       </Typography>
 
       <Typography variant="body1" sx={{marginTop: '1rem'}}>
-        The link your referees need in order to complete their references is: <Link href={`https://portal.qswp.org.uk/join/${status.membershipNumber}/reference`}>https://portal.qswp.org.uk/join/{status.membershipNumber}/reference</Link>.<br />
+        The link your referees need in order to complete their references is: <Link href={`https://portal.kswp.org.uk/join/${status.membershipNumber}/reference`}>https://portal.kswp.org.uk/join/{status.membershipNumber}/reference</Link>.<br />
         You can also pass this link to alternative referees if your original referees are no longer able to help with the application process.
       </Typography>
 
@@ -82,8 +82,8 @@ export default function ApplicationStatus(){
     return <Box>
       <Typography variant="h4" gutterBottom>Check Application Status</Typography>
       <Typography variant="body1" gutterBottom>
-          If you have previously applied to join the QSWP, you can check the status of your application by filling out the details below.
-          If you have any questions regarding your application, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
+          If you have previously applied to join the KSWP, you can check the status of your application by filling out the details below.
+          If you have any questions regarding your application, please contact our <Link href="mailto:members@kswp.org.uk">Membership Coordinator</Link>.
       </Typography>
 
       {error ? <Error error={error}>An error occurred whilst checking the status of your application</Error> : null }

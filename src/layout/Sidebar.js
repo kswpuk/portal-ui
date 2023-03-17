@@ -16,7 +16,7 @@ export default function Sidebar(props) {
   const drawerContent = <>
     <Toolbar variant='dense'>
       <Typography variant="h6" noWrap component="div" flex={1}>
-        QSWP Portal
+        KSWP Portal
       </Typography>
       { isMobile ? <IconButton onClick={props.onDrawerClose}><Close /></IconButton> :  null }
     </Toolbar>
@@ -109,7 +109,7 @@ export default function Sidebar(props) {
       </List>
     </Box>
     <Box sx={{flexGrow: 1}}></Box>
-    <Box sx={{padding: 1, fontSize: 'small'}}><MuiLink href="http://www.qswp.org.uk/members/dataPolicy.html" target="_blank">Data Policy</MuiLink></Box>
+    <Box sx={{padding: 1, fontSize: 'small'}}><MuiLink href="http://www.kswp.org.uk/members/dataPolicy.html" target="_blank">Data Policy</MuiLink></Box>
     </Box>
   </>
 

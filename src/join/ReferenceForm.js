@@ -26,8 +26,8 @@ export default function ReferenceForm(props) {
         If we have any queries regarding your application, we will be in touch.
       </Typography>
       <Typography variant="body1" gutterBottom>
-        If you have any questions regarding this reference, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
-        For information on what information we collect and how it is used, please refer to our <Link href="http://www.qswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
+        If you have any questions regarding this reference, please contact our <Link href="mailto:members@kswp.org.uk">Membership Coordinator</Link>.
+        For information on what information we collect and how it is used, please refer to our <Link href="http://www.kswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
       </Typography>
     </>
   }else if(isLoading){
@@ -43,13 +43,13 @@ export default function ReferenceForm(props) {
   return <Box>
     <Typography variant="h4" gutterBottom>Reference for {applicant.firstName} {applicant.surname}</Typography>
     <Typography variant="body1" gutterBottom>
-      The Queen's Scout Working Party is a national Scout Active Support Unit that supports national Scouting events and promotes the top awards.
-      You have been nominated as a referee for {applicant.firstName} {applicant.surname}, who has applied to join the QSWP, and we ask that you spend a few minutes to complete the following reference form so we can progress their application.
+      The King's Scout Working Party is a national Scout Active Support Unit that supports national Scouting events and promotes the top awards.
+      You have been nominated as a referee for {applicant.firstName} {applicant.surname}, who has applied to join the KSWP, and we ask that you spend a few minutes to complete the following reference form so we can progress their application.
       We appreciate your input into the application process, and thank you for your time completing this form.
     </Typography>
     <Typography variant="body1" gutterBottom>
-      If you have any questions regarding this reference, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
-      For information on what information we collect and how it is used, please refer to our <Link href="http://www.qswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
+      If you have any questions regarding this reference, please contact our <Link href="mailto:members@kswp.org.uk">Membership Coordinator</Link>.
+      For information on what information we collect and how it is used, please refer to our <Link href="http://www.kswp.org.uk/members/dataPolicy.html">Data Policy</Link>.
     </Typography>
 
     { submitError? <Error error={submitError}>An error occurred whilst processing your reference.</Error> : null }

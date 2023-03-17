@@ -9,7 +9,7 @@ export default function Header(props) {
 
   return <>
     <Helmet>
-      <title>{title ? title + " - ": ""}QSWP Portal</title>
+      <title>{title ? title + " - ": ""}KSWP Portal</title>
     </Helmet>
     <AppBar position="fixed" 
       sx={{ 

@@ -37,14 +37,14 @@ export default function ApplicationForm(){
   }
 
   return <Box>
-    <Typography variant="h4" gutterBottom>Join the QSWP</Typography>
+    <Typography variant="h4" gutterBottom>Join the KSWP</Typography>
     <Typography variant="body1" gutterBottom>
-        The Queen's Scout Working Party is a national Scout Active Support Unit that supports national Scouting events and promotes the top awards.
-        As a Queen's Scout Award holder, you are applicable to join the QSWP by completing the form below.
+        The King's Scout Working Party is a national Scout Active Support Unit that supports national Scouting events and promotes the top awards.
+        As a King's Scout Award or Queen's Scout Award holder, you are applicable to join the KSWP by completing the form below.
         It may take a number of weeks to process your application, and we will not be able to accept your application until we have received references from the two referees you provide below.
     </Typography>
     <Typography variant="body1" gutterBottom>
-        If you have any questions about joining the QSWP, please contact our <Link href="mailto:members@qswp.org.uk">Membership Coordinator</Link>.
+        If you have any questions about joining the KSWP, please contact our <Link href="mailto:members@kswp.org.uk">Membership Coordinator</Link>.
         If you have already submitted an application, you can <Link to="/join/status" component={RouterLink}>check on its status</Link> online.
     </Typography>
 
@@ -111,14 +111,14 @@ export default function ApplicationForm(){
       </Box>
 
       <Box>
-        <Typography variant='h5' gutterBottom>Your Queen's Scout Award</Typography>
+        <Typography variant='h5' gutterBottom>Your King's Scout or Queen's Scout Award</Typography>
 
         <Stack spacing={3}>
           <Typography variant="body2" gutterBottom>
-            Please provide some evidence that you have received your Queen's Scout Award. This could be, for example, a scan of your Queen's Scout Award certificate or a photo of you receiving your award.
+            Please provide some evidence that you have received your King's Scout or Queen's Scout Award. This could be, for example, a scan of your certificate or a photo of you receiving your award.
           </Typography>
 
-          <TextField variant="outlined" label="Month you received your Queen's Scout Award"
+          <TextField variant="outlined" label="Month you received your King's Scout or Queen's Scout Award"
                 error={errors.qsaReceived != null} helperText={errors.qsaReceived ? "This field is required (YYYY-MM)" : null}
                 required fullWidth type="month"
                 InputLabelProps={{ shrink: true }} 
@@ -186,20 +186,20 @@ export default function ApplicationForm(){
       <Box>
         <Typography variant='h5' gutterBottom>Declaration</Typography>
         <Typography variant="body2" gutterBottom>
-          By submitting this form, you confirm that you are a Queen's Scout Award holder and that you either hold or would be willing to obtain a DBS check through The Scout Association.
+          By submitting this form, you confirm that you are a King's Scout or Queen's Scout Award holder and that you either hold or would be willing to obtain a DBS check through The Scout Association.
           You also confirm that all the information you have provided is correct and complete.
         </Typography>
         <Typography variant="body2" gutterBottom>
-          By submitting this form, you consent to the QSWP holding the information you have provided for the purposes of assessing your application, and for us to contact The Scout Association and your references regarding your application.
-          For more information, please refer to our <Link href="http://www.qswp.org.uk/members/dataPolicy.html" target="_blank" rel="noreferrer">Data Policy</Link>.
+          By submitting this form, you consent to the KSWP holding the information you have provided for the purposes of assessing your application, and for us to contact The Scout Association and your references regarding your application.
+          For more information, please refer to our <Link href="http://www.kswp.org.uk/members/dataPolicy.html" target="_blank" rel="noreferrer">Data Policy</Link>.
         </Typography>
         <Typography variant="body2" gutterBottom>
-          Upon joining the QSWP, you will be expected to pay an annual &pound;5.00 membership fee - details will be sent out once your application is successful.
+          Upon joining the KSWP, you will be expected to pay an annual &pound;5.00 membership fee - details will be sent out once your application is successful.
           This must be paid within 3 months of your application being accepted, else your membership may be revoked and you will need to apply again.
         </Typography>
         <Typography variant="body2" gutterBottom>
-          We expect members of the QSWP to support at least two events per year.
-          If you are concerned about meeting this commitment, please contact our <Link href="mailto:events@qswp.org.uk">Events Coordinator</Link> to discuss prior to submitting your application.
+          We expect members of the KSWP to support at least two events per year.
+          If you are concerned about meeting this commitment, please contact our <Link href="mailto:events@kswp.org.uk">Events Coordinator</Link> to discuss prior to submitting your application.
         </Typography>
 
         <FormGroup>
