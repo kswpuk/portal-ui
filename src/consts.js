@@ -3,33 +3,33 @@ export const baseUrl = process.env.REACT_APP_STAGE === "prod" ? "https://yw6qyqs
 
 export const committeeRoles = {
   "MANAGER": {
-    "name": "QSWP Manager",
-    "email": "manager@qswp.org.uk",
+    "name": "KSWP Manager",
+    "email": "manager@kswp.org.uk",
     "sortOrder": 0
   },
   "EVENTS": {
     "name": "Events Coordinator",
-    "email": "events@qswp.org.uk",
+    "email": "events@kswp.org.uk",
     "sortOrder": 1
   },
   "MONEY": {
     "name": "Finance Coordinator",
-    "email": "money@qswp.org.uk",
+    "email": "money@kswp.org.uk",
     "sortOrder": 2
   },
   "MEMBERS": {
     "name": "Membership Coordinator",
-    "email": "members@qswp.org.uk",
+    "email": "members@kswp.org.uk",
     "sortOrder": 3
   },
   "MEDIA": {
     "name": "Media Coordinator",
-    "email": "media@qswp.org.uk",
+    "email": "media@kswp.org.uk",
     "sortOrder": 4
   },
   "SOCIALS": {
     "name": "Socials Coordinator",
-    "email": "socials@qswp.org.uk",
+    "email": "socials@kswp.org.uk",
     "sortOrder": 5
   }
 }

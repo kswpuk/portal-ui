@@ -15,7 +15,7 @@ export default function AuthApp() {
     Header() {
       return <View textAlign="center" style={{margin: '2rem'}}>
         <Image
-          alt="QSWP Crown Logo"
+          alt="KSWP Crown Logo"
           src="/logo192.png"
         />
       </View>
