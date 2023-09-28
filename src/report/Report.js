@@ -1,5 +1,8 @@
 import { useDispatch } from 'react-redux'
 import { selectReport, setTitle } from '../redux/navSlice'
+import MembersReport from './MembersReport'
+import EventsReport from './EventsReport'
+import ApplicationsReport from './ApplicationsReport'
 
 export default function Report() {
   const dispatch = useDispatch()
@@ -7,5 +10,14 @@ export default function Report() {
   dispatch(setTitle("Report"))
   dispatch(selectReport())
 
-  return <p>Report</p>
+  return <>
+    <h1>Events</h1>
+    <EventsReport />
+
+    <h1>Membership</h1>
+    <MembersReport />
+
+    <h1>Applications</h1>
+    <ApplicationsReport />
+  </>
 }

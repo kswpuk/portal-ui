@@ -84,11 +84,17 @@ const eventsApi = portalApi.injectEndpoints({
         method: 'DELETE'
       }),
       invalidatesTags: ['ALL_EVENT_SERIES'],
-    })
+    }),
+    eventsReport: builder.query({
+      query: () => 'events/report',
+      providesTags: ['EVENTS_REPORT'],
+    }),
   }),
   overrideExisting: false,
 })
 
 export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useEditEventMutation, useDeleteEventMutation,
   useRegisterForEventMutation, useSuggestAllocationsQuery, useAllocateToEventMutation,
-  useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation, useEditEventSeriesMutation, useDeleteEventSeriesMutation } = eventsApi
+  useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation, useEditEventSeriesMutation, useDeleteEventSeriesMutation,
+  useEventsReportQuery
+} = eventsApi

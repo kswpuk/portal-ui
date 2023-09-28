@@ -73,10 +73,14 @@ const membersApi = portalApi.injectEndpoints({
         responseHandler: "text"
       }),
       providesTags: ['MEMBERS_EXPORT'],
-    })
+    }),
+    membersReport: builder.query({
+      query: () => 'members/report',
+      providesTags: ['MEMBERS_REPORT'],
+    }),
   }),
   overrideExisting: false,
 })
 
 export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation,
-  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery, useExportQuery } = membersApi
+  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery, useExportQuery, useMembersReportQuery } = membersApi

@@ -62,7 +62,7 @@ export default function Sidebar(props) {
           <ListItemText primary="Members" />
         </ListItemButton>
 
-        <Privileged allows={[]}>
+        <Privileged allows={["COMMITTEE"]}>
           <ListItemButton component={Link} to="/report" selected={selected === REPORT}>
             <ListItemIcon>
               <BarChart />

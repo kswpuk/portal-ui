@@ -65,10 +65,14 @@ const applicationsApi = portalApi.injectEndpoints({
         method: 'POST',
         body: {dateOfBirth}
       })
-    })
+    }),
+    applicationsReport: builder.query({
+      query: () => 'applications/report',
+      providesTags: ['APPLICATIONS_REPORT'],
+    }),
   }),
   overrideExisting: false,
 })
 
 export const { useListApplicationsQuery, useGetApplicationQuery, useGetApplicationHeadQuery, useListReferencesQuery, useGetReferenceQuery, useAcceptReferenceMutation, useDeleteApplicationMutation, useApproveApplicationMutation,
-  useSubmitApplicationMutation, useSubmitReferenceMutation, useGetStatusQuery } = applicationsApi
+  useSubmitApplicationMutation, useSubmitReferenceMutation, useGetStatusQuery, useApplicationsReportQuery } = applicationsApi
