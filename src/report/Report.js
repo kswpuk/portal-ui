@@ -3,6 +3,7 @@ import { selectReport, setTitle } from '../redux/navSlice'
 import MembersReport from './MembersReport'
 import EventsReport from './EventsReport'
 import ApplicationsReport from './ApplicationsReport'
+import Maps from './Maps'
 
 export default function Report() {
   const dispatch = useDispatch()
@@ -19,5 +20,8 @@ export default function Report() {
 
     <h1>Applications</h1>
     <ApplicationsReport />
+
+    <h1>Locations</h1>
+    <Maps />
   </>
 }

@@ -89,6 +89,10 @@ const eventsApi = portalApi.injectEndpoints({
       query: () => 'events/report',
       providesTags: ['EVENTS_REPORT'],
     }),
+    eventsAttendanceReport: builder.query({
+      query: () => 'events/report/attendance',
+      providesTags: ['EVENTS_ATTENDANCE_REPORT'],
+    }),
   }),
   overrideExisting: false,
 })
@@ -96,5 +100,5 @@ const eventsApi = portalApi.injectEndpoints({
 export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useEditEventMutation, useDeleteEventMutation,
   useRegisterForEventMutation, useSuggestAllocationsQuery, useAllocateToEventMutation,
   useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation, useEditEventSeriesMutation, useDeleteEventSeriesMutation,
-  useEventsReportQuery
+  useEventsReportQuery, useEventsAttendanceReportQuery
 } = eventsApi

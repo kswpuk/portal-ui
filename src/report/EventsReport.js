@@ -3,6 +3,7 @@ import Error from "../common/Error"
 import Loading from "../common/Loading"
 import { useEventsReportQuery } from "../redux/eventsApi"
 import gradient from 'gradient-color'
+import EventsAttendanceReport from "./EventsAttendanceReport"
 
 export default function EventsReport() {
   const { data: report, error, isLoading, refetch } = useEventsReportQuery()
@@ -71,7 +72,6 @@ export default function EventsReport() {
     </TableBody>
   </Table>
 
-
   return <>
     <h3>Past 12 Months</h3>
     <Grid container spacing={2}>
@@ -133,10 +133,9 @@ export default function EventsReport() {
       There {report.events.counts.upcoming !== 1 ? "are" : "is"} {report.events.counts.upcoming || 0} upcoming event{report.events.counts.upcoming !== 1 ? "s" : ""}, and {report.socials.counts.upcoming || 0} upcoming social{report.socials.counts.upcoming !== 1 ? "s" : ""}.
       {report.events.next !== null ? ` The next event starts in ${report.events.nextDays} day${report.events.nextDays !== 1 ? "s" : ""}, on ${report.events.next}.` : null }
     </p>
+
+    <EventsAttendanceReport />
   </>
 
   // TODO: Summary of events in the past year (number, number only available to under 25s, socials)
-  // TODO: Allocation summary?
-  // TODO: People who haven't attended at least two events in the past year
-  // TODO: Geographic split
 }

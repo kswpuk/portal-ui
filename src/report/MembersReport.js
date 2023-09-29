@@ -60,6 +60,4 @@ export default function MembersReport() {
     </BarChart>
     </ResponsiveContainer>
   </>
-
-  // TODO: Geographic location
 }
