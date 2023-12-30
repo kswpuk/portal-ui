@@ -125,6 +125,8 @@ export default function EventsReport() {
       </Grid>
     </Grid>
 
+    <EventsAttendanceReport />
+
     <h3>Past Events and Socials</h3>
     {pastEvents}
 
@@ -133,8 +135,6 @@ export default function EventsReport() {
       There {report.events.counts.upcoming !== 1 ? "are" : "is"} {report.events.counts.upcoming || 0} upcoming event{report.events.counts.upcoming !== 1 ? "s" : ""}, and {report.socials.counts.upcoming || 0} upcoming social{report.socials.counts.upcoming !== 1 ? "s" : ""}.
       {report.events.next !== null ? ` The next event starts in ${report.events.nextDays} day${report.events.nextDays !== 1 ? "s" : ""}, on ${report.events.next}.` : null }
     </p>
-
-    <EventsAttendanceReport />
   </>
 
   // TODO: Summary of events in the past year (number, number only available to under 25s, socials)
