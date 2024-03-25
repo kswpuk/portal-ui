@@ -69,10 +69,8 @@ export default function ViewApplication() {
       refOutstanding.push("No reference has been accepted from anyone that has known the applicant for more than 5 years")
     }
 
-    refEl = <DataGrid disableSelectionOnClick autoHeight initialState={{
-      pagination: {
-        pageSize: 5,
-      },
+    refEl = <DataGrid disableRowSelectionOnClick autoHeight initialState={{
+      pagination: { paginationModel: { page: 1, pageSize: 25 } },
       sorting: {
         sortModel: [{ field: "submittedAt", sort: "asc"}]
       }

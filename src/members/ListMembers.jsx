@@ -108,12 +108,10 @@ export default function ListMembers() {
     </Typography>
 
     <DataGrid checkboxSelection={isCommittee} autoHeight sx={{marginBottom: '3rem'}} initialState={{
-        pagination: {
-          pageSize: 25,
-        },
+        pagination: { paginationModel: { page: 1, pageSize: 25 } },
         filter: {
           filterModel: {
-            items: [{ columnField: "status", operatorValue: "equals", "value": "ACTIVE"}]
+            items: [{ field: "status", operator: "equals", "value": "ACTIVE"}]
           }
         },
         sorting: {
@@ -121,14 +119,14 @@ export default function ListMembers() {
         },
         columns: columnsInitialState
       }}
-      onSelectionModelChange={(newSelectionModel) => {
+      onRowSelectionModelChange={(newSelectionModel) => {
         setSelectionModel(newSelectionModel);
       }}
-      selectionModel={selectionModel}
+      rowSelectionModel={selectionModel}
       columns={columns} rows={members}
       getRowId={(row) => row.membershipNumber}
-      components={{
-        Toolbar: toolbar
+      slots={{
+        toolbar: toolbar
       }} />
     
     <Privileged allowed={["MEMBERS"]}>

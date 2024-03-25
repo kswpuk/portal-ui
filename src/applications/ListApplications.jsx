@@ -27,9 +27,7 @@ export default function ListApplications() {
 
   return <>
     <DataGrid autoHeight initialState={{
-      pagination: {
-        pageSize: 25,
-      },
+      pagination: { paginationModel: { page: 1, pageSize: 25 } },
       sorting: {
         sortModel: [{ field: "surname", sort: "asc"}]
       }

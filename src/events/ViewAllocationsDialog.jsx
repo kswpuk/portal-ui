@@ -88,9 +88,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
       </DialogTitle>
       <DialogContent>
         <DataGrid autoHeight initialState={{
-          pagination: {
-            pageSize: 25,
-          },
+          pagination: { paginationModel: { page: 1, pageSize: 25 } },
           sorting: {
             sortModel: [{ field: "surname", sort: "asc"}]
           }
@@ -98,10 +96,10 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
           getRowId={(row) => row.membershipNumber}
           getRowClassName={(params) => `allocation_${params.row.allocation}`}
           checkboxSelection={eventsCoord || (socialsCoord && event.type === "social")}
-          onSelectionModelChange={(newSelectionModel) => {
+          onRowSelectionModelChange={(newSelectionModel) => {
             setSelectionModel(newSelectionModel);
           }}
-          selectionModel={selectionModel}
+          rowSelectionModel={selectionModel}
         />
       </DialogContent>
       <Privileged allowed={event.type === "social" ? ["EVENTS", "SOCIALS"] : ["EVENTS"]}>

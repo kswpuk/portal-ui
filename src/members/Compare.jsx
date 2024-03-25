@@ -44,12 +44,10 @@ export default function Compare() {
       </Typography>
 
       <DataGrid autoHeight checkboxSelection={true} sx={{marginTop: '1rem'}} initialState={{
-        pagination: {
-          pageSize: 25,
-        },
+        pagination: { paginationModel: { page: 1, pageSize: 25 } },
         filter: {
           filterModel: {
-            items: [{ columnField: "action", operatorValue: "contains", "value": "Compass"}]
+            items: [{ field: "action", operator: "contains", "value": "Compass"}]
           }
         },
         sorting: {
