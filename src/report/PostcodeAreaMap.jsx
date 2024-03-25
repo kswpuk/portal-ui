@@ -1,6 +1,6 @@
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import gradient from 'gradient-color'
-import postcodes from "./postcode_areas.geojson"  //TODO: Convert to Topojson for smaller file?
+import postcodes from "./postcode_areas.json"  //TODO: Convert to Topojson for smaller file?
 import { Box } from "@mui/material";
 
 export default function PostcodeAreaMap(props) {
