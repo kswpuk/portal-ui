@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Authenticator, Image, View } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import './AuthApp.css'
 
 import awsConfig from './awsConfig';
 import App from './App';
@@ -25,7 +24,7 @@ export default function AuthApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/join/*" element={<Join />} />
-        <Route path="/*" element={<Authenticator components={components}>
+        <Route path="/*" element={<Authenticator components={components} hideSignUp={true}>
             {({ signOut, user }) => <App user={user} signOut={signOut} />}
           </Authenticator>
         } />
