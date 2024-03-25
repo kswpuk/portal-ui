@@ -56,7 +56,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
   const allocationColumns=[
     {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
-    {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
+    {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
     {field: "surname", headerName: "Surname", flex: 2, hideable: false},
     {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
       renderCell: params => <AllocationWidget textOnly allocation={params.value} />}

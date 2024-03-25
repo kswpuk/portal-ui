@@ -45,7 +45,7 @@ export default function ListMembers() {
   const columns = [
     {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
-    {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter: params => params.row.preferredName || params.row.firstName},
+    {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
     {field: "surname", headerName: "Surname", flex: 3, hideable: false},
     {field: "status", headerName: "Status", flex: 1, hideable: true}
   ]

@@ -37,13 +37,13 @@ export default function ListApplications() {
         {field: "firstName", headerName: "First Name", flex: 3, hideable: false},
         {field: "surname", headerName: "Surname", flex: 3, hideable: false},
         {field: "submittedAt", headerName: "Application Date", flex: 2, hideable: false, type: 'date',
-          valueFormatter: (params) => moment.unix(params.value).format("YYYY-MM-DD"),
-          valueGetter: (params) => new Date(params.value)
+          valueFormatter:  (value, row, column, apiRef) => moment.unix(value).format("YYYY-MM-DD"),
+          valueGetter:  (value, row, column, apiRef) => new Date(value)
         },
         {
           field: "scouting", headerName: "Scout Reference", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
-          valueGetter: (params) => params.row.applicationStatus.scouting,
+          valueGetter:  (value, row, column, apiRef) => row.applicationStatus.scouting,
           renderCell: params => {
             if(params.value === "ACCEPTED"){
               return <Circle htmlColor='#7413dc' titleAccess='Reference accepted' />
@@ -57,7 +57,7 @@ export default function ListApplications() {
         {
           field: "nonScouting", headerName: "Non-Scout Reference", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
-          valueGetter: (params) => params.row.applicationStatus.nonScouting,
+          valueGetter:  (value, row, column, apiRef) => row.applicationStatus.nonScouting,
           renderCell: params => {
             if(params.value === "ACCEPTED"){
               return <Circle htmlColor='#003982' titleAccess='Reference accepted' />
@@ -71,7 +71,7 @@ export default function ListApplications() {
         {
           field: "fiveYears", headerName: "5+ Years", flex: 1, hideable: false,
           align: "center", headerAlign: "center",
-          valueGetter: (params) => params.row.applicationStatus.fiveYears,
+          valueGetter:  (value, row, column, apiRef) => row.applicationStatus.fiveYears,
           renderCell: params => {
             if(params.value === "ACCEPTED"){
               return <AccessTimeFilled titleAccess='Reference accepted' />

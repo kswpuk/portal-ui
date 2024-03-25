@@ -85,7 +85,7 @@ export default function ViewApplication() {
         },
         {
           field: "submittedAt", headerName: "Date Received", flex: 2, hideable: false, 
-          type: 'dateTime', valueGetter: ({ value }) => value && new Date(value*1000)
+          type: 'dateTime', valueGetter: (value, row, column, apiRef) => value && new Date(value*1000)
         },
         {
           field: "relationship", headerName: "Type", flex: 1, hideable: false,
