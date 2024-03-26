@@ -1,6 +1,5 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import { Auth } from 'aws-amplify'
-import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { fetchAuthSession } from 'aws-amplify/auth'
 import { baseUrl } from '../consts';
 
 export const data = (data) => ({data: data})
@@ -17,12 +16,15 @@ export const portalApi = createApi({
     baseUrl: baseUrl,
     prepareHeaders: async (headers) => {
       try{
-        const token = (await Auth.currentSession()).getAccessToken().getJwtToken()
+        const session = (await fetchAuthSession());
+        const token = session.tokens?.accessToken.toString()
+        
         if (token) {
           headers.set('Authorization', `Bearer ${token}`)
         }
       }catch(error){
         // Do nothing
+        console.error(error)
       }finally{
         return headers
       }

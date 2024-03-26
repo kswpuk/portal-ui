@@ -4,7 +4,7 @@ import './index.css';
 import AuthApp from './AuthApp';
 import reportWebVitals from './reportWebVitals';
 
-import { AmplifyProvider } from '@aws-amplify/ui-react';
+import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css'; // default theme
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -20,7 +20,7 @@ const prefersDarkMode = false;
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={prefersDarkMode ? darkTheme : theme}>
-      <AmplifyProvider>
+      <Authenticator.Provider>
         <HelmetProvider>
           <Provider store={store}>
             <div data-theme={prefersDarkMode ? "dark" : "light"}>
@@ -28,7 +28,7 @@ ReactDOM.render(
             </div>
           </Provider>
         </HelmetProvider>
-      </AmplifyProvider>
+      </Authenticator.Provider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

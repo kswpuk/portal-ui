@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify'
+import { getCurrentUser } from 'aws-amplify/auth'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Loading from '../common/Loading'
@@ -12,7 +12,7 @@ export default function User() {
   dispatch(selectUser())
 
   const [membershipNumber, setMembershipNumber] = useState(null);
-  Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
+  getCurrentUser().then(user => setMembershipNumber(user.username));
 
   if (membershipNumber === null){
     return <Loading />

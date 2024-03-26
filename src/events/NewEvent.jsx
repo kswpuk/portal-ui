@@ -6,7 +6,7 @@ import { useCreateEventMutation } from '../redux/eventsApi'
 
 import { useNavigate } from 'react-router-dom'
 import EventForm from './EventForm'
-import { Auth } from 'aws-amplify'
+import { getCurrentUser } from 'aws-amplify/auth'
 
 export default function NewEvent() {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ export default function NewEvent() {
   const [eventId, setEventId] = useState(null)
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
 
-  Auth.currentAuthenticatedUser().then(user => {
+  getCurrentUser().then(user => {
     const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
     setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
   })

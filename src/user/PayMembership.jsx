@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { Auth } from 'aws-amplify'
+import { getCurrentUser } from 'aws-amplify/auth'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Error from '../common/Error'
@@ -15,7 +15,7 @@ export default function PayMembership() {
   dispatch(selectPayMembership())
 
   const [membershipNumber, setMembershipNumber] = useState(null);
-  Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
+  getCurrentUser().then(user => setMembershipNumber(user.username));
 
   const { data: member, error, isLoading, refetch } = useGetMemberQuery(membershipNumber, {skip: membershipNumber === null})
   const [ payMembership, { data: payData, isLoading: isPayLoading, isSuccess: isPaySuccess } ] = usePayMembershipMutation()

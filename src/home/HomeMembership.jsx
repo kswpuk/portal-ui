@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+import { getCurrentUser } from 'aws-amplify/auth'
 import { useState } from "react";
 import Error from "../common/Error";
 import Loading from "../common/Loading";
@@ -8,7 +8,7 @@ import HomeMembershipPayment from "./HomeMembershipPayment";
 
 export default function HomeMembership(props) {
   const [membershipNumber, setMembershipNumber] = useState(null);
-  Auth.currentUserInfo().then(user => setMembershipNumber(user.username));
+  getCurrentUser().then(user => setMembershipNumber(user.username));
 
   const { data: member, error, isLoading, refetch } = useGetMemberQuery(membershipNumber, {skip: membershipNumber === null})
 

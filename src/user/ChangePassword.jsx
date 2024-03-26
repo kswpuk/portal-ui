@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Error from '../common/Error';
 import Success from '../common/Success';
-import { Auth } from 'aws-amplify';
+import { updatePassword } from 'aws-amplify/auth'
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import SubmitButton from '../common/SubmitButton';
 
@@ -27,10 +27,7 @@ export default function ChangePassword() {
     setLoading(true)
     setError(null)
 
-    Auth.currentAuthenticatedUser()
-    .then(user => {
-        return Auth.changePassword(user, data.currentPassword, data.newPassword);
-    })
+    updatePassword( {oldPassword: data.currentPassword, newPassword: data.newPassword} )
     .then(() => {
       setSuccess(true)
       setLoading(false)

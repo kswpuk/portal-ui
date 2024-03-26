@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from "@mui/material"
-import { Auth } from "aws-amplify";
+import { fetchAuthSession } from 'aws-amplify/auth'
 import { useState } from "react";
 import useFetch from "react-fetch-hook";
 import { baseUrl } from "../consts";
@@ -8,8 +8,8 @@ import noPhoto from "../common/unknown.png"
 export default function EvidenceImage(props){
   const [token, setToken] = useState(null)
 
-  Auth.currentSession().then(session => {
-    setToken(session.getAccessToken().getJwtToken())
+  fetchAuthSession().then(session => {
+    setToken(session.tokens?.accessToken.toString())
   })
 
   const { data: image, isLoading, error } = useFetch(baseUrl + "applications/" + props.membershipNumber + "/evidence", {
