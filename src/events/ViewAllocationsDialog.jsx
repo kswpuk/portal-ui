@@ -10,7 +10,7 @@ import Privileged from "../common/Privileged";
 import { useAllocateToEventMutation, useSuggestAllocationsQuery } from "../redux/eventsApi";
 import { useEffect, useState } from "react";
 import AddAllocationDialog from "./AddAllocationDialog";
-import { getCurrentUser } from 'aws-amplify/auth'
+import { fetchAuthSession } from 'aws-amplify/auth'
 import AllocationWidget from "./AllocationWidget";
 import EmailLink from "../common/EmailLink";
 import ExportCsvButton from "../common/ExportCsvButton";
@@ -30,8 +30,9 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
   const [allocateToEvent, {isLoading: isAllocating}] = useAllocateToEventMutation()
   const {data: suggestion, isLoading: isSuggesting} = useSuggestAllocationsQuery({eventSeriesId, eventId}, {skip: !suggest})
 
-  getCurrentUser().then(user => {
-    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+  fetchAuthSession().then(session => {
+    const groups = session.tokens?.accessToken.payload["cognito:groups"];
+
     setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
     setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
     setSocialsCoord(groups.includes("SOCIALS"));

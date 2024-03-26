@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import EventForm from './EventForm'
 import Loading from '../common/Loading'
 import Error from '../common/Error'
-import { getCurrentUser } from 'aws-amplify/auth'
+import { fetchAuthSession } from 'aws-amplify/auth'
 
 export default function EditEvent() {
   const dispatch = useDispatch()
@@ -18,8 +18,8 @@ export default function EditEvent() {
   const { data: event, error, isLoading, refetch } = useGetEventQuery({eventSeriesId, eventId})
 
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
-  getCurrentUser().then(user => {
-    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+  fetchAuthSession().then(session => {
+    const groups = session.tokens?.accessToken.payload["cognito:groups"];
     setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
   })
 

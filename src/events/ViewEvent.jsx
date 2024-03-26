@@ -8,7 +8,7 @@ import Loading from "../common/Loading"
 import { useGetEventQuery, useRegisterForEventMutation, useDeleteEventMutation } from "../redux/eventsApi"
 import { setTitle } from "../redux/navSlice"
 import moment from "moment"
-import { getCurrentUser } from 'aws-amplify/auth'
+import { fetchAuthSession } from 'aws-amplify/auth'
 import AllocationWidget, {getAllocationText} from "./AllocationWidget"
 import IconText from "../common/IconText"
 import LocationWidget from "./LocationWidget"
@@ -49,10 +49,11 @@ export default function ViewEvent(){
 
   const [membershipNumber, setMembershipNumber] = useState(null);
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
-  getCurrentUser().then(user => {
+  fetchAuthSession().then(session => {
+    const username = parseInt(session.tokens?.accessToken.payload["username"]);
     setMembershipNumber(user.username)
 
-    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+    const groups = session.tokens?.accessToken.payload["cognito:groups"];
     setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
   })
 

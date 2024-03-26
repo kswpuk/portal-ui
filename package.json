@@ -20,7 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^12.0.4",
-    "react-fetch-hook": "^1.8.5",
+    "react-fetch-hook": "^1.9.5",
     "react-helmet-async": "^1.2.2",
     "react-hook-form": "^7.27.0",
     "react-markdown": "^8.0.3",
@@ -30,8 +30,7 @@
     "recharts": "^2.12.3",
     "tslib": "^2.6.2",
     "vite": "^5.2.6",
-    "vite-tsconfig-paths": "^4.3.2",
-    "web-vitals": "^2.1.4"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "scripts": {
     "start": "vite",

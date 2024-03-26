@@ -12,7 +12,7 @@ import { Close, CompareArrows, Email, MoreHoriz } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import Help from '../common/Help'
 import MemberPhoto from '../common/MemberPhoto'
-import { getCurrentUser } from 'aws-amplify/auth'
+import { fetchAuthSession } from 'aws-amplify/auth'
 import EmailLink from '../common/EmailLink'
 import ExportCsvButton from '../common/ExportCsvButton'
 
@@ -22,8 +22,8 @@ export default function ListMembers() {
   const [isCommittee, setIsCommittee] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
 
-  getCurrentUser().then(user => {
-    const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+  fetchAuthSession().then(session => {
+    const groups = session.tokens?.accessToken.payload["cognito:groups"];
     setIsCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
   })
 
