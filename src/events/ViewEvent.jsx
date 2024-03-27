@@ -103,22 +103,30 @@ export default function ViewEvent(){
   let weighting = null
 
   if(event.attendanceLimit > 0){
-    if(event.weightingCriteria && Object.keys(event.weightingCriteria).length > 0){
-      weighting = <>
-        <Typography variant="body1">There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone who registers will start with one name in the hat, and then the following rules will be applied:</Typography>
-        <WeightingWidget criteria={event.weightingCriteria} />
-        <Typography variant="body1" gutterBottom>After the above rules have been applied, everyone will receive an equal number of additional names until everyone has at least 1 name in the hat.</Typography>
-      </>
-    }else{
-      weighting = <Typography variant="body1" gutterBottom>There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone's name will be placed in the hat the same number of times.</Typography>
-    }
+    if(event.allocationOnPayment) {
+      weighting = <Typography variant="body1">There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. Places will be allocated upon receipt of payment, on a first-come-first-served basis.</Typography>
+    } else {
+      if(event.weightingCriteria && Object.keys(event.weightingCriteria).length > 0){
+        weighting = <>
+          <Typography variant="body1">There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone who registers will start with one name in the hat, and then the following rules will be applied:</Typography>
+          <WeightingWidget criteria={event.weightingCriteria} />
+          <Typography variant="body1" gutterBottom>After the above rules have been applied, everyone will receive an equal number of additional names until everyone has at least 1 name in the hat.</Typography>
+        </>
+      }else{
+        weighting = <Typography variant="body1" gutterBottom>There are <strong>{event.attendanceLimit}</strong> spaces available to attend this event. If it is over-subscribed, names will be drawn from a virtual hat. Everyone's name will be placed in the hat the same number of times.</Typography>
+      }
 
-    weighting = <>
-      {weighting}
-      <Typography variant="body1">The Events Coordinator may allocate specific people where there is a specific requirement for them to attend - e.g. they have a some skill, experience or qualification that is required.</Typography>
-    </>
+      weighting = <>
+        {weighting}
+        <Typography variant="body1">The Events Coordinator may allocate specific people where there is a specific requirement for them to attend - e.g. they have a some skill, experience or qualification that is required.</Typography>
+      </>
+    }
   }else{
-    weighting = <Typography variant="body1" gutterBottom>There is no limit on the number of attendees for this event.</Typography>
+    if(event.allocationOnPayment) {
+      weighting = <Typography variant="body1" gutterBottom>There is no limit on the number of attendees for this event. You will be allocated to this event upon receipt of payment, on a first-come-first-served basis.</Typography>
+    } else {
+      weighting = <Typography variant="body1" gutterBottom>There is no limit on the number of attendees for this event.</Typography>
+    }
   }
 
   // Allocations
