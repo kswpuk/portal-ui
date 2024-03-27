@@ -6,12 +6,15 @@ import HomeMembership from './HomeMembership'
 import HomeOtherEmails from './HomeOtherEmails'
 import HomeOtherSocialMedia from './HomeOtherSocialMedia'
 import { grey } from '@mui/material/colors';
+import { useEffect } from 'react'
 
 export default function Home() {
   const dispatch = useDispatch()
 
-  dispatch(setTitle(null))
-  dispatch(selectHome())
+  useEffect(() => {
+    dispatch(setTitle(null))
+    dispatch(selectHome())
+  }, [])
 
   return <>
     <Grid container spacing={3}>

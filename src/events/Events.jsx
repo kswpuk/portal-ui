@@ -6,10 +6,14 @@ import EventSeries from './EventSeries'
 import ListEvents from './ListEvents'
 import NewEvent from './NewEvent'
 import ViewEvent from './ViewEvent'
+import { useEffect } from 'react'
 
 export default function Events() {
   const dispatch = useDispatch()
-  dispatch(selectEvents())
+
+  useEffect(() => {
+    dispatch(selectEvents())
+  }, []);
 
   return <>
     <Routes>

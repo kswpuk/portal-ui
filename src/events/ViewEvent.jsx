@@ -51,7 +51,7 @@ export default function ViewEvent(){
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
   fetchAuthSession().then(session => {
     const username = parseInt(session.tokens?.accessToken.payload["username"]);
-    setMembershipNumber(user.username)
+    setMembershipNumber(username)
 
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
     setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));

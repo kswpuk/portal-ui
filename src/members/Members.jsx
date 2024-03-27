@@ -6,10 +6,14 @@ import Compare from "./Compare";
 import EditMember from "./EditMember";
 import ListMembers from "./ListMembers";
 import ViewMember from "./ViewMember";
+import { useEffect } from "react";
 
 export default function Members() {
   const dispatch = useDispatch()
-  dispatch(selectMembers())
+
+  useEffect(() => {
+    dispatch(selectMembers())
+  }, [])
 
   return <>
     <Routes>

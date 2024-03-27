@@ -3,10 +3,14 @@ import { Route, Routes } from 'react-router-dom'
 import { selectApplications } from '../redux/navSlice'
 import ListApplications from './ListApplications'
 import ViewApplication from './ViewApplication'
+import { useEffect } from 'react'
 
 export default function Applications() {
   const dispatch = useDispatch()
-  dispatch(selectApplications())
+
+  useEffect(() => {
+    dispatch(selectApplications())
+  }, [])
 
   return <>
     <Routes>

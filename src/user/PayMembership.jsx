@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { getCurrentUser } from 'aws-amplify/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
@@ -11,8 +11,10 @@ import { selectPayMembership, setTitle } from '../redux/navSlice'
 export default function PayMembership() {
   const dispatch = useDispatch()
 
-  dispatch(setTitle("Pay Membership"))
-  dispatch(selectPayMembership())
+  useEffect(() => {
+    dispatch(setTitle("Pay Membership"))
+    dispatch(selectPayMembership())
+  }, [])
 
   const [membershipNumber, setMembershipNumber] = useState(null);
   getCurrentUser().then(user => setMembershipNumber(user.username));

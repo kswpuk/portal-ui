@@ -1,12 +1,15 @@
 import { Link, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { selectShop, setTitle } from '../redux/navSlice'
+import { useEffect } from 'react'
 
 export default function Shop() {
   const dispatch = useDispatch()
 
-  dispatch(setTitle("Shop"))
-  dispatch(selectShop())
+  useEffect(() => {
+    dispatch(setTitle("Shop"))
+    dispatch(selectShop())
+  }, [])
 
   return <>
     <Typography variant='body1'>

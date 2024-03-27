@@ -4,12 +4,15 @@ import MembersReport from './MembersReport'
 import EventsReport from './EventsReport'
 import ApplicationsReport from './ApplicationsReport'
 import Maps from './Maps'
+import { useEffect } from 'react'
 
 export default function Report() {
   const dispatch = useDispatch()
 
-  dispatch(setTitle("Report"))
-  dispatch(selectReport())
+  useEffect(() => {
+    dispatch(setTitle("Report"))
+    dispatch(selectReport())
+  }, [])
 
   return <>
     <h1>Events</h1>
