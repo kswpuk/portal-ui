@@ -3,7 +3,7 @@ import Error from "../common/Error"
 import Loading from "../common/Loading"
 import { useEventsAttendanceReportQuery } from "../redux/eventsApi"
 
-export default function Eventsreport() {
+export default function EventsAttendanceReport() {
   const { data: report, error, isLoading, refetch } = useEventsAttendanceReportQuery()
 
   if(isLoading){

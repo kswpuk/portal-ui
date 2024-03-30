@@ -7,6 +7,7 @@ import EditMember from "./EditMember";
 import ListMembers from "./ListMembers";
 import ViewMember from "./ViewMember";
 import { useEffect } from "react";
+import Awards from "./Awards";
 
 export default function Members() {
   const dispatch = useDispatch()
@@ -20,6 +21,7 @@ export default function Members() {
       <Route path=":membershipNumber/view" element={<ViewMember />} />
       <Route path=":membershipNumber/edit" element={<EditMember />} />
       <Route path=":membershipNumber/photo" element={<ChangePhoto />} />
+      <Route path="/awards" element={<Awards />} />
       <Route path="/compare" element={<Compare />} />
       <Route path="/" element={<ListMembers />} />
     </Routes>

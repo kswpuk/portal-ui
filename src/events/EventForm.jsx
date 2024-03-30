@@ -14,6 +14,7 @@ export default function EventForm(props){
 
   const startDateWatch = watch("startDate")
   const costWatch = watch("cost")
+  const allocationOnPaymentWatch = watch("allocationOnPayment")
 
   const [eventSeriesId, setEventSeriesId] = useState(props.eventSeriesId)
   const [eventId, setEventId] = useState(props.eventId)
@@ -226,7 +227,10 @@ export default function EventForm(props){
               If there are no rules set (i.e. they are all 0), then allocation suggestions will be random.
             </Typography>
           </Box>
-          <Accordion>
+
+          <FormControlLabel control={<Checkbox defaultChecked={props.event?.allocationOnPayment} {...register("allocationOnPayment")} />} label="Allocation will be done manually on receipt of payment (first come, first served)" />
+
+          <Accordion disabled={allocationOnPaymentWatch}>
             <AccordionSummary>
               Allocation Rules
             </AccordionSummary>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from '@mui/material'
 import Privileged from '../common/Privileged'
 import {committeeRoles} from '../consts'
-import { Close, CompareArrows, Email, MoreHoriz } from '@mui/icons-material'
+import { Close, CompareArrows, Email, MilitaryTech, MoreHoriz } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import Help from '../common/Help'
 import MemberPhoto from '../common/MemberPhoto'
@@ -20,10 +20,12 @@ export default function ListMembers() {
   const dispatch = useDispatch()
   
   const [isCommittee, setIsCommittee] = useState(false);
+  const [isManager, setIsManager] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
 
   fetchAuthSession().then(session => {
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
+    setIsManager(groups.includes("MANAGER"));
     setIsCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
   })
 
@@ -38,6 +40,12 @@ export default function ListMembers() {
   }else if(error){
     return <Error error={error} onRetry={() => refetch()}>An error occurred whilst loading the list of current members</Error>
   }
+
+  const managerSpeedDial = isManager ? <SpeedDialAction
+    icon={<MUILink sx={{display: "flex"}} component={Link} to={"/members/awards"}><MilitaryTech /></MUILink>}
+    tooltipTitle="Awards"
+    tooltipOpen
+  /> : null;
 
   const committee = members.filter(x => x.role)
   committee.sort((a, b) => (committeeRoles[a.role]["sortOrder"] > committeeRoles[b.role]["sortOrder"]) ? 1 : -1)
@@ -140,6 +148,8 @@ export default function ListMembers() {
           tooltipTitle="Compare"
           tooltipOpen
         />
+
+        {managerSpeedDial}
       </SpeedDial>
     </Privileged>
   </>
