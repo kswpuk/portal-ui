@@ -89,7 +89,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
       </DialogTitle>
       <DialogContent>
         <DataGrid autoHeight initialState={{
-          pagination: { paginationModel: { page: 1, pageSize: 25 } },
+          pagination: { paginationModel: { page: 0, pageSize: 25 } },
           sorting: {
             sortModel: [{ field: "surname", sort: "asc"}]
           }

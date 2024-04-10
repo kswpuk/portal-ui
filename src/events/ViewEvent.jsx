@@ -50,7 +50,7 @@ export default function ViewEvent(){
   const [membershipNumber, setMembershipNumber] = useState(null);
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
   fetchAuthSession().then(session => {
-    const username = parseInt(session.tokens?.accessToken.payload["username"]);
+    const username = session.tokens?.accessToken.payload["username"];
     setMembershipNumber(username)
 
     const groups = session.tokens?.accessToken.payload["cognito:groups"];

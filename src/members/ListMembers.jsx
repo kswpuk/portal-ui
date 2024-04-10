@@ -116,7 +116,7 @@ export default function ListMembers() {
     </Typography>
 
     <DataGrid checkboxSelection={isCommittee} autoHeight sx={{marginBottom: '3rem'}} initialState={{
-        pagination: { paginationModel: { page: 1, pageSize: 25 } },
+        pagination: { paginationModel: { page: 0, pageSize: 25 } },
         filter: {
           filterModel: {
             items: [{ field: "status", operator: "equals", "value": "ACTIVE"}]

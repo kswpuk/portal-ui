@@ -42,7 +42,7 @@ export default function Awards() {
     </Typography>
 
     <DataGrid checkboxSelection autoHeight sx={{marginBottom: '3rem'}} initialState={{
-        pagination: { paginationModel: { page: 1, pageSize: 25 } },
+        pagination: { paginationModel: { page: 0, pageSize: 25 } },
         sorting: {
           sortModel: [{ field: "surname", sort: "asc"}]
         },
