@@ -220,6 +220,8 @@ export default function ViewApplication() {
           </ul>
         </> : null}
 
+        <Typography sx={{mt: '1rem'}}>The following link can be shared with additional referees to submit a reference: <Link href={`/join/${application.membershipNumber}/reference`}>Submit reference for {application.preferredName ? application.preferredName : application.firstName} {application.surname}</Link></Typography>
+
       </Box>
 
     </Stack>
