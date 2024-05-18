@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { setTitle } from '../redux/navSlice'
-import { Box, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Tab, Tabs } from '@mui/material'
+import { Box, FormControlLabel, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Switch, Tab, Tabs } from '@mui/material'
 
 import { useEffect, useState } from 'react'
 import EventCard from './EventCard'
@@ -23,6 +23,8 @@ export default function ListEvents() {
     setSelectedTab(newValue);
   };
 
+  const [hideSocials, setHideSocials] = useState(false);
+
   const { data: events, error, isFetching, refetch } = useListEventsQuery(selectedTab === 1)
 
   if(error){
@@ -34,7 +36,7 @@ export default function ListEvents() {
     gridContent = <Loading />
   }else{
     gridContent = <Grid container spacing={2}>
-      {events.map(e => <Grid item key={e.combinedEventId} sm={12} md={6} lg={4}>
+      {events.filter(e => !hideSocials || e.type !== "social").map(e => <Grid item key={e.combinedEventId} sm={12} md={6} lg={4}>
         <EventCard event={e} />
       </Grid>
       )}
@@ -48,6 +50,8 @@ export default function ListEvents() {
         <Tab label="All Events" />
       </Tabs>
     </Box>
+
+    <FormControlLabel sx={{marginBottom: '1rem'}} control={ <Switch checked={hideSocials} onChange={() => setHideSocials(!hideSocials)} /> } label="Hide Socials" />
 
     {gridContent}
 

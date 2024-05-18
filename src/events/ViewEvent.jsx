@@ -190,7 +190,7 @@ export default function ViewEvent(){
 
         {event.details ? <>
           <Typography variant="h6">Event Details</Typography>
-          <ReactMarkdown components={{h1 : 'strong', h2: 'strong', h3: 'strong', h4: 'strong', h5: 'strong', h6: 'strong', p: ({node, ...props}) => <Typography gutterBottom variant="body1" {...props} />}}>{event.details}</ReactMarkdown>
+          <ReactMarkdown components={{h1 : 'strong', h2: 'strong', h3: 'strong', h4: 'strong', h5: 'strong', h6: 'strong', a: ({node, ...props}) => <Link target="_blank" {...props} />, p: ({node, ...props}) => <Typography gutterBottom variant="body1" {...props} />}}>{event.details}</ReactMarkdown>
           {event.eventUrl ? <Typography variant="body1" gutterBottom><Link href={event.eventUrl} target="_blank">More information</Link></Typography> : null }
         </> : null}
 
