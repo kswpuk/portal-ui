@@ -13,15 +13,6 @@ export default function Sidebar(props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // The menu item for the shop has been pulled out just so we don't lose it - it can go back in once it's open again
-  // const shop = <ListItemButton component={Link} to="/shop" selected={selected === SHOP}>
-  //   <ListItemIcon>
-  //     <ShoppingBag />
-  //   </ListItemIcon>
-  //   <ListItemText primary="Shop" />
-  // </ListItemButton>
-  const shop = null;
-
   const drawerContent = <>
     <Toolbar variant='dense'>
       <Typography variant="h6" noWrap component="div" flex={1}>
@@ -69,7 +60,12 @@ export default function Sidebar(props) {
           <ListItemText primary="Report" />
         </ListItemButton>
 
-        {shop}
+        <ListItemButton component={Link} to="/shop" selected={selected === SHOP}>
+          <ListItemIcon>
+            <ShoppingBag />
+          </ListItemIcon>
+          <ListItemText primary="Shop" />
+        </ListItemButton>
       </List>
       <Divider />
       <List>

@@ -12,6 +12,21 @@ export default function Shop() {
   }, [])
 
   return <>
+    <Typography variant='h6'>Neckers and Nametapes</Typography>
+    <Typography variant='body1' gutterBottom>
+      All members (including those who were previously members of the QSWP) will receive a KSWP necker and nametape at their first KSWP event.
+      At present, it is not possible to purchase additional neckers or nametapes, but we expect to allow this in the future once we are confident that we won't run out of stock.
+    </Typography>
+
+    <Typography variant='h6'>Clothing</Typography>
+    <Typography variant='body1'>
+      KSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/kswp">Carrie Lou Print and Embroidery</Link> store.
+      Please be aware that when ordering clothing, you are doing so through a third party company and any issues should be addressed to, and resolved with, the company directly, not to the KSWP.
+      Make sure you check the terms and conditions when placing the order.
+    </Typography>
+  </>
+
+  /*return <>
     <Typography variant='body1'>
       <strong>Please note:</strong> All members (including those who were previously members of the QSWP) will receive a KSWP necker and nametape at their first KSWP event, and that you will not be able to order additional neckers or nametapes until you have attended a KSWP event.
     </Typography>
@@ -38,5 +53,5 @@ export default function Shop() {
     <Typography variant='body1'>
       KSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/kswp">Carrie Lou Print and Embroidery</Link> store.
     </Typography>
-  </>
+  </>*/
 }
