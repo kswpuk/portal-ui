@@ -20,8 +20,14 @@ export default function Shop() {
 
     <Typography variant='h6'>Clothing</Typography>
     <Typography variant='body1'>
-      KSWP Hoodies, T-shirts and Polo Shirts - which are generally worn at less formal events and socials - can be purchased via the <Link href="https://www.carrielou.co.uk/kswp">Carrie Lou Print and Embroidery</Link> store.
-      Please be aware that when ordering clothing, you are doing so through a third party company and any issues should be addressed to, and resolved with, the company directly, not to the KSWP.
+      KSWP Hoodies, T-shirts, Polo Shirts and Softshells - which are generally worn at less formal events and socials - can be purchased via the online stores below.
+    </Typography>
+    <ul>
+      <li><Link href="https://www.carrielou.co.uk/kswp">Carrie Lou Print and Embroidery</Link></li>
+      <li><Link href="https://www.polarproducts.org.uk/collections/kings-scout-working-party">Polar Products</Link> (Password: <strong>{import.meta.env.VITE_SHOP_PASSWORD}</strong>)</li>
+    </ul>
+    <Typography variant='body1'>
+      Please be aware that when ordering clothing, you are doing so through a third party company and any issues should be addressed to, and resolved with, the company directly.
       Make sure you check the terms and conditions when placing the order.
     </Typography>
   </>
