@@ -98,6 +98,12 @@ export default function ViewMemberInformation({member}) {
             <TableCell sx={{width: '33%'}}>Membership Status</TableCell>
             <TableCell>{member.status === "ACTIVE" ? "Active" : "Inactive"} <span style={{color: theme.palette.text.secondary}}>({!member.membershipExpires ? "New Member" : (member.status === "ACTIVE" ? "Expires " : "Expired ") + member.membershipExpires})</span></TableCell>
           </TableRow>
+          <Privileged allowed={["COMMITTEE"]}>
+            <TableRow>
+              <TableCell>Suspended</TableCell>
+              <TableCell>{member.suspended ? "Yes": "No"}</TableCell>
+            </TableRow>
+          </Privileged>
           <TableRow>
             <TableCell>Role</TableCell>
             <TableCell>{member.role ? committeeRoles[member.role].name : "Standard Member"}</TableCell>

@@ -35,6 +35,21 @@ export default function ListMembers() {
 
   const { data: members, error, isLoading, refetch } = useListMembersQuery()
 
+  const formatStatus = (memberStatus, memberSuspended) => {
+    let s = memberStatus;
+    if (memberStatus == "ACTIVE") {
+      s = "Active"
+    } else if (memberStatus == "INACTIVE") {
+      s = "Inactive"
+    }
+
+    if (memberSuspended) {
+      return "Suspended (" + s + ")"
+    } else {
+      return s
+    }
+  }
+
   if(isLoading){
     return <Loading />
   }else if(error){
@@ -55,7 +70,7 @@ export default function ListMembers() {
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
     {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
     {field: "surname", headerName: "Surname", flex: 3, hideable: false},
-    {field: "status", headerName: "Status", flex: 1, hideable: true}
+    {field: "status", headerName: "Status", flex: 1, hideable: true, valueGetter:  (value, row, column, apiRef) => formatStatus(row.status, row.suspended)}
   ]
   let emails = null
   let toolbar = null
@@ -119,7 +134,7 @@ export default function ListMembers() {
         pagination: { paginationModel: { page: 0, pageSize: 25 } },
         filter: {
           filterModel: {
-            items: [{ field: "status", operator: "equals", "value": "ACTIVE"}]
+            items: [{ field: "status", operator: "equals", "value": "Active"}]
           }
         },
         sorting: {

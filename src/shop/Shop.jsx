@@ -28,7 +28,7 @@ export default function Shop() {
     </ul>
     <Typography variant='body1'>
       Please be aware that when ordering clothing, you are doing so through a third party company and any issues should be addressed to, and resolved with, the company directly.
-      Make sure you check the terms and conditions when placing the order.
+      Make sure you check the sizing information (particularly for women's fit items), and the terms and conditions when placing the order.
     </Typography>
   </>
 

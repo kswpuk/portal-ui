@@ -57,6 +57,14 @@ const membersApi = portalApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
     }),
+    setSuspended: builder.mutation({
+      query: ( {membershipNumber, suspended} ) => ({
+        url: `members/${membershipNumber}/suspended`,
+        method: 'PATCH',
+        body: {suspended: suspended}
+      }),
+      invalidatesTags: (_result, _error, {membershipNumber}) => [{type: 'MEMBER', id: membershipNumber}, 'MEMBERS'],
+    }),
     compare: builder.query({
       query: ( membershipNumbers ) => ({
         url: `members/compare`,
@@ -87,4 +95,4 @@ const membersApi = portalApi.injectEndpoints({
 })
 
 export const { useListMembersQuery, useGetMemberQuery, useGetMemberAllocationsQuery, useGetMemberPhotoQuery, useUpdateMemberMutation, useDeleteMemberMutation,
-  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useCompareQuery, useExportQuery, useMembersReportQuery, useMembersAwardsQuery } = membersApi
+  usePayMembershipMutation, useChangePhotoMutation, useSetNeckerReceivedMutation, useSetSuspendedMutation, useCompareQuery, useExportQuery, useMembersReportQuery, useMembersAwardsQuery } = membersApi

@@ -46,7 +46,6 @@ export default function EventForm(props){
   };
 
   const onSubmit = (data) => {
-    console.log(data)
     props.onSubmit({ eventSeriesId: (props.eventSeriesId || eventSeriesId), eventId: (props.eventId || eventId),
       body: {
         ...data,

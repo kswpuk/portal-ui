@@ -5,6 +5,7 @@ import Loading from "../common/Loading";
 import { useGetMemberQuery } from "../redux/membersApi";
 import HomeMembershipDetails from "./HomeMembershipDetails";
 import HomeMembershipPayment from "./HomeMembershipPayment";
+import HomeMembershipSuspended from './HomeMembershipSuspended';
 
 export default function HomeMembership(props) {
   const [membershipNumber, setMembershipNumber] = useState(null);
@@ -19,6 +20,7 @@ export default function HomeMembership(props) {
   }
 
   return <>
+    {member.suspended ? <HomeMembershipSuspended /> : null}
     <HomeMembershipDetails member={member} />
     <HomeMembershipPayment member={member} />
   </>

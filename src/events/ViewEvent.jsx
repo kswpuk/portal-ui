@@ -1,5 +1,5 @@
 import { ArrowForward, Close, CurrencyPound, Delete, Edit, EmojiEvents, Event, MoreHoriz } from "@mui/icons-material"
-import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, IconButton, Link, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography } from "@mui/material"
+import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, IconButton, Link, SpeedDial, SpeedDialAction, SpeedDialIcon, styled, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom"
@@ -23,6 +23,18 @@ import ReactMarkdown from 'react-markdown'
 import { grey } from '@mui/material/colors';
 import ViewAllocationsDialog from "./ViewAllocationsDialog"
 import WeightingWidget from "./WeightingWidget"
+import MemberCard from "./MemberCard"
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { useGetMemberQuery } from "../redux/membersApi"
+
+
+const BorderlessTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    padding: 0
+  },
+}));
 
 export default function ViewEvent(){
   const dispatch = useDispatch()
@@ -56,6 +68,9 @@ export default function ViewEvent(){
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
     setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
   })
+
+  const { data: member } = useGetMemberQuery(membershipNumber, {skip: membershipNumber === null})
+  const memberSuspended = (member ? member.suspended == true : false)
 
   const [showAllocations, setShowAllocations] = useState(false);
 
@@ -160,9 +175,11 @@ export default function ViewEvent(){
     sortedAllocations.sort((a, b) => allocationToOrder(a.allocation) - allocationToOrder(b.allocation))
 
     allocations = <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: 1}}>
-      {sortedAllocations.map(a => <Avatar key={a.membershipNumber} className={"allocation_outline_"+a.allocation} sx={{margin: 0.5, borderWidth: '2px', borderStyle: 'solid', height: '48px', width: '48px'}}>
-        <MemberPhoto membershipNumber={a.membershipNumber} thumb title={(a.preferredName || a.firstName) ? `${a.preferredName || a.firstName} ${a.surname}` : a.membershipNumber}/>
-      </Avatar>)}
+      {sortedAllocations.map(a => <BorderlessTooltip key={a.membershipNumber} title={<MemberCard membershipNumber={a.membershipNumber} name={(a.preferredName || a.firstName) ? `${a.preferredName || a.firstName} ${a.surname}` : null}/>}>
+        <Avatar className={"allocation_outline_"+a.allocation} sx={{margin: 0.5, borderWidth: '2px', borderStyle: 'solid', height: '48px', width: '48px'}}>
+          <MemberPhoto membershipNumber={a.membershipNumber} thumb />
+        </Avatar>
+      </BorderlessTooltip>)}
       <Avatar sx={{margin: 0.5, backgroundColor: grey[300], height: '48px', width: '48px'}}>
         <IconButton onClick={() => setShowAllocations(true)}>
           <MoreHoriz />
@@ -232,13 +249,13 @@ export default function ViewEvent(){
         <Card elevation={3} className={"allocation_"+currentAllocation}>
           <CardContent>
             <Typography variant="h6" gutterBottom>Attendance</Typography>
-            <AllocationWidget allocation={currentAllocation} verbose marginBottom={allocations !== null ? '1.5rem' : '0rem'} eligible={event.eligibility.eligible}/>
+            <AllocationWidget allocation={currentAllocation} verbose marginBottom={allocations !== null ? '1.5rem' : '0rem'} eligible={event.eligibility.eligible} suspended={memberSuspended}/>
             {allocations}
             {allocationCountText}
             
           </CardContent>
           <CardActions>
-            {event.eligibility.eligible === true && now.isBefore(registrationDate) && (!currentAllocation || currentAllocation === "REGISTERED") ? <SubmitButton
+            {event.eligibility.eligible === true && now.isBefore(registrationDate) && ((!currentAllocation && !memberSuspended) || currentAllocation === "REGISTERED") ? <SubmitButton
                 submitting={isRegistering} submittingText="Updating..."
                 onClick={() => registerForEvent({eventSeriesId, eventId, membershipNumber})}>
                 { currentAllocation ? "Unregister from event" : "Register for event" }

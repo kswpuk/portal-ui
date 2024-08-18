@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Close, Delete, Edit, Email, MoreHoriz, Phone, PhotoCamera } from '@mui/icons-material'
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Tab, Tabs, Typography } from '@mui/material'
+import { Block, Close, Delete, Edit, Email, MoreHoriz, Phone, PhotoCamera } from '@mui/icons-material'
+import { Alert, AlertTitle, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MUILink, SpeedDial, SpeedDialAction, SpeedDialIcon, Tab, Tabs, Typography } from '@mui/material'
 
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 import Privileged from '../common/Privileged'
 
-import { useDeleteMemberMutation, useGetMemberQuery } from '../redux/membersApi'
+import { useDeleteMemberMutation, useGetMemberQuery, useSetSuspendedMutation } from '../redux/membersApi'
 import { setTitle } from '../redux/navSlice'
 import ConfirmLink from '../common/ConfirmLink'
 import MemberPhoto from '../common/MemberPhoto'
@@ -22,6 +22,7 @@ export default function ViewMember() {
   const { membershipNumber } = useParams()
   const { data: member, error, isLoading, refetch } = useGetMemberQuery(membershipNumber)
   const [ deleteMember, { isLoading: isDeleting, isSuccess: isDeleted } ] = useDeleteMemberMutation()
+  const [ suspendMember, { isLoading: isSuspending } ] = useSetSuspendedMutation()
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -61,7 +62,17 @@ export default function ViewMember() {
             />
           <CardContent>
             <Typography variant="h5">{(member.preferredName || member.firstName)} {member.surname}</Typography>
-            <Typography variant="subtitle1" color="text.secondary">Member No: {member.membershipNumber}</Typography>
+            <Typography gutterBottom variant="subtitle1" color="text.secondary">Member No: {member.membershipNumber}</Typography>
+
+            <Privileged allowed={["COMMITTEE"]}>
+              {member.suspended ? <Alert severity='error'>
+                <AlertTitle>Membership Suspended</AlertTitle>
+                <Typography variant='body1'>
+                  This member is currently suspended from the KSWP, and not able to attend events.
+                  If you require more information, please contact the <MUILink href="mailto:manager@kswp.org.uk">KSWP Manager</MUILink> or <MUILink href="mailto:members@kswp.org.uk">Membership Coordinator</MUILink>.
+                </Typography>
+              </Alert> : null }
+            </Privileged>
           </CardContent>
           
           <CardActions>
@@ -98,6 +109,15 @@ export default function ViewMember() {
         <SpeedDialAction
           icon={<MUILink sx={{display: "flex"}} component={Link} to={"/members/"+membershipNumber+"/photo"}><PhotoCamera /></MUILink>}
           tooltipTitle="Photo"
+          tooltipOpen
+        />
+
+        <SpeedDialAction 
+          icon={<ConfirmLink sx={{display: "flex"}} title={(member.suspended ?  "Unsuspend" : "Suspend")+" "+membershipNumber+"?"} loading={isSuspending}
+            onConfirm={() => suspendMember({membershipNumber: membershipNumber, suspended: !member.suspended})}
+            body={"Are you sure you wish to "+(member.suspended ?  "unsuspend" : "suspend")+" "+(member.preferredName || member.firstName)+" "+member.surname+"? They will be notified of this action."}><Block />
+          </ConfirmLink>}
+          tooltipTitle={(member.suspended ?  "Unsuspend" : "Suspend")}
           tooltipOpen
         />
 

@@ -14,6 +14,7 @@ import { fetchAuthSession } from 'aws-amplify/auth'
 import AllocationWidget from "./AllocationWidget";
 import EmailLink from "../common/EmailLink";
 import ExportCsvButton from "../common/ExportCsvButton";
+import AllocationSuspendedWidget from "./AllocationSuspendedWidget";
 
 export default function ViewAllocationsDialog({event, open, onClose}) {
   const eventId = event.eventId
@@ -60,7 +61,7 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
     {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
     {field: "surname", headerName: "Surname", flex: 2, hideable: false},
     {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
-      renderCell: params => <AllocationWidget textOnly allocation={params.value} />}
+      renderCell: params => <><AllocationWidget textOnly allocation={params.value} /><Privileged allowed={["COMMITTEE"]}><AllocationSuspendedWidget suspended={params.row.suspended} /></Privileged></>}
   ]
   if(committee){
     allocationColumns.push({field: "email", headerName: "E-mail", flex: 2, hideable: false,
