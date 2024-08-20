@@ -16,10 +16,10 @@ export default function HomeEventsUpcoming(props) {
       return startDate.date() + " - "+ endDateFormat
     }else if(startDate.year() === endDate.year()) {
       // Different days, different months, same year
-      return endDate.format("D MMMM") + " - "+ endDateFormat
+      return startDate.format("D MMMM") + " - "+ endDateFormat
     }else{
       // Different days, different months, different years
-      return endDate.format("D MMMM YYYY") + " - "+ endDateFormat
+      return startDate.format("D MMMM YYYY") + " - "+ endDateFormat
     }
   }
 
