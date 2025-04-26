@@ -3,8 +3,8 @@ export const baseUrl = import.meta.env.VITE_APP_STAGE === "prod" ? "https://yw6q
 
 export const committeeRoles = {
   "MANAGER": {
-    "name": "KSWP Manager",
-    "email": "manager@kswp.org.uk",
+    "name": "KSWP Team Leader",
+    "email": "lead@kswp.org.uk",
     "sortOrder": 0
   },
   "EVENTS": {
@@ -22,15 +22,20 @@ export const committeeRoles = {
     "email": "members@kswp.org.uk",
     "sortOrder": 3
   },
+  "PORTAL": {
+    "name": "Digital Coordinator",
+    "email": "digital@kswp.org.uk",
+    "sortOrder": 4
+  },
   "MEDIA": {
     "name": "Media Coordinator",
     "email": "media@kswp.org.uk",
-    "sortOrder": 4
+    "sortOrder": 5
   },
   "SOCIALS": {
     "name": "Socials Coordinator",
     "email": "socials@kswp.org.uk",
-    "sortOrder": 5
+    "sortOrder": 6
   }
 }
 

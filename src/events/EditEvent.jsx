@@ -20,7 +20,7 @@ export default function EditEvent() {
   const [isSocialCoordinator, setIsSocialCoordinator] = useState(false);
   fetchAuthSession().then(session => {
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
-    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
+    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER") && !groups.includes("PORTAL"));
   })
 
   const [ editEvent, { isLoading: isSubmitting, isSuccess: isSubmitted, error: submitError } ] = useEditEventMutation()

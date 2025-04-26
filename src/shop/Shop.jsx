@@ -15,7 +15,7 @@ export default function Shop() {
     <Typography variant='h6'>Neckers and Nametapes</Typography>
     <Typography variant='body1' gutterBottom>
       All members (including those who were previously members of the QSWP) will receive a KSWP necker and nametape at their first KSWP event.
-      At present, it is not possible to purchase additional neckers or nametapes, but we expect to allow this in the future once we are confident that we won't run out of stock.
+      Additional neckers can be purchased (as replacements, or to have one for formal and one for informal events) from the KSWP Manager for £6 each (plus postage).
     </Typography>
 
     <Typography variant='h6'>Clothing</Typography>

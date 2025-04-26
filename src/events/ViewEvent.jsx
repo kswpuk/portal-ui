@@ -66,7 +66,7 @@ export default function ViewEvent(){
     setMembershipNumber(username)
 
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
-    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
+    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER") && !groups.includes("PORTAL"));
   })
 
   const { data: member } = useGetMemberQuery(membershipNumber, {skip: membershipNumber === null})

@@ -25,8 +25,8 @@ export default function ListMembers() {
 
   fetchAuthSession().then(session => {
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
-    setIsManager(groups.includes("MANAGER"));
-    setIsCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
+    setIsManager(groups.includes("MANAGER") || groups.includes("PORTAL"));
+    setIsCommittee(groups.includes("MANAGER") || groups.includes("PORTAL") || groups.includes("COMMITTEE"));
   })
 
   useEffect(() => {
@@ -99,18 +99,21 @@ export default function ListMembers() {
     }
   }
 
-  // TODO: Hide committee members on small displays?
+  let committeeSizes = {
+    xs: 150,
+    md: 200,
+    xl: 300
+  }
 
   return <>
     <Typography variant='h5' gutterBottom>Committee Members</Typography>
 
     <Grid container spacing={2} sx={{mb: 3, display: "flex", justifyContent: "center"}}>
-
       {committee.map(x => <Grid key={"committee_"+x.membershipNumber} item>
-        <Card variant="outlined">
-          <CardMedia component={() => <Box height={300} width={300}>
+        <Card variant="outlined" sx={{width: committeeSizes}}>
+          <CardMedia component={() => <Box height={committeeSizes} width={committeeSizes}>
             <MemberPhoto membershipNumber={x.membershipNumber}
-              width={300} height={300}
+              width="100%" height="100%"
               alt={(x.preferredName || x.firstName) + " " + x.surname} /></Box>}
             />
 

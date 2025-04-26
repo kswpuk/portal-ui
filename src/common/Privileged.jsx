@@ -8,7 +8,7 @@ export default function Privileged(props){
     const username = session.tokens?.accessToken.payload["username"];
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
 
-    setAllow(groups.includes("MANAGER") || (props.allowed && (props.allowed.includes(username) || groups.filter(g => props.allowed.includes(g)).length > 0)));
+    setAllow(groups.includes("MANAGER") || groups.includes("PORTAL") || (props.allowed && (props.allowed.includes(username) || groups.filter(g => props.allowed.includes(g)).length > 0)));
   })
 
   if(allow){

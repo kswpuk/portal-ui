@@ -18,7 +18,7 @@ export default function NewEvent() {
 
   fetchAuthSession().then(session => {
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
-    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER"));
+    setIsSocialCoordinator(groups.includes("SOCIALS") && !groups.includes("EVENTS") && !groups.includes("MANAGER") && !groups.includes("PORTAL"));
   })
 
   const [ submitEvent, { isLoading: isSubmitting, isSuccess: isSubmitted, error: submitError } ] = useCreateEventMutation()

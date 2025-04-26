@@ -34,8 +34,8 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
   fetchAuthSession().then(session => {
     const groups = session.tokens?.accessToken.payload["cognito:groups"];
 
-    setCommittee(groups.includes("MANAGER") || groups.includes("COMMITTEE"));
-    setEventsCoord(groups.includes("MANAGER") || groups.includes("EVENTS"));
+    setCommittee(groups.includes("MANAGER") || groups.includes("PORTAL") || groups.includes("COMMITTEE"));
+    setEventsCoord(groups.includes("MANAGER") || groups.includes("PORTAL") || groups.includes("EVENTS"));
     setSocialsCoord(groups.includes("SOCIALS"));
   })
 
