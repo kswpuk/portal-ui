@@ -9,7 +9,7 @@ import { useAllocateToEventMutation } from "../redux/eventsApi";
 
 export default function AddAllocationDialog(props) {
   const { register, handleSubmit, formState: { errors } } = useForm({mode: 'onTouched'});
-  const [allocateToEvent, {isLoading: isAllocating, isSuccess: isAllocated, error: allocationError}] = useAllocateToEventMutation()
+  const [allocateToEvent, {isLoading: isAllocating, isSuccess: isAllocated, error: allocationError, reset}] = useAllocateToEventMutation()
 
   const onSubmit = (data) => {
     allocateToEvent({eventSeriesId: props.eventSeriesId, eventId: props.eventId, "allocations": [{"allocation": data.allocation, "membershipNumbers": [data.membershipNumber]}], social})
@@ -21,6 +21,7 @@ export default function AddAllocationDialog(props) {
   useEffect(() => {
     if(isAllocated){
       close()
+      reset()
     }
   }, [isAllocated, close])
 
