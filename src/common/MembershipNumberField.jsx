@@ -13,7 +13,7 @@ export default function MembershipNumberField(props){
 
   return <Autocomplete
     disablePortal freeSolo loading={isLoading}
-    options={members || []} getOptionLabel={o => o.membershipNumber} isOptionEqualToValue={(o1, o2) => o1.membershipNumber == o2.membershipNumber}
+    options={members?.toSorted((m1, m2) => m1.surname.localeCompare(m2.surname) || m1.firstName.localeCompare(m2.firstName)) || []} getOptionLabel={o => o.membershipNumber} isOptionEqualToValue={(o1, o2) => o1.membershipNumber == o2.membershipNumber}
     filterOptions={filterOptions}
     renderOption={(props, option) => {
       const { key, ...optionProps } = props;
