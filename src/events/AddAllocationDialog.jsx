@@ -6,6 +6,7 @@ import Error from "../common/Error";
 import SubmitButton from "../common/SubmitButton";
 import { ALLOCATED, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, NO_SHOW, REGISTERED, RESERVE } from "../consts";
 import { useAllocateToEventMutation } from "../redux/eventsApi";
+import MembershipNumberField from "../common/MembershipNumberField";
 
 export default function AddAllocationDialog(props) {
   const { register, handleSubmit, formState: { errors } } = useForm({mode: 'onTouched'});
@@ -44,11 +45,8 @@ export default function AddAllocationDialog(props) {
     <DialogContent>
       <Stack spacing={3} sx={{marginTop: '0.5rem'}}>
         {allocationError ? <Error error={allocationError}>Unable to add allocation</Error> : null}
-
-        <TextField variant="outlined" label="Scout Membership Number"
-          error={errors.membershipNumber != null} helperText={errors.membershipNumber ? "This field is required and must be a number" : null}
-          required fullWidth 
-          {...register("membershipNumber", {required: true, pattern: /^[1-9][0-9]+$/})} />
+        
+        <MembershipNumberField register={register("membershipNumber", {required: true, pattern: /^[1-9][0-9]+$/})} error={errors.membershipNumber} />
         
         <FormControl fullWidth>
           <InputLabel id="allocation-label">Allocation</InputLabel>
