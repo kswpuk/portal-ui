@@ -32,16 +32,16 @@ export default function ListApplications() {
         sortModel: [{ field: "surname", sort: "asc"}]
       }
     }} columns={[
-        {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+        {field: "membershipNumber", headerName: "Membership Number", flex: 1,
           renderCell: params => <MUILink component={Link} to={"/applications/"+params.value+"/view"}>{params.value}</MUILink>},
-        {field: "firstName", headerName: "First Name", flex: 3, hideable: false},
-        {field: "surname", headerName: "Surname", flex: 3, hideable: false},
-        {field: "submittedAt", headerName: "Application Date", flex: 2, hideable: false, type: 'date',
+        {field: "firstName", headerName: "First Name", flex: 3},
+        {field: "surname", headerName: "Surname", flex: 3},
+        {field: "submittedAt", headerName: "Application Date", flex: 2, type: 'date',
           valueFormatter:  (value, row, column, apiRef) => moment.unix(value).format("YYYY-MM-DD"),
           valueGetter:  (value, row, column, apiRef) => new Date(value)
         },
         {
-          field: "scouting", headerName: "Scout Reference", flex: 1, hideable: false,
+          field: "scouting", headerName: "Scout Reference", flex: 1,
           align: "center", headerAlign: "center",
           valueGetter:  (value, row, column, apiRef) => row.applicationStatus.scouting,
           renderCell: params => {
@@ -55,7 +55,7 @@ export default function ListApplications() {
           }
         },
         {
-          field: "nonScouting", headerName: "Non-Scout Reference", flex: 1, hideable: false,
+          field: "nonScouting", headerName: "Non-Scout Reference", flex: 1,
           align: "center", headerAlign: "center",
           valueGetter:  (value, row, column, apiRef) => row.applicationStatus.nonScouting,
           renderCell: params => {
@@ -69,7 +69,7 @@ export default function ListApplications() {
           }
         },
         {
-          field: "fiveYears", headerName: "5+ Years", flex: 1, hideable: false,
+          field: "fiveYears", headerName: "5+ Years", flex: 1,
           align: "center", headerAlign: "center",
           valueGetter:  (value, row, column, apiRef) => row.applicationStatus.fiveYears,
           renderCell: params => {

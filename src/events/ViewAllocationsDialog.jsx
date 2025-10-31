@@ -56,17 +56,17 @@ export default function ViewAllocationsDialog({event, open, onClose}) {
   let emails = null
 
   const allocationColumns=[
-    {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+    {field: "membershipNumber", headerName: "Membership Number", flex: 1,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><Link component={RouterLink} to={"/members/"+params.value+"/view"}>{params.value}</Link></Privileged>},
-    {field: "name", headerName: "First Name", flex: 2, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
-    {field: "surname", headerName: "Surname", flex: 2, hideable: false},
-    {field: "allocation", headerName: "Allocation", flex: 2, hideable: false,
+    {field: "name", headerName: "First Name", flex: 2, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
+    {field: "surname", headerName: "Surname", flex: 2},
+    {field: "allocation", headerName: "Allocation", flex: 2,
       renderCell: params => <><AllocationWidget textOnly allocation={params.value} /><Privileged allowed={["COMMITTEE"]}><AllocationSuspendedWidget suspended={params.row.suspended} /></Privileged></>}
   ]
   if(committee){
-    allocationColumns.push({field: "email", headerName: "E-mail", flex: 2, hideable: false,
+    allocationColumns.push({field: "email", headerName: "E-mail", flex: 2,
       renderCell: params => <EmailLink>{params.value}</EmailLink>})
-    allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1, hideable: false,
+    allocationColumns.push({field: "receivedNecker", headerName: "Has Necker?", flex: 1,
       renderCell: params => params.value ? "Yes" : "No"})
     emails = event.allocations.filter(a => selectionModel.includes(a.membershipNumber)).map(a => a.email).join(',')
   }

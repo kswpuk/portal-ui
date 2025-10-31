@@ -66,11 +66,11 @@ export default function ListMembers() {
   committee.sort((a, b) => (committeeRoles[a.role]["sortOrder"] > committeeRoles[b.role]["sortOrder"]) ? 1 : -1)
 
   const columns = [
-    {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+    {field: "membershipNumber", headerName: "Membership Number", flex: 1,
       renderCell: params => <Privileged allowed={["COMMITTEE", params.value]} denyMessage={params.value}><MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink></Privileged>},
-    {field: "name", headerName: "First Name", flex: 3, hideable: false, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
-    {field: "surname", headerName: "Surname", flex: 3, hideable: false},
-    {field: "status", headerName: "Status", flex: 1, hideable: true, valueGetter:  (value, row, column, apiRef) => formatStatus(row.status, row.suspended)}
+    {field: "name", headerName: "First Name", flex: 3, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
+    {field: "surname", headerName: "Surname", flex: 3},
+    {field: "status", headerName: "Status", flex: 1, valueGetter:  (value, row, column, apiRef) => formatStatus(row.status, row.suspended)}
   ]
   let emails = null
   let toolbar = null
@@ -78,9 +78,9 @@ export default function ListMembers() {
   let columnsInitialState = {}
 
   if(isCommittee){
-    columns.splice(-1, 0, {field: "email", headerName: "E-mail", flex: 3, hideable: false,
+    columns.splice(-1, 0, {field: "email", headerName: "E-mail", flex: 3,
       renderCell: params => <EmailLink>{params.value}</EmailLink>})
-    columns.splice(-1, 0, {field: "age", headerName: "Age", type: 'number', flex: 1, hideable: true})
+    columns.splice(-1, 0, {field: "age", headerName: "Age", type: 'number', flex: 1})
     
     columnsInitialState = {
       columnVisibilityModel: {

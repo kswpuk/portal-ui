@@ -54,9 +54,9 @@ export default function Compare() {
           sortModel: [{ field: "membershipNumber", sort: "asc"}]
         }
       }} columns={[
-          {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false, renderCell: params => <MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink>},
-          {field: "name", headerName: "Name", flex: 2, hideable: false, renderCell: params => params.row.name || <Grey>Unknown</Grey>},
-          {field: "action", headerName: "Action", flex: 2, hideable: false, renderCell: params => {
+          {field: "membershipNumber", headerName: "Membership Number", flex: 1, renderCell: params => <MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink>},
+          {field: "name", headerName: "Name", flex: 2, renderCell: params => params.row.name || <Grey>Unknown</Grey>},
+          {field: "action", headerName: "Action", flex: 2, renderCell: params => {
             switch(params.row.action){
               case "ADD_TO_COMPASS":
                 return <><PersonAdd sx={{marginRight: '1rem'}} />Add to Compass</>

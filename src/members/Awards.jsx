@@ -48,10 +48,10 @@ export default function Awards() {
         },
       }}
       columns={[
-        {field: "membershipNumber", headerName: "Membership Number", flex: 1, hideable: false,
+        {field: "membershipNumber", headerName: "Membership Number", flex: 1,
           renderCell: params => <MUILink component={Link} to={"/members/"+params.value+"/view"}>{params.value}</MUILink>},
-        {field: "firstName", headerName: "First Name", flex: 3, hideable: false},
-        {field: "surname", headerName: "Surname", flex: 3, hideable: false},
+        {field: "firstName", headerName: "First Name", flex: 3},
+        {field: "surname", headerName: "Surname", flex: 3},
       ]} rows={awardSuggestions.members}
       getRowId={(row) => row.membershipNumber}
     />

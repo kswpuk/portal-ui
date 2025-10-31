@@ -76,19 +76,19 @@ export default function ViewApplication() {
       }
     }} columns={[
         {
-          field: "referenceName", headerName: "Reference Name", flex: 3, hideable: false,
+          field: "referenceName", headerName: "Reference Name", flex: 3,
           renderCell: params => params.row.submittedAt ? <Link href="#" onClick={(event) => {event.preventDefault(); setShowReference(params.row.referenceEmail)}}>{params.value}</Link> : params.value
         },
         {
-          field: "referenceEmail", headerName: "Reference E-mail", flex: 3, hideable: false,
+          field: "referenceEmail", headerName: "Reference E-mail", flex: 3,
           renderCell: params => <Link href={"mailto:"+params.value}>{params.value}</Link>
         },
         {
-          field: "submittedAt", headerName: "Date Received", flex: 2, hideable: false, 
+          field: "submittedAt", headerName: "Date Received", flex: 2, 
           type: 'dateTime', valueGetter: (value, row, column, apiRef) => value && new Date(value*1000)
         },
         {
-          field: "relationship", headerName: "Type", flex: 1, hideable: false,
+          field: "relationship", headerName: "Type", flex: 1,
           align: "center", headerAlign: "center",
           renderCell: params => {
             let col = ''
@@ -111,7 +111,7 @@ export default function ViewApplication() {
           }
         },
         {
-          field: "howLong", headerName: "5+ years", flex: 1, hideable: false,
+          field: "howLong", headerName: "5+ years", flex: 1,
           align: "center", headerAlign: "center",
           renderCell: params => {
             // Color = gt/lt 5
