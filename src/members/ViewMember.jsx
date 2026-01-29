@@ -14,6 +14,7 @@ import ConfirmLink from '../common/ConfirmLink'
 import MemberPhoto from '../common/MemberPhoto'
 import ViewMemberInformation from './ViewMemberInformation'
 import ViewMemberAllocations from './ViewMemberAllocations'
+import ViewMemberEventSeries from './ViewMemberEventSeries'
 
 export default function ViewMember() {
   const dispatch = useDispatch()
@@ -86,9 +87,10 @@ export default function ViewMember() {
         <Tabs value={selectedTab} onChange={handleTabChange} sx={{marginBottom: '1rem'}}>
           <Tab label="Personal Information" />
           <Tab label="Allocations" />
+          <Tab label="Event Series" />
         </Tabs>
 
-        {selectedTab === 0 ? <ViewMemberInformation member={member} /> : <ViewMemberAllocations membershipNumber={membershipNumber} />}
+        {selectedTab === 0 ? <ViewMemberInformation member={member} /> : (selectedTab === 1 ? <ViewMemberAllocations membershipNumber={membershipNumber} /> : <ViewMemberEventSeries membershipNumber={membershipNumber} />)}
         
       </Grid>
     </Grid>
