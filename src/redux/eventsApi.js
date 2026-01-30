@@ -38,7 +38,7 @@ const eventsApi = portalApi.injectEndpoints({
         url: `events/${eventSeriesId}/${eventId}/register/${membershipNumber}`,
         method: 'POST'
       }),
-      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT'],
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT', {type: 'EVENT_SERIES_ALLOCATIONS', id: eventSeriesId}],
     }),
     suggestAllocations: builder.query({
       query: ({eventSeriesId, eventId}) => `events/${eventSeriesId}/${eventId}/allocate/suggest`,
@@ -52,7 +52,7 @@ const eventsApi = portalApi.injectEndpoints({
           "allocations": allocations
         }
       }),
-      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT'],
+      invalidatesTags: (_result, _error, {eventSeriesId, eventId}) => [{type: 'EVENT', id: `${eventSeriesId}/${eventId}`}, 'EVENTS', {type: 'ALLOCATION_SUGGESTION', id: `${eventSeriesId}/${eventId}`}, 'MEMBERS_EXPORT', {type: 'EVENT_SERIES_ALLOCATIONS', id: eventSeriesId}],
     }),
     listEventSeries: builder.query({
       query: (detailed) => detailed ? `events/_series?detailed=true` : `events/_series`,
@@ -85,6 +85,10 @@ const eventsApi = portalApi.injectEndpoints({
       }),
       invalidatesTags: ['ALL_EVENT_SERIES'],
     }),
+    getEventSeriesAllocations: builder.query({
+      query: (eventSeriesId) => `events/${eventSeriesId}/_allocations`,
+      providesTags: (_result, _error, eventSeriesId) => [{type: 'EVENT_SERIES_ALLOCATIONS', id: eventSeriesId}],
+    }),
     eventsReport: builder.query({
       query: () => 'events/report',
       providesTags: ['EVENTS_REPORT'],
@@ -100,5 +104,6 @@ const eventsApi = portalApi.injectEndpoints({
 export const { useListEventsQuery, useGetEventQuery, useCreateEventMutation, useEditEventMutation, useDeleteEventMutation,
   useRegisterForEventMutation, useSuggestAllocationsQuery, useAllocateToEventMutation,
   useListEventSeriesQuery, useGetEventSeriesQuery, useCreateEventSeriesMutation, useEditEventSeriesMutation, useDeleteEventSeriesMutation,
+  useGetEventSeriesAllocationsQuery,
   useEventsReportQuery, useEventsAttendanceReportQuery
 } = eventsApi

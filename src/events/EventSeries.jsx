@@ -13,6 +13,7 @@ import ConfirmButton from "../common/ConfirmButton"
 import LocationWidget from "./LocationWidget"
 import DateRangeWidget from "../common/DateRangeWidget"
 import { Link } from "react-router-dom"
+import EventSeriesAttendanceWrapper from "./EventSeriesAttendanceWrapper"
 
 export default function EventSeries() {
   const dispatch = useDispatch()
@@ -53,7 +54,7 @@ export default function EventSeries() {
     let letter = e.name.substring(0, 1).toUpperCase();
 
     if(letter != currLetter) {
-      stack.push(<Box marginTop={currLetter == null ? "0rem" : "1.5rem"} marginBottom="1rem">
+      stack.push(<Box key={"letter_"+letter} marginTop={currLetter == null ? "0rem" : "1.5rem"} marginBottom="1rem">
         <Typography variant="h5">{letter}</Typography>
       </Box>);
 
@@ -63,7 +64,7 @@ export default function EventSeries() {
     stack.push(<Accordion key={e.eventSeriesId}>
         <AccordionSummary expandIcon={<ArrowDropDownRounded />}>
           <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
-            <Typography variant="h6" flex={1}>
+            <Typography variant="h5" flex={1}>
               {e.name}
               {eventTypeIcon(e.type)}
             </Typography>
@@ -73,15 +74,18 @@ export default function EventSeries() {
         <AccordionDetails>
           {e.description}
           <Grid container spacing={2} sx={{mt: 1}}>
-              {e["instances"].map(i => <Grid item xs={6} md={4} lg={3}>
-                <Card variant="outlined">
-                  <CardActionArea sx={{p: 1, pt: '1rem'}} component={Link} to={`/events/${i["eventSeriesId"]}/${i["eventId"]}`}>
-                    <DateRangeWidget startDate={i.startDate} endDate={i.endDate} marginBottom='0.5rem' />
-                    <LocationWidget event={i} marginBottom='0.5rem' />
-                  </CardActionArea>
-                </Card>
-              </Grid>)}
-            </Grid>
+            {e["instances"].map(i => <Grid key={i.eventId} item xs={6} md={4} lg={3}>
+              <Card variant="outlined">
+                <CardActionArea sx={{p: 1, pt: '1rem'}} component={Link} to={`/events/${i["eventSeriesId"]}/${i["eventId"]}`}>
+                  <DateRangeWidget startDate={i.startDate} endDate={i.endDate} marginBottom='0.5rem' />
+                  <LocationWidget event={i} marginBottom='0.5rem' />
+                </CardActionArea>
+              </Card>
+            </Grid>)}
+          </Grid>
+          <Box marginTop="1rem">
+            <EventSeriesAttendanceWrapper eventSeriesId={e.eventSeriesId} />
+          </Box>
         </AccordionDetails>
         <Privileged allowed={["EVENTS"]}>
           <AccordionActions>
@@ -106,43 +110,5 @@ export default function EventSeries() {
       <AddEventSeriesDialog show={show} onClose={() => setShow(false)} existing={eventSeries.map(e => e.eventSeriesId)}/>
       <EditEventSeriesDialog show={editEvent !== null} onClose={() => setEditEvent(null)} event={editEvent} />
     </Privileged>
-  </>
-
-
-  return <>
-    <Grid container spacing={2} sx={{marginBottom: '1rem'}}>
-      {eventSeries.map(e => <Grid item xs={12} key={e.eventSeriesId}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6">
-              {e.name}
-              {eventTypeIcon(e.type)}
-            </Typography>
-            <Typography variant="body2">{e.description}</Typography>
-
-            <Grid container spacing={2} sx={{mt: 1}}>
-              {e["instances"].map(i => <Grid item xs={6} md={4} lg={3}>
-                <Card variant="outlined">
-                  <CardActionArea sx={{p: 1, pt: '1rem'}} component={Link} to={`/events/${i["eventSeriesId"]}/${i["eventId"]}`}>
-                    <DateRangeWidget startDate={i.startDate} endDate={i.endDate} marginBottom='0.5rem' />
-                    <LocationWidget event={i} marginBottom='0.5rem' />
-                  </CardActionArea>
-                </Card>
-              </Grid>)}
-            </Grid>
-          </CardContent>
-          <Privileged allowed={["EVENTS"]}>
-            <CardActions>
-              <Button startIcon={<Edit />} onClick={() => setEditEvent(e)}>Edit</Button>
-              {e["instances"].length === 0 ? <ConfirmButton startIcon={<Delete />} onConfirm={() => deleteEventSeries(e["eventSeriesId"])}
-                  loading={isDeleting} loadingText="Deleting..."
-                  body={"Are you sure you want to delete the event series "+e['name']+"? This action cannot be undone."}>Delete</ConfirmButton> : null}
-            </CardActions>
-          </Privileged>
-        </Card>
-      </Grid>)}
-    </Grid>
-
-
   </>
 }

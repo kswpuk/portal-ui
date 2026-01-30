@@ -5,7 +5,6 @@ import { useListEventSeriesQuery } from "../redux/eventsApi"
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid"
 import { ALLOCATED, ATTENDED, DROPPED_OUT, NO_SHOW, NOT_ALLOCATED, REGISTERED, RESERVE } from "../consts"
 import { Box } from "@mui/material"
-import ExportCsvButton from "../common/ExportCsvButton"
 import ExportDataCsvButton from "../common/ExportDataCsvButton"
 
 export default function ViewMemberEventSeries(props) {
