@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, Fab, Grid, Tooltip, Typography } from "@mui/material"
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardActionArea, CardActions, CardContent, Fab, Grid, Tooltip, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import Error from "../common/Error"
@@ -6,7 +6,7 @@ import Loading from "../common/Loading"
 import { useDeleteEventSeriesMutation, useListEventSeriesQuery } from "../redux/eventsApi"
 import { setTitle } from "../redux/navSlice"
 import Privileged from '../common/Privileged'
-import { Add, Celebration, Delete, Edit, EventBusy } from '@mui/icons-material'
+import { Add, ArrowDropDownRounded, Celebration, Delete, Edit, EventBusy } from '@mui/icons-material'
 import AddEventSeriesDialog from "./AddEventSeriesDialog"
 import EditEventSeriesDialog from "./EditEventSeriesDialog"
 import ConfirmButton from "../common/ConfirmButton"
@@ -47,6 +47,68 @@ export default function EventSeries() {
     }
   }
 
+  let stack = [];
+  let currLetter = null;
+  for (let e of eventSeries) {
+    let letter = e.name.substring(0, 1).toUpperCase();
+
+    if(letter != currLetter) {
+      stack.push(<Box marginTop={currLetter == null ? "0rem" : "1.5rem"} marginBottom="1rem">
+        <Typography variant="h5">{letter}</Typography>
+      </Box>);
+
+      currLetter = letter;
+    }
+
+    stack.push(<Accordion key={e.eventSeriesId}>
+        <AccordionSummary expandIcon={<ArrowDropDownRounded />}>
+          <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
+            <Typography variant="h6" flex={1}>
+              {e.name}
+              {eventTypeIcon(e.type)}
+            </Typography>
+            <Typography variant="subtitle1" marginRight="1rem" color="grey">{e["instances"].length} instance{e["instances"].length != 1 ? "s" : ""}</Typography>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+          {e.description}
+          <Grid container spacing={2} sx={{mt: 1}}>
+              {e["instances"].map(i => <Grid item xs={6} md={4} lg={3}>
+                <Card variant="outlined">
+                  <CardActionArea sx={{p: 1, pt: '1rem'}} component={Link} to={`/events/${i["eventSeriesId"]}/${i["eventId"]}`}>
+                    <DateRangeWidget startDate={i.startDate} endDate={i.endDate} marginBottom='0.5rem' />
+                    <LocationWidget event={i} marginBottom='0.5rem' />
+                  </CardActionArea>
+                </Card>
+              </Grid>)}
+            </Grid>
+        </AccordionDetails>
+        <Privileged allowed={["EVENTS"]}>
+          <AccordionActions>
+            <Button startIcon={<Edit />} onClick={() => setEditEvent(e)}>Edit</Button>
+            {e["instances"].length === 0 ? <ConfirmButton startIcon={<Delete />} onConfirm={() => deleteEventSeries(e["eventSeriesId"])}
+                loading={isDeleting} loadingText="Deleting..."
+                body={"Are you sure you want to delete the event series "+e['name']+"? This action cannot be undone."}>Delete</ConfirmButton> : null}
+          </AccordionActions>
+        </Privileged>
+      </Accordion>)
+  }
+
+  return <>
+    <Box marginBottom="5rem">
+      {stack}
+    </Box>
+    <Privileged allowed={["EVENTS"]}>
+      <Fab color="primary" sx={{ position: 'fixed', bottom: 16, right: 16 }} onClick={() => setShow(true)}>
+        <Add />
+      </Fab>
+
+      <AddEventSeriesDialog show={show} onClose={() => setShow(false)} existing={eventSeries.map(e => e.eventSeriesId)}/>
+      <EditEventSeriesDialog show={editEvent !== null} onClose={() => setEditEvent(null)} event={editEvent} />
+    </Privileged>
+  </>
+
+
   return <>
     <Grid container spacing={2} sx={{marginBottom: '1rem'}}>
       {eventSeries.map(e => <Grid item xs={12} key={e.eventSeriesId}>
@@ -81,13 +143,6 @@ export default function EventSeries() {
       </Grid>)}
     </Grid>
 
-    <Privileged allowed={["EVENTS"]}>
-      <Fab color="primary" sx={{ position: 'fixed', bottom: 16, right: 16 }} onClick={() => setShow(true)}>
-        <Add />
-      </Fab>
 
-      <AddEventSeriesDialog show={show} onClose={() => setShow(false)} existing={eventSeries.map(e => e.eventSeriesId)}/>
-      <EditEventSeriesDialog show={editEvent !== null} onClose={() => setEditEvent(null)} event={editEvent} />
-    </Privileged>
   </>
 }
