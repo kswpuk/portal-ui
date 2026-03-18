@@ -15,6 +15,9 @@ export default defineConfig({
       plugins: ['@emotion/babel-plugin'],
     },
   }), viteTsconfigPaths()],
+  resolve: {
+    dedupe: ["@emotion/react", "@emotion/styled"]
+  },
   server: {    
     open: true,
     port: 3000,

@@ -1,0 +1,57 @@
+import { Person, PersonOutline } from "@mui/icons-material";
+import IconText from "../common/IconText";
+import { ALLOCATED, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, NO_SHOW, REGISTERED, RESERVE } from "../consts";
+
+interface AllocationWidgetProps {
+  allocation: AllocationStatus | null
+
+  closed?: boolean
+  eligible?: boolean
+  suspended?: boolean
+  textOnly?: boolean
+  verbose?: boolean
+
+  marginBottom?: string
+  gap?: string
+}
+
+export default function AllocationWidget(props: AllocationWidgetProps){
+  const allocationText = getAllocationText(props.allocation, props.verbose)
+
+  return props.textOnly ? allocationText : <IconText icon={allocationText == null ? <PersonOutline /> : <Person />} marginBottom={props.marginBottom} gap={props.gap}>
+    {allocationText == null ? getNotRespondedText(props.closed || false, props.verbose, props.eligible !== undefined ? props.eligible : true, props.suspended !== undefined ? props.suspended : false) : allocationText}
+  </IconText>
+}
+
+function getNotRespondedText(closed=false, verbose=false, eligible=true, suspended=false){
+  if(!eligible){
+    return verbose ? "You are not eligible to sign up for this event" : "Not eligible"
+  } else if(closed){
+    return verbose ? "It's too late to sign up for this event" : "Registration closed"
+  } else if(suspended){
+    return verbose ? "You can't sign up to events whilst suspended" : "Suspended"
+  }else{
+    return verbose ? "You have not responded to this event" : "Not responded"
+  }
+}
+
+export function getAllocationText(allocation: AllocationStatus | null, verbose=false){
+  switch(allocation){
+    case REGISTERED:
+      return verbose ? "You are registered for this event" : "Registered"
+    case ALLOCATED:
+      return verbose ? "You are allocated to this event" : "Allocated"
+    case ATTENDED:
+      return verbose ? "You attended this event" : "Attended"
+    case NOT_ALLOCATED:
+      return verbose ? "You are not allocated to this event" : "Not allocated"
+    case RESERVE:
+      return verbose ? "You are on the reserve list for this event" : "Reserve list"
+    case DROPPED_OUT:
+      return verbose ? "You dropped out of this event" : "Dropped out"
+    case NO_SHOW:
+      return verbose ? "You were allocated to this event but did not show up" : "Did not show"
+    default:
+      return null
+  }
+}
