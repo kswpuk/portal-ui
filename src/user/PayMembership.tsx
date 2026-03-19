@@ -29,7 +29,7 @@ export default function PayMembership() {
   const [ payMembership, { data: payData, isLoading: isPayLoading, isSuccess: isPaySuccess } ] = usePayMembershipMutation()
 
   if(isPaySuccess){
-    navigate(payData.url)
+    window.location.href = payData.url;
   }
 
   if (membershipNumber === null || isLoading || member === undefined){
