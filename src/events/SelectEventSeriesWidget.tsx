@@ -5,7 +5,7 @@ interface SelectEventSeriesWidgetProps {
   /**
    * Selected event series ID
    */
-  selected: string
+  selected?: string
 
   /**
    * Possible event series 

@@ -6,7 +6,7 @@ import { ReactNode, useEffect } from "react";
 interface ErrorProps {
   error?: FetchBaseQueryError | SerializedError
 
-  children: ReactNode
+  children?: ReactNode
 
   gutterBottom?: boolean
   noJump?: boolean

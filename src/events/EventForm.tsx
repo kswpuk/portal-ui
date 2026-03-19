@@ -29,7 +29,7 @@ type EventFormValues = Omit<EventBody, "locationType" | "payee" | "attendanceCri
 
 export default function EventForm(props: EventFormProps){
 
-  const { register, watch, handleSubmit, formState: { errors } } = useForm<EventFormValues>();
+  const { register, watch, handleSubmit, control, formState: { errors } } = useForm<EventFormValues>();
 
   const startDateWatch = watch("startDate")
   const costWatch = watch("cost")
@@ -86,7 +86,7 @@ export default function EventForm(props: EventFormProps){
     seriesEl = <Error error={seriesError} onRetry={seriesRefetch}/>
   }else if(series){
     seriesEl = <>
-      <SelectEventSeriesWidget selected={props.eventSeriesId || series[0].eventSeriesId} series={props.social ? series.filter(s => s.type === "social") : series} onChange={props.eventSeriesId ? () => {} : setEventSeriesId} />
+      <SelectEventSeriesWidget selected={props.eventSeriesId} series={props.social ? series.filter(s => s.type === "social") : series} onChange={props.eventSeriesId ? () => {} : setEventSeriesId} />
     </>
   }
 
@@ -110,6 +110,7 @@ export default function EventForm(props: EventFormProps){
     <Grid size={{xs: 9}}>
       <Controller
         name={`weightingCriteria.${id}`}
+        control={control}
         defaultValue={props.event?.weightingCriteria?.[id] || defaultValue}
         render={({field}) => (
           <Slider
@@ -254,7 +255,7 @@ export default function EventForm(props: EventFormProps){
 
           <Grid size={{xs: 6}}>
             <RadioGroup defaultValue={props.event?.attendanceCriteria.includes("over25") ? "over25" : (props.event?.attendanceCriteria.includes("under25") ? "under25" : "")}>
-              <FormControlLabel control={<Radio value="" {...register("attendanceCriteria_age")} />} label="No age limit" />
+              <FormControlLabel control={<Radio value={null} {...register("attendanceCriteria_age")} />} label="No age limit" />
               <FormControlLabel control={<Radio value="over25" {...register("attendanceCriteria_age")} />} label="25 and over" />
               <FormControlLabel control={<Radio value="under25" {...register("attendanceCriteria_age")} />} label="Under 25" />
             </RadioGroup>
