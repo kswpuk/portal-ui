@@ -5,14 +5,22 @@ import { useExportQuery } from "../redux/membersApi";
 import { saveAs } from 'file-saver';
 
 interface ExportCsvButtonProps {
+  /** Membership numbers to include in the export. When empty, all members are exported. */
   selected?: string[]
+  /** Optional event ID to scope the export to a specific event's attendees. */
   event?: string
-
+  /** Base filename for the downloaded file (without `.csv` extension). Defaults to `"export"`. */
   filename?: string
-
+  /** When true, renders a compact icon-only button instead of a labelled button. */
   iconButton?: boolean
 }
 
+/**
+ * Triggers a server-side CSV export and downloads the result.
+ *
+ * Shows a spinner while the export is in progress. The button label switches
+ * between "Export Selected" (when `selected` is non-empty) and "Export All".
+ */
 export default function ExportCsvButton({selected, event, filename, iconButton}: ExportCsvButtonProps){
   const [clicked, setClicked] = useState(-1);
   const {data: exportedCsv, isFetching: isExporting, fulfilledTimeStamp} = useExportQuery({members: selected || [], event: event, requestedAt: clicked}, {skip: clicked < 0})

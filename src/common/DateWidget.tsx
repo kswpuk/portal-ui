@@ -17,6 +17,13 @@ interface DateWidgetProps {
   format?: string
 }
 
+/**
+ * Displays a date (and optionally time) inside a semantic `<time>` element.
+ *
+ * The `dateTime` attribute is always machine-readable (ISO-style).
+ * The visible text defaults to a human-friendly format but can be overridden
+ * via the `format` prop (moment.js format string).
+ */
 export default function DateWidget(props: DateWidgetProps){
   const d = moment(props.date)
 

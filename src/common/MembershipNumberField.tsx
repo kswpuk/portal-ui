@@ -3,10 +3,19 @@ import { useListMembersQuery } from '../redux/membersApi'
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 interface MembershipNumberFieldProps {
+  /** React Hook Form field error. When present, the field shows "This field is required". */
   error?: FieldError
+  /** React Hook Form `register` return value wired to the underlying `TextField`. */
   register: UseFormRegisterReturn
 }
 
+/**
+ * An autocomplete field for selecting a scout membership number.
+ *
+ * Loads the full member list from the API and allows filtering by membership
+ * number, first name, or surname. The field is free-solo so a number can also
+ * be typed directly without selecting from the list.
+ */
 export default function MembershipNumberField(props: MembershipNumberFieldProps){
   // TODO: Load on open, not by default
   const { data: members, isLoading } = useListMembersQuery()

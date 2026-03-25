@@ -8,6 +8,12 @@ interface TelephoneLinkProps {
     children: string | JSX.Element
 }
 
+/**
+ * Normalises a phone number and renders it as a `tel:` hyperlink.
+ *
+ * Non-numeric characters (except a leading `+`) are stripped. A UK number
+ * starting with `0` has the leading zero replaced with the `+44` country code.
+ */
 export default function TelephoneLink(props: TelephoneLinkProps){
   let number = String(props.children).replaceAll(/[^+0-9]/g, '')
   if(number.startsWith('0')){

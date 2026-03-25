@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
@@ -18,8 +19,13 @@ export default defineConfig({
   resolve: {
     dedupe: ["@emotion/react", "@emotion/styled"]
   },
-  server: {    
+  server: {
     open: true,
     port: 3000,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
   },
 })

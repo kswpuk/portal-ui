@@ -9,6 +9,14 @@ interface ImageDropzoneProps {
   onFileSelected: (file: File) => void
 }
 
+/**
+ * A drag-and-drop image upload zone backed by `react-dropzone`.
+ *
+ * Accepts a single image file up to 3 MB. Shows a success alert with the
+ * filename and size once a valid file is selected, or an error alert if the
+ * file is rejected (wrong type or too large). The drop area's visual style
+ * updates while a file is being dragged over it.
+ */
 export default function ImageDropzone({ onFileSelected }: ImageDropzoneProps) {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState("");

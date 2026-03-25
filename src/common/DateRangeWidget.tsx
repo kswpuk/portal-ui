@@ -3,12 +3,22 @@ import moment from "moment"
 import IconText from "./IconText"
 
 interface DateRangeWidgetProps {
+  /** Start of the date range. Accepts any value that moment can parse. */
   startDate: moment.MomentInput
+  /** End of the date range. Accepts any value that moment can parse. */
   endDate: moment.MomentInput
-
+  /** Bottom margin passed through to the underlying `IconText`. */
   marginBottom?: string | number
 }
 
+/**
+ * Renders a date range as an icon + text row, collapsing shared parts to avoid repetition.
+ *
+ * - Same day: `"15 June 2025"`
+ * - Same month: `"14 - 15 June 2025"`
+ * - Same year: `"14 May - 15 June 2025"`
+ * - Different years: `"31 December 2025 - 1 January 2026"`
+ */
 export default function DateRangeWidget(props: DateRangeWidgetProps){
   const startDate = moment(props.startDate)
   const endDate = moment(props.endDate)

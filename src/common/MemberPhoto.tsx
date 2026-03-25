@@ -29,6 +29,12 @@ interface MemberPhotoProps {
   width?: number | string
 }
 
+/**
+ * Fetches and displays a member's photo via the members API.
+ *
+ * Shows a spinner while the photo is loading. Falls back to a placeholder
+ * image if the request fails. The photo URL is re-fetched every hour.
+ */
 export default function MemberPhoto(props: MemberPhotoProps){
   const { data: url, error, isLoading } = useGetMemberPhotoQuery(props.membershipNumber, {pollingInterval: 3600000})
 

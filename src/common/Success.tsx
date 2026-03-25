@@ -8,6 +8,9 @@ interface SuccessProps {
   children: ReactNode
 }
 
+/**
+ * Displays a green MUI success Alert with a "Hooray!" heading.
+ */
 export default function Success (props: SuccessProps){
   return <Alert severity="success">
     <AlertTitle>Hooray!</AlertTitle>

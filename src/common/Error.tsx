@@ -4,12 +4,15 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { ReactNode, useEffect } from "react";
 
 interface ErrorProps {
+  /** An RTK Query `FetchBaseQueryError` or Redux `SerializedError` to display. */
   error?: FetchBaseQueryError | SerializedError
-
+  /** Additional message content rendered above the parsed error detail. */
   children?: ReactNode
-
+  /** When true, adds a bottom margin below the alert. */
   gutterBottom?: boolean
+  /** When true, suppresses the automatic scroll-to-top triggered on mount. */
   noJump?: boolean
+  /** When provided, a "Try Again" button is shown that calls this function. */
   onRetry?: () => void
 }
 
@@ -19,6 +22,14 @@ function isFetchBaseQueryError(
   return typeof error === 'object' && error != null && 'status' in error;
 }
 
+/**
+ * Displays an error inside a red MUI Alert with an "Oh no!" heading.
+ *
+ * Handles RTK Query `FetchBaseQueryError` (showing the `message`, optional
+ * `detail`, and HTTP status code) and Redux `SerializedError` (shown as JSON).
+ * Scrolls the page to the top on mount so the error is always visible, unless
+ * `noJump` is set.
+ */
 export default function Error(props: ErrorProps){
 
   useEffect(() => {

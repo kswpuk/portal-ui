@@ -2,9 +2,17 @@ import { Link } from "@mui/material"
 import { ReactNode } from "react"
 
 interface PostcodeLinkProps {
+  /** The postcode string to normalise and link. Returns `null` if not provided. */
   children?: ReactNode
 }
 
+/**
+ * Normalises a UK postcode and links it to Google Maps.
+ *
+ * Uppercases the input, strips non-alphanumeric characters, then inserts a
+ * space before the final three characters to produce the standard format
+ * (e.g. `"SW1A 2AA"`). Returns `null` if no value is provided.
+ */
 export default function PostcodeLink(props: PostcodeLinkProps){
   if(!props.children)
     return null

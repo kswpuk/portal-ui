@@ -36,7 +36,9 @@
     "start": "vite",
     "start:prod": "set \"VITE_APP_STAGE=prod\" && vite",
     "build": "vite build",
-    "build:prod": "set \"VITE_APP_STAGE=prod\" && vite build"
+    "build:prod": "set \"VITE_APP_STAGE=prod\" && vite build",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +59,11 @@
     ]
   },
   "devDependencies": {
-    "@types/react-dom": "^19.2.3"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react-dom": "^19.2.3",
+    "jsdom": "^29.0.1",
+    "vitest": "^4.1.1"
   }
 }
