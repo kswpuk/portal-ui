@@ -61,7 +61,10 @@ export default function ViewAllocationsDialog({event, open, onClose}: ViewAlloca
   }
 
   let emails = null
-  const selectedIds = Array.from(selectionModel.ids.values()).map(row => row.toString());
+  const allIds = event.allocations.map(a => a.membershipNumber);
+  const selectedIds = selectionModel.type === "exclude"
+    ? allIds.filter(id => !selectionModel.ids.has(id))
+    : Array.from(selectionModel.ids.values()).map(row => row.toString());
 
   const allocationColumns: GridColDef[] = [
     {field: "membershipNumber", headerName: "Membership Number", flex: 1,

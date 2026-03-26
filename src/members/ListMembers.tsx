@@ -97,14 +97,18 @@ export default function ListMembers() {
     }
 
 
-    let emails = members.filter(m => selectionModel.ids.has(m.membershipNumber)).map(a => a.email).join(',')
+    const selectedMembers = selectionModel.type === "exclude"
+      ? members.filter(m => !selectionModel.ids.has(m.membershipNumber))
+      : members.filter(m => selectionModel.ids.has(m.membershipNumber))
+    const selectedMemberIds = selectedMembers.map(m => m.membershipNumber)
+    let emails = selectedMembers.map(a => a.email).join(',')
 
     toolbar = () => {
       return <Toolbar>
-        <ToolbarButton disabled={selectionModel.ids.size === 0} render={<Button startIcon={<Email />} href={"mailto:?bcc="+emails} />}>
+        <ToolbarButton disabled={selectedMemberIds.length === 0} render={<Button startIcon={<Email />} href={"mailto:?bcc="+emails} />}>
           E-mail Selected
         </ToolbarButton>
-        <ToolbarButton render={<ExportCsvButton selected={Array.from(selectionModel.ids.values()).map(row => row.toString())} filename={`members${selectionModel.ids.size > 0 ? "_selected" : ""}`} />} />
+        <ToolbarButton render={<ExportCsvButton selected={selectedMemberIds} filename={`members${selectedMemberIds.length > 0 ? "_selected" : ""}`} />} />
       </Toolbar>
     }
   }
