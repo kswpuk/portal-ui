@@ -27,7 +27,8 @@ export default function MembersReport() {
     }else if(l === "OVER_65"){
       return "65+"
     }else{
-      return l.substring(0, 2) + " - " + l.substring(3, 2)
+      let ages = l.split("_")
+      return ages[0] + " - " + ages[ages.length - 1]
     }
   }
 
