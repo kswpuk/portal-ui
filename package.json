@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
-    "@mui/x-data-grid": "^8.27.5",
+    "@mui/x-data-grid": "^8.28.1",
     "@reduxjs/toolkit": "^2.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/javascript-color-gradient": "^2.4.2",
@@ -23,14 +23,13 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-dropzone": "^15.0.0",
-    "react-hook-form": "^7.27.0",
+    "react-hook-form": "^7.72.0",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.13.0",
-    "recharts": "^3.8.0",
+    "react-router-dom": "^7.13.2",
+    "recharts": "^3.8.1",
     "tslib": "^2.6.2",
-    "vite": "^7.3.1",
-    "vite-tsconfig-paths": "^6.0.5"
+    "vite": "^8.0.0"
   },
   "scripts": {
     "start": "vite",

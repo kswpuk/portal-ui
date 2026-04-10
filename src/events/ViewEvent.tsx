@@ -197,7 +197,7 @@ export default function ViewEvent(){
     event.allocations.forEach(a => allocationCountByType[a.allocation] = (allocationCountByType[a.allocation] || 0) + 1)
   }
   
-  const listJoin = (arr: string[], s1: string, s2: string) => arr.slice(0,-1).join(s1).concat(arr.length > 1 ? s2 : '', arr.slice(-1)[0]);
+  const listJoin = (arr: string[], s1: string, s2: string) => arr.length > 0 ? arr.slice(0,-1).join(s1).concat(arr.length > 1 ? s2 : '', arr.slice(-1)[0]) : "";
   const personOrPeople = (v: number) => v === 1 ? "person is" : "people are"
 
   const allocationCountText = listJoin((Object.entries(allocationCountByType) as [AllocationStatus, number][])
