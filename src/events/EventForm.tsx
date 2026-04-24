@@ -24,7 +24,7 @@ interface EventFormProps {
 
 type EventFormValues = Omit<EventBody, "locationType" | "payee" | "attendanceCriteria"> & {
   "attendanceCriteria_active": "active" | null
-  "attendanceCriteria_age": "under25" | "over25" | null
+  "attendanceCriteria_age": "under25" | "over25" | ""
 }
 
 export default function EventForm(props: EventFormProps){
@@ -74,7 +74,7 @@ export default function EventForm(props: EventFormProps){
           ...data,
           locationType,
           payee,
-          attendanceCriteria: [data["attendanceCriteria_active"], data["attendanceCriteria_age"]].filter(v => v !== null)
+          attendanceCriteria: [data["attendanceCriteria_active"], data["attendanceCriteria_age"]].filter(v => v !== null && v !== "")
         } })
     }
   }
@@ -255,7 +255,7 @@ export default function EventForm(props: EventFormProps){
 
           <Grid size={{xs: 6}}>
             <RadioGroup defaultValue={props.event?.attendanceCriteria.includes("over25") ? "over25" : (props.event?.attendanceCriteria.includes("under25") ? "under25" : "")}>
-              <FormControlLabel control={<Radio value={null} {...register("attendanceCriteria_age")} />} label="No age limit" />
+              <FormControlLabel control={<Radio value="" {...register("attendanceCriteria_age")} />} label="No age limit" />
               <FormControlLabel control={<Radio value="over25" {...register("attendanceCriteria_age")} />} label="25 and over" />
               <FormControlLabel control={<Radio value="under25" {...register("attendanceCriteria_age")} />} label="Under 25" />
             </RadioGroup>
