@@ -52,7 +52,7 @@ export default function App(props: AppProps) {
       <Header toggleDrawer={handleDrawerToggle} />
       <Sidebar isOpen={mobileOpen} onDrawerClose={handleDrawerToggle} username={props.user.username} signOut={props.signOut} />
       
-      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, minWidth: 0 }}>
         <Toolbar variant='dense'/>
         <Routes>
           <Route path="/applications/*" element={<LoadingSuspense><LazyApplications /></LoadingSuspense>} />

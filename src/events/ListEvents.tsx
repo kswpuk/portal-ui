@@ -40,7 +40,7 @@ export default function ListEvents() {
     gridContent = <Loading />
   }else{
     gridContent = <Grid container spacing={2}>
-      {events.filter(e => (!hideSocials || e.type !== "social") && (!hideClosed || e.allocation != null || moment(e.registrationDate).isAfter(now, 'day'))).map(e => <Grid key={e.combinedEventId} size={{sm: 12, md: 6, lg: 4}}>
+      {events.filter(e => (!hideSocials || e.type !== "social") && (!hideClosed || e.allocation != null || moment(e.registrationDate).isAfter(now, 'day'))).map(e => <Grid key={e.combinedEventId} size={{xs: 12, md: 6, lg: 4}}>
         <EventCard event={e} />
       </Grid>
       )}

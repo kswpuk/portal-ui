@@ -209,7 +209,7 @@ export default function ViewEvent(){
 
   return <>
     <Grid container spacing={2}>
-      <Grid size={{md: 8}}>
+      <Grid size={{xs: 12, md: 8}}>
         <Typography variant="body1" gutterBottom>{event.description}</Typography>
 
         {event.details ? <>
@@ -230,7 +230,7 @@ export default function ViewEvent(){
         {weighting}
         
       </Grid>
-      <Grid size={{md: 4}}>
+      <Grid size={{xs: 12, md: 4}}>
         <Card elevation={3} sx={{marginBottom: '1rem'}}>
           <CardContent>
             <Typography variant="h6" gutterBottom>Essentials</Typography>

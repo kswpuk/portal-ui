@@ -59,7 +59,7 @@ export default function ViewMember() {
 
   return <>
     <Grid container spacing={3}>
-      <Grid size={{md: 4}}>
+      <Grid size={{xs: 12, md: 4}}>
         <Card>
           <CardMedia component={() => 
             <MemberPhoto membershipNumber={member.membershipNumber}

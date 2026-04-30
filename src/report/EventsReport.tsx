@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Card, CardContent, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import Error from "../common/Error"
 import Loading from "../common/Loading"
 import { useEventsReportQuery } from "../redux/eventsApi"
@@ -41,7 +41,7 @@ export default function EventsReport() {
   }
 
   const year = new Date().getFullYear()
-  const pastEvents = <Table >
+  const pastEvents = <Table>
     <TableHead>
       <TableRow>
         <TableCell></TableCell>
@@ -81,7 +81,7 @@ export default function EventsReport() {
   return <>
     <h3>Past 12 Months</h3>
     <Grid container spacing={2}>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -93,7 +93,7 @@ export default function EventsReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -105,7 +105,7 @@ export default function EventsReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -117,7 +117,7 @@ export default function EventsReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -134,7 +134,7 @@ export default function EventsReport() {
     <EventsAttendanceReport />
 
     <h3>Past Events and Socials</h3>
-    {pastEvents}
+    <TableContainer>{pastEvents}</TableContainer>
 
     <h3>Upcoming Events</h3>
     <p>

@@ -18,21 +18,21 @@ export default function Home() {
 
   return <>
     <Grid container spacing={3}>
-      <Grid size={{lg: 4, md: 6, sm: 12}}>
+      <Grid size={{xs: 12, md: 6, lg: 4}}>
         <Stack spacing={2}>
           <Typography variant="h5" color={grey[400]}>Your Membership</Typography>
           <HomeMembership />
         </Stack>
       </Grid>
 
-      <Grid size={{lg: 4, md: 6, sm: 12}}>
+      <Grid size={{xs: 12, md: 6, lg: 4}}>
         <Stack spacing={2}>
           <Typography variant="h5" color={grey[400]}>Events</Typography>
           <HomeEvents />
         </Stack>
       </Grid>
 
-      <Grid size={{lg: 4, md: 6, sm: 12}}>
+      <Grid size={{xs: 12, md: 6, lg: 4}}>
         <Stack spacing={2}>
           <Typography variant="h5" color={grey[400]}>Other</Typography>
           <HomeOtherSocialMedia />

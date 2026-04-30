@@ -35,7 +35,7 @@ export default function EventsAttendanceReport() {
   return <>
     <h3>Event Attendance (Past 12 Months)</h3>
     <Grid container spacing={2}>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -47,7 +47,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -59,7 +59,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -71,7 +71,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -83,7 +83,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -95,7 +95,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -107,7 +107,7 @@ export default function EventsAttendanceReport() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{xs: 6, md: 4, lg: 2}}>
+      <Grid size={{xs: 12, md: 4, lg: 2}}>
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

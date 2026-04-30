@@ -51,7 +51,7 @@ export default function MemberPhoto(props: MemberPhotoProps){
     return <Box width={props.width} height={props.height} sx={{display: 'flex'}}>
       <CircularProgress sx={{alignSelf: 'center', margin: 'auto', mt: '1rem', mb: '1rem'}} />
     </Box>
-  }else if(error){
+  }else if(error || !url){
     return <img style={imgStyle} src={noPhoto} alt="" title={props.title || "No photo"} width={props.width} height={props.height} />
   }
 

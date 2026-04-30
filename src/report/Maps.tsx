@@ -41,15 +41,15 @@ export default function Maps() {
   }
 
   return <Grid container>
-    <Grid size={{md: 12, lg: 4}}>
+    <Grid size={{xs: 12, lg: 4}}>
       <h3>Events (past year)</h3>
       {eventsMap}
     </Grid>
-    <Grid size={{md: 12, lg: 4}}>
+    <Grid size={{xs: 12, lg: 4}}>
       <h3>Members (active)</h3>
       {membersMap}
     </Grid>
-    <Grid size={{md: 12, lg: 4}}>
+    <Grid size={{xs: 12, lg: 4}}>
       <h3>Applications</h3>
       {applicationsMap}
     </Grid>
