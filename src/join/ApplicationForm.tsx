@@ -144,7 +144,8 @@ export default function ApplicationForm(){
 
         <Stack spacing={3}>
           <Typography variant="body2" gutterBottom>
-            Please provide some evidence that you have received your King's Scout or Queen's Scout Award. This could be, for example, a scan of your certificate or a photo of you receiving your award.
+            Please provide some evidence that you have received your King's Scout or Queen's Scout Award.
+            This should be a scan or a photo of your King's / Queen's Scout Award certificate, or of the completion letter from headquarters.
           </Typography>
 
           <TextField variant="outlined" label="Month you received your King's Scout or Queen's Scout Award"
