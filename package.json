@@ -14,7 +14,7 @@
     "@reduxjs/toolkit": "^2.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/javascript-color-gradient": "^2.4.2",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "^6.0.1",
     "@vnedyalk0v/react19-simple-maps": "^2.0.2",
     "aws-amplify": "^6.16.3",
     "file-saver": "^2.0.5",
