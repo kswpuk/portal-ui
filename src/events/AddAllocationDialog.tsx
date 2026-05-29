@@ -67,7 +67,7 @@ export default function AddAllocationDialog(props: AddAllocationDialogProps) {
           <Select
               required defaultValue={REGISTERED}
               labelId="allocation-label" label="Allocation"
-              inputProps={register("allocation")}>
+              slotProps={{ input: register("allocation") }}>
             <MenuItem value={REGISTERED}>Registered</MenuItem>
             <Divider />
             <MenuItem value={ALLOCATED}>Allocated</MenuItem>

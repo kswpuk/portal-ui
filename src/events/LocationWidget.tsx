@@ -3,8 +3,12 @@ import { Link } from "@mui/material";
 import IconText from "../common/IconText";
 
 interface LocationWidgetProps {
-  event: EventDetails
-  
+  event: {
+    locationType: EventLocationType
+    location: string
+    postcode: string
+    eventUrl?: string
+  }
   gap?: string | number
   marginBottom?: string | number
 }

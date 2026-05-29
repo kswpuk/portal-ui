@@ -1,4 +1,4 @@
-import { Person, PersonOutline } from "@mui/icons-material";
+import { Person, PersonOutlined } from "@mui/icons-material";
 import IconText from "../common/IconText";
 import { ALLOCATED, ATTENDED, DROPPED_OUT, NOT_ALLOCATED, NO_SHOW, REGISTERED, RESERVE } from "../consts";
 
@@ -18,7 +18,7 @@ interface AllocationWidgetProps {
 export default function AllocationWidget(props: AllocationWidgetProps){
   const allocationText = getAllocationText(props.allocation, props.verbose)
 
-  return props.textOnly ? allocationText : <IconText icon={allocationText == null ? <PersonOutline /> : <Person />} marginBottom={props.marginBottom} gap={props.gap}>
+  return props.textOnly ? allocationText : <IconText icon={allocationText == null ? <PersonOutlined /> : <Person />} marginBottom={props.marginBottom} gap={props.gap}>
     {allocationText == null ? getNotRespondedText(props.closed || false, props.verbose, props.eligible !== undefined ? props.eligible : true, props.suspended !== undefined ? props.suspended : false) : allocationText}
   </IconText>
 }

@@ -8,7 +8,7 @@ import Warning from "../common/Warning";
 import { useEditEventSeriesMutation } from "../redux/eventsApi";
 
 interface EditEventSeriesDialogProps {
-  event: EventSeries
+  event: EventSeries | null
   onClose: () => void
   show: boolean
 }
@@ -19,7 +19,7 @@ export default function EditEventSeriesDialog(props: EditEventSeriesDialogProps)
 
   const onSubmit: SubmitHandler<EventSeries> = (data) => {
     editEventSeries({
-      eventSeriesId: props.event.eventSeriesId,
+      eventSeriesId: props.event!.eventSeriesId,
       body: data
     })
   }

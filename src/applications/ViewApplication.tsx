@@ -230,18 +230,16 @@ export default function ViewApplication() {
             body={"Are you sure you wish to approve the application from "+application.firstName+" "+application.surname+"?"}>
               <HowToReg />
           </ConfirmLink>}
-          tooltipTitle="Approve"
-          tooltipOpen
+          slotProps={{ tooltip: { title: "Approve", open: true } }}
         />
 
-        <SpeedDialAction 
+        <SpeedDialAction
           icon={<ConfirmLink sx={{display: "flex"}} title={"Delete "+membershipNumber+"?"} loading={isDeleting}
             onConfirm={() => deleteApplication(membershipNumber)}
             body={"Are you sure you wish to delete the application from "+application.firstName+" "+application.surname+"? This action is permanent, and cannot be undone."}>
               <Delete />
           </ConfirmLink>}
-          tooltipTitle="Delete"
-          tooltipOpen
+          slotProps={{ tooltip: { title: "Delete", open: true } }}
         />
       </SpeedDial>
   </>

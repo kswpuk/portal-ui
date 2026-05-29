@@ -8,9 +8,9 @@
     "@emotion/babel-plugin": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^7.3.7",
-    "@mui/material": "^7.3.7",
-    "@mui/x-data-grid": "^8.28.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@mui/x-data-grid": "^9.0.4",
     "@reduxjs/toolkit": "^2.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/javascript-color-gradient": "^2.4.2",
@@ -34,8 +34,8 @@
   "scripts": {
     "start": "vite",
     "start:prod": "set \"VITE_APP_STAGE=prod\" && vite",
-    "build": "vite build",
-    "build:prod": "set \"VITE_APP_STAGE=prod\" && vite build",
+    "build": "npx tsc --noEmit && vite build",
+    "build:prod": "set \"VITE_APP_STAGE=prod\" && npx tsc --noEmit && vite build",
     "test": "vitest",
     "test:run": "vitest run"
   },
@@ -63,6 +63,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react-dom": "^19.2.3",
     "jsdom": "^29.0.1",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.1"
   }
 }

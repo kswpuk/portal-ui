@@ -48,7 +48,7 @@ export default function MemberPhoto(props: MemberPhotoProps){
   }
 
   if(isLoading){
-    return <Box width={props.width} height={props.height} sx={{display: 'flex'}}>
+    return <Box sx={{display: 'flex', width: props.width, height: props.height}}>
       <CircularProgress sx={{alignSelf: 'center', margin: 'auto', mt: '1rem', mb: '1rem'}} />
     </Box>
   }else if(error || !url){

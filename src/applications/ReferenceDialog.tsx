@@ -148,8 +148,8 @@ export default function ReferenceDialog(props: ReferenceDialogProps) {
       </DialogContent>
       <DialogActions>
         { data.accepted ? 
-          <SubmitButton onClick={() => acceptReference({membershipNumber: props.membershipNumber, referenceEmail: props.referenceEmail, accept: false})} submitting={isAccepting} text="Unaccept Reference" submittingText="Unaccepting Reference..." /> :
-          <SubmitButton onClick={() => acceptReference({membershipNumber: props.membershipNumber, referenceEmail: props.referenceEmail, accept: true})} submitting={isAccepting} text="Accept Reference" submittingText="Accepting Reference..." />
+          <SubmitButton onClick={() => acceptReference({membershipNumber: props.membershipNumber, referenceEmail: props.referenceEmail!, accept: false})} submitting={isAccepting} text="Unaccept Reference" submittingText="Unaccepting Reference..." /> :
+          <SubmitButton onClick={() => acceptReference({membershipNumber: props.membershipNumber, referenceEmail: props.referenceEmail!, accept: true})} submitting={isAccepting} text="Accept Reference" submittingText="Accepting Reference..." />
         }
         <Button onClick={props.onClose}>Close</Button>
       </DialogActions>

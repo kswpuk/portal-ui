@@ -18,8 +18,8 @@ const register: UseFormRegisterReturn = {
 }
 
 const members: MemberListItem[] = [
-  { membershipNumber: '10001', firstName: 'Alice', surname: 'Smith' },
-  { membershipNumber: '10002', firstName: 'Bob', surname: 'Jones' },
+  { membershipNumber: '10001', firstName: 'Alice', surname: 'Smith', preferredName: '', status: 'ACTIVE', role: '' },
+  { membershipNumber: '10002', firstName: 'Bob', surname: 'Jones', preferredName: '', status: 'ACTIVE', role: '' },
 ]
 
 describe('MembershipNumberField', () => {

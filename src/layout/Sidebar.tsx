@@ -37,7 +37,7 @@ export default function Sidebar(props: SidebarProps) {
 
   const drawerContent = <>
     <Toolbar variant='dense'>
-      <Typography variant="h6" noWrap component="div" flex={1}>
+      <Typography variant="h6" noWrap component="div" sx={{flex: 1}}>
         KSWP Portal
       </Typography>
       { isMobile ? <IconButton onClick={props.onDrawerClose}><Close /></IconButton> :  null }
@@ -139,9 +139,7 @@ export default function Sidebar(props: SidebarProps) {
       variant="temporary"
       open={props.isOpen}
       onClose={props.onDrawerClose}
-      ModalProps={{
-        keepMounted: true
-      }}
+      slotProps={{ root: { keepMounted: true } }}
       sx={{
         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
       }}

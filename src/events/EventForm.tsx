@@ -100,7 +100,7 @@ export default function EventForm(props: EventFormProps){
     required fullWidth
     {...register("postcode", {
       validate: {
-        required: () => locationType === "physical",
+        required: (value) => locationType !== "physical" || (value !== undefined && value !== null && value.trim() !== ""),
       }})} />
 
   const weightingSlider = (id: EventWeighting, title: string, defaultValue = 0) => <>
@@ -192,7 +192,7 @@ export default function EventForm(props: EventFormProps){
               shrink: true
             }
           }}
-          {...register("eventUrl", {pattern: /https?:\/\/([-\w-])+\.{1}([a-zA-Z]{2,63})([/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/g})} />
+          {...register("eventUrl", {pattern: /https?:\/\/([-\w-])+\.{1}([a-zA-Z]{2,63})([/\w-]*)*\/?\??([^#\n\r]*)?#?([^\n\r]*)/})} />
         
         <Box sx={{flexGrow: 1}}>
           <Grid container spacing={3}>

@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { ReactNode } from "react";
 
 interface IconTextProps {
@@ -19,8 +19,8 @@ interface IconTextProps {
  * locations, and deadlines throughout the portal.
  */
 export default function IconText(props: IconTextProps){
-  return <Typography component={Stack} direction="row" alignItems="center" gap={props.gap || 2} sx={{marginBottom: props.marginBottom || '1rem'}}>
+  return <Stack direction="row" sx={{alignItems: 'center', gap: props.gap || 2, marginBottom: props.marginBottom || '1rem'}}>
     {props.icon}
     {props.children}
-  </Typography>
+  </Stack>
 }

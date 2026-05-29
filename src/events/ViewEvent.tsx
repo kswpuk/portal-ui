@@ -285,17 +285,15 @@ export default function ViewEvent(){
 
         <SpeedDialAction
           icon={<Link sx={{display: "flex"}} component={RouterLink} to={"/events/"+eventSeriesId+"/"+eventId+"/edit"}><Edit /></Link>}
-          tooltipTitle="Edit"
-          tooltipOpen
+          slotProps={{ tooltip: { title: "Edit", open: true } }}
         />
 
-        <SpeedDialAction 
+        <SpeedDialAction
           icon={<ConfirmLink sx={{display: "flex"}} title={"Delete "+(event?.name || "event")+"?"} loading={isDeleting}
             onConfirm={() => deleteEvent({eventSeriesId, eventId, social: isSocialCoordinator})}
             body={"Are you sure you wish to delete "+(event?.name || "this event")+"? This action is permanent, and cannot be undone."}><Delete />
           </ConfirmLink>}
-          tooltipTitle="Delete"
-          tooltipOpen
+          slotProps={{ tooltip: { title: "Delete", open: true } }}
         />
       </SpeedDial>
     </Privileged>

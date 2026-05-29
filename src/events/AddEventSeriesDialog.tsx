@@ -95,7 +95,7 @@ export default function AddEventSeriesDialog(props: AddEventSeriesDialogProps) {
           <Select
               required defaultValue="event"
               labelId="type-label" label="Event Type"
-              inputProps={register("type")}>
+              slotProps={{ input: register("type") }}>
             <MenuItem value="event">Event</MenuItem>
             <MenuItem value="social">Social</MenuItem>
             <MenuItem value="no_impact">No Impact on Allocations</MenuItem>

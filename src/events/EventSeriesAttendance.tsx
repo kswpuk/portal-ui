@@ -80,8 +80,8 @@ export default function EventSeriesAttendance({eventSeriesId}: {eventSeriesId: s
   }
 
   return <>
-    <Typography variant="h6" marginBottom="0.5rem">Event Series Allocations</Typography>
-    <Box flexDirection="column">
+    <Typography variant="h6" sx={{marginBottom: '0.5rem'}}>Event Series Allocations</Typography>
+    <Box sx={{flexDirection: 'column'}}>
       <DataGrid
         columns={columns} rows={rows} 
         getRowId={(row) => row.membershipNumber}

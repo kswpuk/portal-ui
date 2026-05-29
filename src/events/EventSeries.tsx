@@ -54,7 +54,7 @@ export default function EventSeries() {
     let letter = e.name.substring(0, 1).toUpperCase();
 
     if(letter != currLetter) {
-      stack.push(<Box key={"letter_"+letter} marginTop={currLetter == null ? "0rem" : "1.5rem"} marginBottom="1rem">
+      stack.push(<Box key={"letter_"+letter} sx={{marginTop: currLetter == null ? "0rem" : "1.5rem", marginBottom: "1rem"}}>
         <Typography variant="h5">{letter}</Typography>
       </Box>);
 
@@ -63,12 +63,12 @@ export default function EventSeries() {
 
     stack.push(<Accordion key={e.eventSeriesId}>
         <AccordionSummary expandIcon={<ArrowDropDownRounded />}>
-          <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
-            <Typography variant="h5" flex={1}>
+          <Box sx={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
+            <Typography variant="h5" sx={{flex: 1}}>
               {e.name}
               {eventTypeIcon(e.type)}
             </Typography>
-            <Typography variant="subtitle1" marginRight="1rem" color="grey">{e["instances"].length} instance{e["instances"].length != 1 ? "s" : ""}</Typography>
+            <Typography variant="subtitle1" sx={{marginRight: '1rem', color: 'grey'}}>{e["instances"].length} instance{e["instances"].length != 1 ? "s" : ""}</Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails>
@@ -83,14 +83,14 @@ export default function EventSeries() {
               </Card>
             </Grid>)}
           </Grid>
-          <Box marginTop="1rem">
+          <Box sx={{marginTop: '1rem'}}>
             <EventSeriesAttendanceWrapper eventSeriesId={e.eventSeriesId} />
           </Box>
         </AccordionDetails>
         <Privileged allowed={["EVENTS"]}>
           <AccordionActions>
             <Button startIcon={<Edit />} onClick={() => setEditEventSeries(e)}>Edit</Button>
-            {e["instances"].length === 0 ? <ConfirmButton startIcon={<Delete />} onConfirm={() => deleteEventSeries(e["eventSeriesId"])}
+            {e["instances"].length === 0 ? <ConfirmButton startIcon={<Delete />} onConfirm={() => deleteEventSeries(e["eventSeriesId"])} onCancel={() => {}}
                 loading={isDeleting} loadingText="Deleting..."
                 body={"Are you sure you want to delete the event series "+e['name']+"? This action cannot be undone."}>Delete</ConfirmButton> : null}
           </AccordionActions>
@@ -99,7 +99,7 @@ export default function EventSeries() {
   }
 
   return <>
-    <Box marginBottom="5rem">
+    <Box sx={{marginBottom: '5rem'}}>
       {stack}
     </Box>
     <Privileged allowed={["EVENTS"]}>

@@ -23,7 +23,7 @@ export default function PostcodeAreaMap(props: PostcodeAreaMapProps) {
   const defaultScale = 1600
 
   //TODO: Work out how to disable clicking of elements
-  return <Box width={props.width ?? defaultWidth} height={props.height ?? defaultHeight}><ComposableMap projection="geoMercator" projectionConfig={{
+  return <Box sx={{width: props.width ?? defaultWidth, height: props.height ?? defaultHeight}}><ComposableMap projection="geoMercator" projectionConfig={{
     center: createCoordinates(-2.5, 55.5),
     scale: props.scale ?? defaultScale
   }} width={props.width ?? defaultWidth} height={props.height ?? defaultHeight} >

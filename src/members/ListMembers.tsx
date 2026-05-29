@@ -125,7 +125,7 @@ export default function ListMembers() {
     <Grid container spacing={2} sx={{mb: 3, display: "flex", justifyContent: "center"}}>
       {committee.map(x => <Grid key={"committee_"+x.membershipNumber}>
         <Card variant="outlined" sx={{width: committeeSizes}}>
-          <CardMedia component={() => <Box height={committeeSizes} width={committeeSizes}>
+          <CardMedia component={() => <Box sx={{height: committeeSizes, width: committeeSizes}}>
             <MemberPhoto membershipNumber={x.membershipNumber}
               width="100%" height="100%"
               alt={(x.preferredName || x.firstName) + " " + x.surname} /></Box>}

@@ -1,4 +1,4 @@
-import { CancelOutlined, CheckCircleOutline, HelpOutline } from "@mui/icons-material"
+import { CancelOutlined, CheckCircleOutlined, HelpOutlined } from "@mui/icons-material"
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
 import { ReactNode } from "react"
 
@@ -12,11 +12,11 @@ export default function CriteriaWidget(props: CriteriaWidgetProps){
 
   const eligibilityIcon: {[key: string]: ReactNode} = {}
   if(props.eligibility){
-    props.eligibility.forEach(e => eligibilityIcon[e.id] = e.passed ? <CheckCircleOutline color="success" /> : <CancelOutlined color="error" />)
+    props.eligibility.forEach(e => eligibilityIcon[e.id] = e.passed ? <CheckCircleOutlined color="success" /> : <CancelOutlined color="error" />)
   }
 
   const liWrap = (key: string, text: string) => <ListItem key={key}>
-    <ListItemIcon>{eligibilityIcon[key] || <HelpOutline />}</ListItemIcon>
+    <ListItemIcon>{eligibilityIcon[key] || <HelpOutlined />}</ListItemIcon>
     <ListItemText>{text}</ListItemText>
   </ListItem>
 

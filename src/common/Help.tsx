@@ -1,4 +1,4 @@
-import { HelpOutline } from "@mui/icons-material";
+import { HelpOutlined } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
 interface HelpProps {
@@ -9,10 +9,10 @@ interface HelpProps {
 /**
  * A small inline help icon that reveals tooltip content on hover.
  *
- * Renders a MUI `HelpOutline` icon styled for inline use next to labels or headings.
+ * Renders a MUI `HelpOutlined` icon styled for inline use next to labels or headings.
  */
 export default function Help(props: HelpProps){
   return <Tooltip title={props.children}>
-    <HelpOutline fontSize="small" sx={{ml: '1rem', verticalAlign: "middle"}} color="primary" />
+    <HelpOutlined fontSize="small" sx={{ml: '1rem', verticalAlign: "middle"}} color="primary" />
   </Tooltip>
 }
