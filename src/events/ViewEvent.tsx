@@ -26,6 +26,8 @@ import WeightingWidget from "./WeightingWidget"
 import MemberCard from "./MemberCard"
 import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import { useGetMemberQuery } from "../redux/membersApi"
+import DownloadCalendarButton from "./DownloadCalendarButton"
+
 
 
 const BorderlessTooltip = styled((props: TooltipProps) => {
@@ -251,6 +253,9 @@ export default function ViewEvent(){
               <span><strong>&pound;{event.cost.toFixed(2)}</strong>, payable to {eventPayee}.</span>
             </IconText> : null}
           </CardContent>
+          <CardActions>
+            <DownloadCalendarButton event={event} fullWidth />
+          </CardActions>
         </Card>
 
         <Card elevation={3} className={"allocation_"+currentAllocation}>
