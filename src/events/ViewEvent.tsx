@@ -179,8 +179,8 @@ export default function ViewEvent(){
   let allocationCountByType: {[key in AllocationStatus]?: number} = {};
 
   if(event.allocations && event.allocations.length > 0){
-    const sortedAllocations = [...event.allocations].sort((a, b) => (a.preferredName || a.firstName).localeCompare(b.preferredName || b.firstName))
-    sortedAllocations.sort((a, b) => a.surname.localeCompare(b.surname))
+    const sortedAllocations = [...event.allocations].sort((a, b) => (a.preferredName || a.firstName || "").localeCompare(b.preferredName || b.firstName || ""))
+    sortedAllocations.sort((a, b) => (a.surname || "").localeCompare(b.surname || ""))
     sortedAllocations.sort((a, b) => allocationToOrder(a.allocation) - allocationToOrder(b.allocation))
 
     allocations = <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: 1}}>
