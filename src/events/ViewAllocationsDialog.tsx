@@ -72,7 +72,8 @@ export default function ViewAllocationsDialog({event, open, onClose}: ViewAlloca
     {field: "name", headerName: "First Name", flex: 2, valueGetter:  (value, row, column, apiRef) => row.preferredName || row.firstName},
     {field: "surname", headerName: "Surname", flex: 2},
     {field: "allocation", headerName: "Allocation", flex: 2,
-      renderCell: params => <><AllocationWidget textOnly allocation={params.value} /><Privileged allowed={["COMMITTEE"]}><AllocationSuspendedWidget suspended={params.row.suspended} /></Privileged></>}
+      renderCell: params => <><AllocationWidget textOnly allocation={params.value} /><Privileged allowed={["COMMITTEE"]}><AllocationSuspendedWidget suspended={params.row.suspended} /></Privileged></>},
+    {field: "experience", headerName: "Experience", flex: 1}
   ]
   if(committee){
     allocationColumns.push({field: "email", headerName: "E-mail", flex: 2,
@@ -103,6 +104,11 @@ export default function ViewAllocationsDialog({event, open, onClose}: ViewAlloca
       <DialogContent>
         <DataGrid autoHeight initialState={{
           pagination: { paginationModel: { page: 0, pageSize: 25 } },
+          columns: {
+            columnVisibilityModel: {
+              experience: false,
+            },
+          },
           sorting: {
             sortModel: [{ field: "surname", sort: "asc"}]
           }

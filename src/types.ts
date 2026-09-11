@@ -381,6 +381,9 @@ interface EventDetailsAllocation {
 
   /** True if the member has already received a necker */
   receivedNecker?: boolean
+
+  /** The number of events in this event series that the member has attended previous to this event */
+  experience: number
 }
 
 interface EventBody {
